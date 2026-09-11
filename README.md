@@ -1,23 +1,27 @@
-# Vida de Estudante
+# SR Beauty
 
 `Análise e Desenvolvimento de Sistemas - PUC Minas`
 
-`Desenvolvimento de aplicação web front-end`
+`Desenvolvimento de um Sistema Sociotécnico Inovador`
 
-`1º semestre/2022`
+`2º semestre/2026`
 
-O objetivo geral deste projeto é a criação de uma aplicação web de fácil acesso e uso que permita aos universitários a busca e troca de fontes de informações e conhecimentos entre seus colegas discentes.
+O SR Beauty é um sistema de gestão desenvolvido para o Simone Rodrigues Espaço de Beleza, com o objetivo de centralizar e facilitar o gerenciamento das atividades do salão. A aplicação busca otimizar o controle de agendamentos, profissionais, serviços, pagamentos, repasses e informações financeiras, proporcionando uma gestão mais organizada e eficiente.
+
+O sistema foi desenvolvido como parte de um projeto acadêmico, considerando as necessidades identificadas junto ao parceiro e buscando aplicar conceitos de análise, desenvolvimento e validação de sistemas sociotécnicos. A solução contempla diferentes perfis de acesso — Cliente, Profissional e Proprietário —, permitindo que cada usuário tenha acesso às funcionalidades correspondentes às suas atividades.
+
+Além de auxiliar na organização da rotina do salão, o SR Beauty busca reduzir processos manuais, facilitar o acompanhamento financeiro e proporcionar maior confiabilidade nas informações utilizadas para a tomada de decisões.
 
 ## Integrantes
 
-* Anna Luiza de Angelis Souza Freitas
-* Daiane Campos Procópio
-* Fernanda Augusta de Barcelos Coura
-* Rúbia Karina Prado Costa
+* Flávia Sergina Rodrigues
+* Júlio César Villaça Cardoso
+* Pâmella Almeida da Silva
+* Virgílio Parreiras Campos Zenith
 
-## Orientadora
+## Orientador
 
-* Joyce Christina de Paiva Carvalho
+* José Wilson da Costa
 
 # Documentação
 
