@@ -16,6 +16,7 @@ Além de auxiliar na organização da rotina do salão, o SR Beauty busca reduzi
 
 * Flávia Sergina Rodrigues
 * Júlio César Villaça Cardoso
+* Luiz Guilherme Martins Franchim
 * Pâmella Almeida da Silva
 * Virgílio Parreiras Campos Zenith
 
