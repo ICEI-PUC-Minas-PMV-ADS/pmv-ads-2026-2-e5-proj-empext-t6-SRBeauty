@@ -65,24 +65,30 @@ Com base na análise das personas forma identificadas as seguintes histórias de
 |Ex-aluno | compartilhar com os outros estudantes conhecimentos, e assim poder ajudar uns aos outros  | conectar com alunos e até poder formar amizades e grupos de estudos. |
 |Aluno | aprender sobre conteúdos específicos da área com exemplos práticos e em mídias diferentes  | aplicar o conhecimento na prática.  |
 
+## Project Model Canvas 
+
+<img width="3174" height="2245" alt="ProjectModelCanvasA1 pdf" src="https://github.com/user-attachments/assets/73b1e1ba-c05d-47b3-92c2-5ae178b49563" />
+
+
 ## Requisitos
 
 ### Requisitos Funcionais
 
 |ID    | Descrição do Requisito  | Prioridade |
 |------|-----------------------------------------|----|
-|RF-01| A aplicação deve permitir ao usuário cadastrar uma conta.   | ALTA | 
-|RF-02| A aplicação deve permitir ao usuário fazer o login da sua conta.   | ALTA | 
-|RF-03| A aplicação deve oferecer uma funcionalidade de filtro/pesquisa para permitir ao usuário localizar livros.    | ALTA |
-|RF-04| A aplicação deve permitir ao usuário fazer o cadastro de livros.    | ALTA |
-|RF-05| A aplicação deve permitir ao usuário disponibilizar informações das disciplinas de tutoria.  | ALTA |
-|RF-06| A aplicação deve apresentar, para cada livro, uma imagem correspondente à capa.    | BAIXA |
-|RF-07| A aplicação deve permitir ao usuário visualizar as informações sobre  o livro.    | MÉDIA |
-|RF-08| A aplicação deve permitir ao usuário visualizar os detalhes dos tutores   | MÉDIA |
-|RF-09| A aplicação deve permitir ao usuário verificar as informações registradas no cadastro na página Perfil, após fazer seu login.  | MÉDIA |
-|RF-10| A aplicação deve oferecer uma funcionalidade de filtro/pesquisa para permitir ao usuário localizar disciplinas das tutorias disponíveis.  | ALTA |
-|RF-11| A aplicação deve permitir ao usuário disponibilizar informações sobre a tutoria e seu contato.  | MÉDIA |
-|RF-12| A aplicação deve apresentar o tipo de mídia do material disponível.   | BAIXA |
+|RF-01| A aplicação deve permitir ao usuário cadastrar e fazer login em sua conta.   | ALTA | 
+|RF-02| O sistema deve permitir que a Cliente consulte a disponibilidade de horários das profissionais.  | ALTA | 
+|RF-03| O sistema deve permitir que a Cliente (ou a Profissional) agende um atendimento, impedindo conflito ou duplicidade de horário para a mesma profissional.    | ALTA |
+|RF-04| O sistema deve permitir que a Profissional registre um atendimento realizado, incluindo o tipo de serviço prestado e a forma de pagamento (Pix, dinheiro ou cartão).    | MÉDIA |
+|RF-05| O sistema deve calcular automaticamente o valor do repasse ao salão com base no percentual definido por tipo de serviço (ex.: cabeleireira 30%, manicure 20%), e não por profissional.  | ALTA |
+|RF-06| Quando o pagamento for feito em cartão, o sistema deve permitir registrar a taxa da maquininha repassada à cliente.    | BAIXA |
+|RF-07| O sistema deve permitir registrar quando o repasse de uma profissional ao salão foi efetivamente pago (equivalente ao "OK" hoje anotado na agenda física).    | MÉDIA |
+|RF-08| O sistema deve permitir que a Proprietária registre despesas do salão (aluguel, água, energia, internet, materiais de uso e consumo, outras).   | MÉDIA |
+|RF-09| O sistema deve permitir o fechamento financeiro semanal, consolidando entradas, saídas e resultado do período.  | ALTA |
+|RF-10| O sistema deve permitir que a Proprietária consulte, diariamente: horários agendados, horários disponíveis e atendimentos realizados no dia.  | ALTA |
+|RF-11| O sistema deve permitir que a Proprietária consulte, mensalmente: faturamento, total de despesas, valores recebidos e valores repassados pelas profissionais, e o resultado financeiro do mês.  | ALTA |
+|RF-12| O sistema deve permitir o cadastro e a gestão dos horários de trabalho de cada profissional.   | MÉDIA |
+|RF-13| O sistema deve autenticar os usuários de acordo com seu perfil (Cliente, Profissional, Proprietária).   | ALTA |
 
 **Prioridade: Alta / Média / Baixa.  
 
@@ -90,10 +96,15 @@ Com base na análise das personas forma identificadas as seguintes histórias de
 
 |ID     | Descrição do Requisito  |Prioridade |
 |-------|-------------------------|----|
-|RNF-01| A aplicação deve ser publicada em um ambiente acessível público na Internet.  | ALTA | 
-|RNF-02| A aplicação deverá ser responsiva permitindo a visualização em dispositivos diversos de forma adequada.  | ALTA | 
-|RNF-03| A aplicação deve ter bom nível de contraste entre os elementos da tela.  | MÉDIA | 
-|RNF-04| A aplicação deve ser compatível com os navegadores O site deve ser compatível com os principais navegadores do mercado: Google Chrome, Firefox e Microsoft Edge.  | ALTA | 
+|RNF-01| O sistema deve ser acessível via navegador web, com interface responsiva para uso em celular.  | ALTA | 
+|RNF-02| O sistema deve impedir, em nível de banco de dados/regra de negócio, o agendamento duplicado no mesmo horário para a mesma profissional.  | ALTA | 
+|RNF-03| As senhas dos usuários devem ser armazenadas de forma criptografada.  | ALTA | 
+|RNF-04| O sistema deve responder às operações de agendamento e consulta em até 3 segundos em condições normais de uso.  | MÉDIA | 
+|RNF-05| O sistema deve ter interface simples e intuitiva, adequada a usuárias sem familiaridade técnica avançada.  | MÉDIA | 
+|RNF-06| O sistema deve estar disponível para uso durante o horário comercial do salão (alta disponibilidade em horário de funcionamento).  | ALTA | 
+|RNF-07| O código-fonte e a documentação devem seguir os padrões definidos para entrega no GitHub Classroom.  | BAIXA | 
+|RNF-08| O sistema deve manter histórico rastreável dos repasses e pagamentos, permitindo auditoria posterior (hoje feita por conferência de extrato bancário).  | ALTA | 
+
 
 
 **Prioridade: Alta / Média / Baixa.
