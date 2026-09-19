@@ -128,7 +128,7 @@ O protótipo apresentado contempla os três perfis principais de acesso definido
 
 ### Situação do protótipo e dos requisitos
 
-Durante a reunião, o protótipo foi apresentado à Proprietária, percorrendo as telas de cada perfil. Os requisitos relacionados a agendamento, controle de acesso, repasses, despesas e relatórios, foram representados no protótipo para validação de fluxo e de usabilidade.
+Durante a reunião, o protótipo foi apresentado à Proprietária, percorrendo as telas de cada perfil. Os requisitos RF-01 a RF-13 relacionados a agendamento, controle de acesso, repasses, despesas e relatórios, foram representados no protótipo para validação de fluxo e de usabilidade.
 O protótipo é somente de interface: os dados são fictícios e as regras (como o bloqueio de conflito de horários e o cálculo dos repasses) são apenas simuladas, e serão implementadas junto com o back-end.
 
 A situação atual do quadro é:
