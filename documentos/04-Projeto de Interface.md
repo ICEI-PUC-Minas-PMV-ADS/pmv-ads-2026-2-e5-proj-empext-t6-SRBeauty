@@ -4,117 +4,101 @@
 
 ## User Flow
 
-O fluxograma apresentado na figura 1 mostra o fluxo de interação do usuário pelas telas do sistema. Cada uma das telas deste fluxo é detalhada na seção de Protótipo de baixa fidelidade que se segue. Para visualizar o protótipo interativo, acesse o <a href="https://marvelapp.com/prototype/i39bj37/screen/86143037">ambiente MarvelApp do projeto</a>.
+O User Flow do SR Beauty representa o fluxo principal de navegação atualmente implementado na aplicação, desde o acesso inicial até as funcionalidades disponíveis para o usuário autenticado.
 
-  ![Untitled Diagram-Page-1 drawio (2)](https://user-images.githubusercontent.com/81182674/172236663-978177e6-9496-467b-a77a-127d6664e84a.png)
+Ao acessar o sistema, o usuário é direcionado para a tela de Login. Caso ainda não possua uma conta, poderá acessar a tela de Cadastro e criar um novo usuário. Após a autenticação bem-sucedida, o sistema direciona o usuário para a Home, que funciona como ponto principal de navegação da aplicação.
 
-  
-<figure> 
-    <figcaption>Figura 1 - Fluxo de telas do usuário
-</figure> 
+A partir da Home, o usuário pode acessar a área Minha Conta para consultar e atualizar seus dados pessoais. Também é possível encerrar a sessão por meio da funcionalidade de Logout, retornando à tela de Login.
+
+Durante o processo de autenticação, credenciais inválidas impedem o acesso ao sistema e uma mensagem de erro é apresentada ao usuário. As páginas protegidas também exigem autenticação para serem acessadas.
+
+O fluxo apresentado representa as funcionalidades implementadas até o momento e poderá ser ampliado conforme o desenvolvimento das demais áreas previstas para o SR Beauty, como agendamentos, profissionais, serviços e gestão financeira.
+
+![User Flow do SR Beauty](img/user-flow-srbeauty.png)
+
+<figure>
+    <figcaption>Figura 1 - Fluxo principal de navegação do SR Beauty.</figcaption>
+</figure>
 
 
 ## Protótipo de baixa fidelidade
 
-As telas do sistema apresentam uma estrutura comum que é apresentada na figura 2. Nesta estrutura existem 3 grandes blocos, descritos a seguir. São eles:
+O projeto de interface do SR Beauty foi planejado com foco em simplicidade, organização das informações e facilidade de navegação. A estrutura visual definida durante a prototipação serviu como referência para o desenvolvimento das telas atualmente disponíveis na aplicação.
+
+As interfaces utilizam uma identidade visual comum, com cores, tipografia e componentes padronizados, buscando manter consistência durante a navegação.
+
+De forma geral, as telas são organizadas a partir dos seguintes elementos:
+
 <ul>
-  <li>Cabeçalho - local onde estão dispostos o nome da aplicação web e navegação principal do site (menu da aplicação);</li>
-  <li>Conteúdo - apresenta o conteúdo da tela em questão;</li>
-  <li>Rodapé - apresenta informações sobre os direitos autorais.</li>
+
+  <li><b>Identidade visual:</b> apresenta a marca SR Beauty e mantém o padrão visual da aplicação;</li>
+
+  <li><b>Navegação:</b> disponibiliza acesso às funcionalidades permitidas ao usuário;</li>
+
+  <li><b>Conteúdo principal:</b> apresenta informações, formulários e ações relacionadas à funcionalidade acessada;</li>
+
+  <li><b>Mensagens de retorno:</b> apresentam confirmações, validações ou erros decorrentes das ações realizadas pelo usuário.</li>
+
 </ul>
 
-<figure> 
-  <img src="https://user-images.githubusercontent.com/100447878/164074128-7b006e50-8621-4964-b0fd-07a90e626673.png"
-    <figcaption>Figura 2 - Estrutura padrão do site
-</figure> 
-<hr>
-
-<h3><b>Tela - Home page</b></h3>
-<p>A tela de home page apresenta banners que remetem para as páginas de Livros, Tutorias e Cadastro, depoimentos de estudantes e uma breve descrição sobre o projeto. </p>
-  
-![homepage](https://user-images.githubusercontent.com/81182674/167677975-53f61b97-4979-441b-813c-036c3cd153bf.png)
-
-<figure> 
-  <figcaption>Figura 3 - Tela home page
-</figure> 
-<hr>
-
-
-<h3><b>Tela - Livros</b></h3>
-<p>A tela de Livros apresenta os livros disponíveis para troca, as informações sobre os livros e o contato do proprietário do livro.</p>
-  
-![livros](https://user-images.githubusercontent.com/81182674/172237430-f4f8089c-dae3-499e-87b6-d344ae418de3.png)
-
-  
-<figure> 
-  <figcaption> Figura 4 - Tela de Livros
-</figure> 
-<hr>
-
-<h3><b>Tela - Tutorias</b></h3>
-<p>A tela de Tutorias apresenta as informações sobre os tutores/alunos, disciplinas e informações para contato.</p>
-
-
-![tutoria (1)](https://user-images.githubusercontent.com/81182674/172237160-e63519ab-9058-44ec-999d-07385b5a93a4.png)
-
-  
-<figure>  
-    <figcaption>Figura 5 - Tela de Tutorias      
-</figure> 
 <hr>
 
 <h3><b>Tela – Login</b></h3>
-<p>A tela de Login apresenta campos para a inserção do e-mail e da senha, e a funcionalidade de manter-se logado. </p>
-  
-  ![login](https://user-images.githubusercontent.com/81182674/167681381-ee88eeee-ffd8-428f-bfb2-67106c0d6046.png)
 
+<p>A tela de Login é o ponto inicial de acesso ao SR Beauty. Ela permite que usuários cadastrados informem seu e-mail e senha para acessar a aplicação.</p>
 
-<figure> 
-    <figcaption>Figura 6 - Tela de acesso à conta do usuário
+<p>A interface também disponibiliza acesso ao cadastro de novos usuários e apresenta mensagens de validação quando as credenciais informadas são inválidas.</p>
+
+![Tela de Login](img/tela-login.png)
+
+<figure>
+    <figcaption>Figura 2 - Tela de Login do SR Beauty.</figcaption>
 </figure>
+
+**Requisitos contemplados:** RF-01, RF-13
+
 <hr>
 
 <h3><b>Tela – Cadastro</b></h3>
-<p>A tela de cadastro apresenta os seguintes campos para a inserção das informações pessoais do usuário: Nome Completo, E-mail, Telefone, Instituição de Ensino, Endereço, Senha e Confirmação de Senha.</p>
-  
-  ![cadastro](https://user-images.githubusercontent.com/81182674/167681719-694701df-5bd7-4615-9562-b106001e40db.png)
 
+<p>A tela de Cadastro permite a criação de uma nova conta de usuário. Após o preenchimento e validação das informações, os dados são registrados no sistema e o usuário pode acessar a aplicação.</p>
 
-<figure> 
-    <figcaption>Figura 7 - Tela de cadastro de usuários
+![Tela de Cadastro](img/tela-cadastro.png)
+
+<figure>
+    <figcaption>Figura 3 - Tela de Cadastro de usuário.</figcaption>
 </figure>
-<hr> 
-  
-  <h3><b>Tela – Perfil</b></h3>
-<p>A tela de Perfil apresenta um menu lateral, que permite ter acesso às informações do usuário (que foram inseridas na Página de Cadastro), às telas de Cadastro de Livros e de Tutores, e à opção de "Logout".  </p>
-  
-![perfil](https://user-images.githubusercontent.com/81182674/172498681-6fd2d59e-00f8-45b8-b0f4-7e8676eba5a6.png)
 
+**Requisitos contemplados:** RF-01
 
-<figure> 
-    <figcaption>Figura 8 - Tela de Perfil
-</figure>
 <hr>
 
-  <h3><b>Tela – Cadastro de Livros</b></h3>
-<p>A tela de Cadastro de Livros apresenta os seguintes campos: Título, Imagem da capa, Resumo, Autor, Ano de publicação, Área de conhecimento, Estado de conservação, Nome do(a) proprietário(a) e Contato. Esta tela só pode ser acessada por usuários cadastrados, após realizarem o Login.   </p>
-  
+<h3><b>Tela – Home</b></h3>
 
-![livros (1)](https://user-images.githubusercontent.com/81182674/172500605-2d476435-9841-4c40-848c-016bea99ecdb.png)
+<p>A Home funciona como a área principal da aplicação após a autenticação. A interface apresenta a navegação lateral e informações resumidas relacionadas às principais áreas previstas para o SR Beauty, como agendamentos, clientes, profissionais, serviços e financeiro.</p>
 
+<p>O conteúdo apresentado ao usuário poderá variar de acordo com seu perfil de acesso.</p>
 
+![Tela Home](img/tela-home.png)
 
-
-<figure> 
-    <figcaption>Figura 9 - Tela de Cadastro de Livros
+<figure>
+    <figcaption>Figura 4 - Tela principal do SR Beauty.</figcaption>
 </figure>
- <hr>
 
-  <h3><b>Tela – Cadastro de Tutores</b></h3>
-<p>A tela de Cadastro de Tutores apresenta os seguintes campos: Foto, Nome, Instituição de ensino, Cidade, Disciplina e Contato. Esta tela só pode ser acessada por usuários cadastrados, após realizarem o Login. </p>
-  
-![tutores](https://user-images.githubusercontent.com/81182674/172501101-1222f7e8-a62e-44d7-8c37-0afbdab03f59.png)
+**Requisitos contemplados:** RF-13
 
-<figure> 
-    <figcaption>Figura 10 - Tela de Cadastro de Tutores
+<hr>
+
+<h3><b>Tela – Minha Conta</b></h3>
+
+<p>A tela Minha Conta permite que o usuário autenticado consulte e atualize as informações associadas ao seu cadastro.</p>
+
+<p>As alterações realizadas são persistidas no sistema, permitindo que os dados atualizados sejam recuperados em acessos posteriores.</p>
+
+![Tela Minha Conta](img/tela-minha-conta.png)
+
+<figure>
+    <figcaption>Figura 5 - Tela de gerenciamento da conta do usuário.</figcaption>
 </figure>
+
+**Requisitos contemplados:** RF-01

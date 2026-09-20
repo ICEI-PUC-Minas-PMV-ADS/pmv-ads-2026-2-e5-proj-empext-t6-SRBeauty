@@ -1,35 +1,75 @@
 # Template padrão da Aplicação
 
-O layout padrão do site foi construído com as linguagens de marcação HTML e CSS, e a linguagem de programação JavaScript foi utilizada para a construção do menu responsivo.
+O padrão visual do SR Beauty foi desenvolvido buscando transmitir uma identidade elegante, leve e compatível com o segmento de beleza, mantendo consistência entre as diferentes telas da aplicação.
 
-As páginas terão como elementos padrões o menu de navegação, o header e o footer, além dos elementos de identidade visual citados abaixo:
+A interface utiliza HTML5, CSS3 e JavaScript no frontend, enquanto as páginas são integradas à aplicação Flask por meio dos templates utilizados pelo sistema.
+
+Os principais elementos visuais adotados são:
 
 <ul>
-<li>Cores: RGB: #3E497A, whitesmoke, goldenrod e white;</li>
-<li>Font-family: Arial, Helvetica, sans-serif e cursive.</li>
-<li>Font-size: 15px e 28px. </li>
+
+  <li><b>Paleta de cores:</b> tons de rosa queimado, nude, bege claro, marrom e branco, utilizados de forma consistente nos fundos, botões, textos, destaques e elementos de navegação;</li>
+
+  <li><b>Cor de destaque:</b> #B76E79;</li>
+
+  <li><b>Cor de apoio:</b> #E8CFCF;</li>
+
+  <li><b>Fundo principal:</b> #F8F3F1;</li>
+
+  <li><b>Cor para textos e elementos de contraste:</b> #6B4A4A;</li>
+
+  <li><b>Tipografia de destaque:</b> Playfair Display, utilizada principalmente em títulos e elementos de identidade visual;</li>
+
+  <li><b>Tipografia da interface:</b> Montserrat, utilizada em textos, formulários, menus e demais componentes;</li>
+
+  <li><b>Componentes:</b> botões, campos de formulário, cartões e áreas de conteúdo utilizam bordas suaves, espaçamento consistente e elementos visuais padronizados.</li>
+
 </ul>
-  
-O código utilizado para a construção dos elementos citados, incluindo a responsividade, pode ser consultado <a href="https://github.com/ICEI-PUC-Minas-PMV-ADS/ads-e1-exemplo-vida-de-estudante/tree/main/codigo-fonte">aqui</a>. As imagens e ícones utilizados no projeto estão disponíveis <a href="https://github.com/ICEI-PUC-Minas-PMV-ADS/ads-e1-exemplo-vida-de-estudante/tree/main/documentos/img">aqui</a>.
 
-<h3><b>Tela de visualização dos livros</b></h3>
-<p>Exibe informações sobre os livros, a imagem da capa e o contato do proprietário do livro.</p>
-<figure> 
-  <img src="https://user-images.githubusercontent.com/81182674/167680178-5869794e-1133-4dbd-aed9-31eef5c54d50.png">
-  <figcaption> Figura 1 - Tela de Livros
-</figure> 
+A identidade visual também utiliza o logotipo do Simone Rodrigues Espaço de Beleza como elemento recorrente nas telas, reforçando a identificação do sistema com o estabelecimento parceiro.
 
-<h3><b>Tela de visualização dos tutores e disciplinas</b></h3>
-<p>Exibe informações sobre os tutores/alunos, disciplinas e contato.</p>
-<figure> 
-  <img src="https://user-images.githubusercontent.com/81182674/167681053-7715d698-610b-4717-8eca-79484ca4f596.png">
-  <figcaption>Figura 2 - Tela de Tutorias      
-</figure> 
-<hr>
-  
-<p>Para a criação do logotipo do site foi utilizada a cor amarela, pois esta cor remete a aspectos do conhecimento e sabedoria (PATEL, 2021). A utilização da imagem de um marca-texto foi escolhida por ser algo presente no dia-a-dia dos estudantes.</p>
+## Estrutura das telas
 
-<figure> 
-  <img src="https://github.com/ICEI-PUC-Minas-PMV-ADS/ads-e1-exemplo-vida-de-estudante/blob/main/documentos/img/Marca texto.png" width="200" height="200">
-    <figcaption>Figura 3 - Logotipo da aplicação web Vida de Estudante
-</figure> 
+As telas autenticadas do SR Beauty utilizam uma estrutura visual comum composta principalmente por:
+
+<ul>
+
+  <li><b>Menu lateral:</b> apresenta a identidade visual da aplicação e os acessos às principais funcionalidades do sistema;</li>
+
+  <li><b>Área principal:</b> concentra o conteúdo correspondente à funcionalidade selecionada;</li>
+
+  <li><b>Identificação do usuário:</b> apresenta informações básicas do usuário autenticado e seu perfil de acesso;</li>
+
+  <li><b>Cards e painéis:</b> utilizados para organizar informações resumidas e facilitar a visualização dos dados;</li>
+
+  <li><b>Mensagens de retorno:</b> utilizadas para informar sucesso, erro ou validações decorrentes das ações realizadas pelo usuário.</li>
+
+</ul>
+
+A tela de Login possui uma composição diferenciada das áreas internas do sistema, mantendo, entretanto, a mesma identidade visual, paleta de cores e tipografia utilizadas no restante da aplicação.
+
+## Tela de Login
+
+A tela de Login apresenta a identidade visual do SR Beauty juntamente com o formulário de autenticação. Os campos, botões e mensagens seguem o padrão visual definido para a aplicação.
+
+![Tela de Login](img/tela-login.png)
+
+<figure>
+  <figcaption>Figura 1 - Aplicação do padrão visual na tela de Login.</figcaption>
+</figure>
+
+## Tela principal
+
+Após a autenticação, a aplicação apresenta uma estrutura baseada em menu lateral e área principal de conteúdo. O mesmo padrão poderá ser reutilizado nas demais funcionalidades do sistema, mantendo consistência durante a navegação.
+
+![Tela principal](img/tela-home.png)
+
+<figure>
+  <figcaption>Figura 2 - Aplicação do padrão visual na tela principal do SR Beauty.</figcaption>
+</figure>
+
+## Organização dos arquivos de interface
+
+Os arquivos utilizados na construção das interfaces estão organizados na pasta `codigo-fonte`, incluindo os templates HTML e os recursos utilizados na apresentação da aplicação.
+
+O código-fonte pode ser consultado em [codigo-fonte](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2026-2-e5-proj-empext-t6-SRBeauty/tree/main/codigo-fonte), enquanto os recursos visuais utilizados na documentação estão disponíveis em [documentos/img](img/).

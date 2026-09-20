@@ -1,17 +1,23 @@
 # Referências Bibliográficas
 
-AMARAL, Vanessa de Araújo; OLIVEIRA, Angela Maria Fleury de; ISONI, Taciana Maria. Inovação social e metodologias ágeis: uma história de sucesso. <b>DOM</b>: a revista da Fundação Dom Cabral, Nova Lima, v. 12, n. 38, p. 66-71, maio/ago. 2019.
+BRASIL. **Lei nº 13.709, de 14 de agosto de 2018**. Lei Geral de Proteção de Dados Pessoais (LGPD). Brasília, DF: Presidência da República, 2018. Acesso em: 20 set. 2026.
 
-ATLASSIAN BITBUCKET. <b>Fluxo de trabalho de Gitflow</b>. <i>[s. d.]</i>. Disponível em: https://www.atlassian.com/br/git/tutorials/comparing-workflows/gitflow-workflow. Acesso em: 11 abr. 2022.
+GITHUB. **GitHub Docs: Repositories**. Documentação oficial sobre repositórios, controle de versão, commits e branches. GitHub, [s. d.]. Acesso em: 20 set. 2026.
 
-O QUE é a arquitetura da informação e como aplicá-la em seus projetos. <b>Digital House</b>, 10 set. 2018. Disponível em: https://www.digitalhouse.com/br/blog/o-que-e-arquitetura-da-informacao-e-como-aplica-la-em-seus-projetos/. Acesso em: 12 abr. 2022.
+PALLETS PROJECTS. **Flask Documentation**. Documentação oficial do framework Flask. [s. d.]. Acesso em: 20 set. 2026.
 
-FIALHO, Lia Machado Fiuza; SOUSA, Francisca Genifer Andrade de. Juventudes e redes sociais: interações e orientações educacionais. <b>Revista Exitus</b>, Santarém, v. 9, n. 1, p. 202-231, jan./mar. 2019.
+PALLETS PROJECTS. **Flask-SQLAlchemy Documentation**. Documentação oficial da extensão Flask-SQLAlchemy. [s. d.]. Acesso em: 20 set. 2026.
 
-OLIVEIRA, Clarissa Tochetto de; DIAS, Ana Cristina Garcia. Dificuldades na trajetória universitária e rede de apoio de calouros e formandos. <b>Psico</b>, v. 45, n. 2, p. 187-197, abr./jun. 2014. Disponível em: https://revistaseletronicas.pucrs.br/ojs/index.php/revistapsico/article/view/13347/11708. Acesso em: 05 mar. 2022.
+PALLETS PROJECTS. **Werkzeug Documentation: Security Helpers**. Documentação sobre geração e verificação segura de hashes de senha. [s. d.]. Acesso em: 20 set. 2026.
 
-PATEL, Neil. <b>Psicologia das cores</b>: estudo e significado das cores (2021). 2021. Disponível em: https://neilpatel.com/br/blog/psicologia-das-cores-como-usar-cores-para-aumentar-sua-taxa-de-conversao/. Acesso em: 28 abr. 2022.
+POSTGRESQL GLOBAL DEVELOPMENT GROUP. **PostgreSQL Documentation**. Documentação oficial do sistema gerenciador de banco de dados PostgreSQL. 2026. Acesso em: 20 set. 2026.
 
-SOMMERVILLE, Ian. <b>Engenharia de software</b>. 10 ed. São Paulo: Pearson, 2019.
+PYTHON SOFTWARE FOUNDATION. **Python Documentation: sqlite3 — DB-API 2.0 interface for SQLite databases**. Documentação oficial do módulo SQLite utilizado pelo Python. [s. d.]. Acesso em: 20 set. 2026.
 
-UNIVERSIDADE DE BRASÍLIA. Decanato de Ensino de Graduação. <b>Tutoria</b>. c2021. Disponível em: http://deg.unb.br/tutoria-caa. Acesso em: 06 mar. 2022.
+RENDER. **Deploy a Flask App on Render**. Documentação oficial para implantação de aplicações Flask na plataforma Render. [s. d.]. Acesso em: 20 set. 2026.
+
+SOMMERVILLE, Ian. **Engenharia de software**. 10. ed. São Paulo: Pearson, 2019.
+
+WORLD WIDE WEB CONSORTIUM (W3C). **Web Content Accessibility Guidelines (WCAG) 2.2**. W3C Recommendation. 2023. Acesso em: 20 set. 2026.
+
+MAX COUNTRYMAN. **Flask-Login Documentation**. Documentação da extensão utilizada para gerenciamento de autenticação e sessões em aplicações Flask. [s. d.]. Acesso em: 20 set. 2026.

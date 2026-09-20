@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SR Beauty | Início</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+  <aside>
+    <div class="aside-brand"><div class="aside-logo-wrap"><img class="aside-logo" src="{{ url_for('documentos_img', filename='logo.png') }}" alt="SR Beauty"></div><div class="aside-subtitle"><span>SIMONE RODRIGUES</span><span>ESPAÇO DE BELEZA</span></div></div>
+    <nav>
+      <a class="active" href="{{ url_for('home') }}">⌂ <span>Início</span></a>
+      <a href="#">▣ <span>Agendamentos</span></a><a href="#">♙ <span>Clientes</span></a><a href="#">✂ <span>Profissionais</span></a><a href="#">◇ <span>Serviços</span></a><a href="#">▥ <span>Financeiro</span></a>
+      <a href="{{ url_for('perfil') }}">⚙ <span>Minha conta</span></a>
+    </nav>
+    <a class="logout" href="{{ url_for('logout') }}">↪ <span>Sair</span></a>
+  </aside>
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-list">{% for category, message in messages %}<p class="flash {{ category }}">{{ message }}</p>{% endfor %}</div>{% endif %}{% endwith %}
+    <header>
+      <div><h1>Olá, {{ current_user.nome.split(' ')[0] }}!</h1><p>Que bom ter você aqui. 💕</p></div>
+      <a class="profile-link" href="{{ url_for('perfil') }}"><div class="profile"><span>{{ current_user.nome[0]|upper }}</span><div>{{ current_user.nome }}<small>{{ current_user.tipo_label }}</small></div></div></a>
+    </header>
+    <section class="hero"><h2>Bem-vinda ao SR Beauty</h2><p>Organize sua rotina e acompanhe seu espaço em um só lugar.</p></section>
+    <section class="cards"><article><b>12</b><span>Agendamentos hoje</span></article><article><b>248</b><span>Clientes cadastrados</span></article><article><b>5</b><span>Profissionais ativos</span></article><article><b>R$ 1.240</b><span>Receita da semana</span></article></section>
+    <section class="panel"><h2>Próximos agendamentos</h2><div class="appointment"><b>09:00</b><span>Ana Clara Souza<small>Corte + Escova</small></span><em>Confirmado</em></div><div class="appointment"><b>10:30</b><span>Juliana Mendes<small>Coloração</small></span><em>Confirmado</em></div><div class="appointment"><b>13:00</b><span>Patrícia Lima<small>Manicure</small></span><em class="pending">Pendente</em></div></section>
+  </main>
+</body>
+</html>
