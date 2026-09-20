@@ -23,6 +23,12 @@ O fluxo apresentado representa as funcionalidades implementadas até o momento e
 
 ## Protótipo de baixa fidelidade
 
+### Acesso ao protótipo navegável
+
+O protótipo navegável do sistema pode ser acessado pelo link abaixo:
+
+[Acessar os arquivos do protótipo](../codigo-fonte/Prototipo/)
+
 O projeto de interface do SR Beauty foi planejado com foco em simplicidade, organização das informações e facilidade de navegação. A estrutura visual definida durante a prototipação serviu como referência para o desenvolvimento das telas atualmente disponíveis na aplicação.
 
 As interfaces utilizam uma identidade visual comum, com cores, tipografia e componentes padronizados, buscando manter consistência durante a navegação.
