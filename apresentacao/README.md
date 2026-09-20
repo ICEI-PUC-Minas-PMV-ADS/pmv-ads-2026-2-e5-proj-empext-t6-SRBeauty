@@ -1,17 +1,40 @@
 # Apresentação da Solução
 
+Esta seção reúne os materiais utilizados para apresentação do projeto **SR Beauty**, desenvolvido para o Simone Rodrigues Espaço de Beleza.
 
-1. Apresentação de slides
+## 1. Apresentação de Slides
 
-[Apresentação - Vida de estudante.pdf](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2022-1-e1-proj-web-t3-vida-de-estudante/files/8977541/Apresentacao.-.Vida.de.estudante.pdf)
+A apresentação em slides será utilizada para demonstrar o contexto do projeto, o problema identificado, a solução proposta, os principais requisitos, as tecnologias utilizadas e as funcionalidades desenvolvidas.
 
-2. Vídeo de apresentação das funcionalidades
+> Material de apresentação a ser adicionado nesta pasta.
 
-https://user-images.githubusercontent.com/100447878/175574137-6a15dff8-275c-4715-b33a-cd947f5bc64e.mp4
+## 2. Vídeo de Apresentação das Funcionalidades
 
-<br>
+O vídeo de apresentação demonstrará o funcionamento das principais funcionalidades implementadas no SR Beauty, incluindo:
+
+- cadastro de usuário;
+- login e autenticação;
+- validação de credenciais;
+- acesso à área autenticada;
+- consulta e atualização dos dados da conta;
+- logout.
+
+> Vídeo de demonstração a ser adicionado após sua gravação.
 
 
 ## Hospedagem
 
-Foi utilizada a plataforma GitHub Pages como ambiente de hospedagem do site do projeto, que será mantido na URL: https://icei-puc-minas-pmv-ads.github.io/pmv-ads-2022-1-e1-proj-web-t3-vida-de-estudante/src/paginaHome/index.html.
+A aplicação SR Beauty está hospedada na plataforma **Render**, utilizando uma aplicação web desenvolvida com Python e Flask e um banco de dados PostgreSQL no ambiente de produção.
+
+A aplicação pode ser acessada em:
+
+**[https://srbeauty-app.onrender.com](https://srbeauty-app.onrender.com)**
+
+O processo de implantação está integrado ao repositório GitHub. Alterações enviadas para a branch configurada para produção podem iniciar automaticamente uma nova implantação da aplicação por meio do recurso de Auto-Deploy do Render.
+
+
+## Repositório
+
+O código-fonte, a documentação e os demais artefatos do projeto estão disponíveis no repositório oficial:
+
+**[SR Beauty - GitHub](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2026-2-e5-proj-empext-t6-SRBeauty)**

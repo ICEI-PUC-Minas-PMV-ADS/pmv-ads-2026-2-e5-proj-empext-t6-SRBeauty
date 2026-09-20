@@ -3,81 +3,174 @@
 
 ## Gerenciamento de Projeto
 
-A metodologia ágil escolhida para o desenvolvimento deste projeto foi o SCRUM, pois como citam Amaral, Fleury e Isoni (2019, p. 68), seus benefícios são a
+O desenvolvimento do SR Beauty adota práticas inspiradas em metodologias ágeis, com uma adaptação do Scrum para a organização e acompanhamento das atividades do projeto.
 
-“visão clara dos resultados a entregar; ritmo e disciplina necessários à execução; definição de papéis e responsabilidades dos integrantes do projeto (Scrum Owner, Scrum Master e Team); empoderamento dos membros da equipe de projetos para atingir o desafio; conhecimento distribuído e compartilhado de forma colaborativa; ambiência favorável para crítica às ideias e não às pessoas.” 
+O trabalho é dividido em etapas e sprints, permitindo que as funcionalidades e demais entregas sejam desenvolvidas de forma incremental. As atividades são organizadas a partir das necessidades do projeto e dos requisitos definidos para o sistema, possibilitando revisões e ajustes ao longo do desenvolvimento.
+
+Para o acompanhamento das tarefas, é utilizado um quadro no GitHub Projects seguindo uma organização semelhante ao Kanban, permitindo visualizar atividades pendentes, em desenvolvimento e concluídas. Esse processo auxilia na definição de prioridades e no acompanhamento do progresso das entregas.
+
+O GitHub também é utilizado para o controle de versão do código-fonte e da documentação, permitindo que as alterações realizadas durante o desenvolvimento sejam registradas e integradas ao projeto de forma organizada.
+
+A aplicação dessas práticas busca manter o desenvolvimento estruturado, facilitar o acompanhamento das atividades e permitir que o projeto evolua de maneira incremental a partir das validações realizadas durante cada etapa.
 
 ### Divisão de Papéis
 
-Desta forma, a equipe está organizada da seguinte maneira:
+A equipe do SR Beauty é composta por cinco integrantes, que atuam de forma colaborativa nas diferentes etapas do projeto. As responsabilidades são distribuídas conforme as necessidades de cada sprint, envolvendo atividades de levantamento e análise de requisitos, documentação, prototipação, desenvolvimento, testes e validação da solução.
+
 <ul>
-  <li>Scrum Master: Daiane Procópio</li>
-  <li>Product Owner: Fernanda Coura </li>
-  <li>Equipe de Desenvolvimento: Anna Freitas, Daiane Procópio, Fernanda Coura, Rúbia Karina</li>
-  <li>Equipe de Design: Anna Freitas</li>
+
+  <li><b>Equipe de Desenvolvimento:</b>
+    <ul>
+      <li>Flávia Sergina Rodrigues</li>
+      <li>Júlio César Villaça Cardoso</li>
+      <li>Luiz Guilherme Martins Franchim</li>
+      <li>Pâmella Almeida da Silva</li>
+      <li>Virgílio Parreiras Campos Zenith</li>
+    </ul>
+  </li>
+
+  <li><b>Parceira do Projeto:</b> Simone Rodrigues, responsável por apresentar as necessidades do estabelecimento e participar da validação dos requisitos e das funcionalidades desenvolvidas</li>
+
+  <li><b>Orientador:</b> José Wilson da Costa, responsável pelo acompanhamento e orientação acadêmica do projeto</li>
+
 </ul>
+
+Como o projeto utiliza uma adaptação de práticas ágeis, os integrantes não permanecem restritos a uma única função durante todo o desenvolvimento. As atividades podem ser redistribuídas entre os membros da equipe de acordo com as demandas de cada etapa, favorecendo a colaboração e o compartilhamento de conhecimento.
 
 ### Processo
 
-Para organização e distribuição das tarefas do projeto, a equipe está utilizando o GitHub, estruturado com as seguintes listas: 
+Para organizar e acompanhar as atividades do projeto, a equipe utiliza o GitHub em conjunto com o GitHub Projects. As tarefas são distribuídas em um quadro Kanban, permitindo acompanhar o andamento das atividades ao longo de cada etapa do desenvolvimento.
+
+O quadro é organizado nas seguintes colunas:
 
 <ul>
-  <li>Backlog: esta coluna representa o Product Backlog e recebe as Tarefas do Projeto a serem trabalhadas.</li>
-  <li>To Do: esta coluna representa o Sprint Backlog que está sendo trabalhado.</li>
-  <li>In progress: lista das tarefas iniciadas.</li>
-  <li>Ready to Test: tarefas prontas para Testes.</li>
-  <li>Testing: tarefas em Revisão e/ou Teste.</li>
-  <li>Done: tarefas concluídas.</li>
- </ul>
 
-O quadro Kanban do grupo no GitHub está disponível no link [Projects](https://github.com/ICEI-PUC-Minas-PMV-ADS/ads-e1-exemplo-vida-de-estudante/blob/main/documentos/img/Kanbanvidaestudante.png) e é apresentado, no estado atual, na figura abaixo:
+  <li><b>Backlog:</b> reúne as atividades e funcionalidades previstas para o projeto que ainda não foram selecionadas para desenvolvimento.</li>
 
-<figure> 
-  <img src="https://github.com/ICEI-PUC-Minas-PMV-ADS/ads-e1-exemplo-vida-de-estudante/blob/main/documentos/img/Kanbanvidaestudante.png"
-    <figcaption>Figura 2 - Tela do kanban no GitHub utilizada pelo grupo</figcaption>
-</figure> 
+  <li><b>To Do:</b> reúne as tarefas selecionadas para execução na etapa ou sprint atual.</li>
 
-  
-<h3>Etiquetas</h3>
-<p>As tarefas são, ainda, etiquetadas em função da natureza da atividade e seguem o seguinte esquema de cores/categorias:</p>
+  <li><b>In Progress:</b> contém as tarefas que estão sendo desenvolvidas pela equipe.</li>
 
-<ul>
-  <li>Bug (Erro no código)</li>
-  <li>Desenvolvimento (Development)</li>
-  <li>Documentação (Documentation)</li>
-  <li>Gerência de Projetos (Project Management)</li>
-  <li>Infraestrutura (Infrastructure)</li>
-  <li>Testes (Tests)</li>
+  <li><b>Review / Testing:</b> reúne as tarefas concluídas que ainda precisam ser revisadas, testadas ou validadas antes de serem consideradas finalizadas.</li>
+
+  <li><b>Done:</b> contém as tarefas concluídas e validadas.</li>
+
 </ul>
 
-<figure> 
-  <img src="https://user-images.githubusercontent.com/100447878/164068979-9eed46e1-9b44-461e-ab88-c2388e6767a1.png"
-    <figcaption>Figura 3 - Tela do esquema de cores e categorias</figcaption>
-</figure> 
+Essa organização permite acompanhar de forma visual o progresso das funcionalidades, da documentação, dos testes e das demais atividades relacionadas ao desenvolvimento do SR Beauty.
+
+O quadro Kanban do projeto está disponível no GitHub Projects e é apresentado, em seu estado atual, na figura abaixo:
+
+[GitHub Projects](INSERIR_LINK_DO_PROJECT)
+
+<figure>
+
+  <img src="img/kanban-srbeauty.png">
+
+  <figcaption>Figura 2 - Quadro Kanban utilizado no gerenciamento do projeto SR Beauty.</figcaption>
+
+</figure>
+
+
+<h3>Etiquetas</h3>
+
+<p>As tarefas podem ser classificadas por meio de etiquetas de acordo com a natureza da atividade, facilitando a identificação e a organização das demandas do projeto.</p>
+
+<ul>
+
+  <li><b>Bug:</b> correção de erros ou comportamentos inesperados da aplicação.</li>
+
+  <li><b>Desenvolvimento:</b> implementação e evolução das funcionalidades do sistema.</li>
+
+  <li><b>Documentação:</b> criação ou atualização dos documentos do projeto.</li>
+
+  <li><b>Gerenciamento:</b> atividades relacionadas à organização e acompanhamento do projeto.</li>
+
+  <li><b>Infraestrutura:</b> configuração de ambiente, banco de dados, hospedagem e deploy.</li>
+
+  <li><b>Testes:</b> criação, execução e registro de testes da aplicação.</li>
+
+</ul>
   
 ### Ferramentas
 
-As ferramentas empregadas no projeto são:
+Para o desenvolvimento do SR Beauty são utilizadas ferramentas e tecnologias relacionadas à implementação da aplicação, persistência de dados, controle de versão, gerenciamento do projeto e implantação em ambiente de produção.
 
-- Editor de código.
-- Ferramentas de comunicação
-- Ferramentas de desenho de tela (_wireframing_)
+As principais ferramentas e tecnologias utilizadas são:
 
-O editor de código foi escolhido porque ele possui uma integração com o
-sistema de versão. As ferramentas de comunicação utilizadas possuem
-integração semelhante e por isso foram selecionadas. Por fim, para criar
-diagramas utilizamos essa ferramenta por melhor captar as
-necessidades da nossa solução.
+<ul>
 
-<p>Os artefatos do projeto são desenvolvidos a partir das plataformas GitHub e MarvelApp, apresentadas com seu propósito na tabela que se segue.<p/>
+  <li><b>Visual Studio Code:</b> ambiente utilizado para desenvolvimento, edição e organização do código-fonte.</li>
 
-| AMBIENTE | PLATAFORMA |LINK DE ACESSO                 |
-|--------------------|--------------------------------------------------------------------------------|----------------------------------------|
-|Repositório de código fonte | GitHub | https://github.com/ICEI-PUC-Minas-PMV-ADS/ads-e1-exemplo-vida-de-estudante/blob/main/codigo-fonte/README.md  |
-|Documentos do projeto  | GitHub | https://github.com/ICEI-PUC-Minas-PMV-ADS/ads-e1-exemplo-vida-de-estudante/blob/main/  |
-|Projeto de interface e wireframes | MarvelApp | https://marvelapp.com/prototype/i39bj37/screen/86143037 |
-|Gerenciamento do projeto  | GitHub | [https://github.com/ICEI-PUC-Minas-PMV-ADS/ads-e1-exemplo-vida-de-estudante/projects/2](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2022-1-e1-proj-web-t3-vida-de-estudante/projects/2) |
+  <li><b>Python:</b> linguagem utilizada no desenvolvimento da camada de backend da aplicação.</li>
 
-### Estratégia de Organização de Codificação 
+  <li><b>Flask:</b> framework web utilizado para criação da aplicação, definição das rotas e integração entre a interface, as regras de negócio e os dados.</li>
 
-Todos os artefatos relacionados a implementação e visualização dos conteúdos do projeto da aplicação foram inseridos na pasta [codigo-fonte](https://github.com/ICEI-PUC-Minas-PMV-ADS/ads-e1-exemplo-vida-de-estudante/tree/main/codigo-fonte). 
+  <li><b>Flask-Login:</b> extensão utilizada para gerenciamento de autenticação, sessões e proteção das rotas destinadas a usuários autenticados.</li>
+
+  <li><b>Flask-SQLAlchemy:</b> extensão utilizada para integração entre a aplicação Flask e os bancos de dados utilizados pelo sistema.</li>
+
+  <li><b>Werkzeug:</b> biblioteca utilizada para geração e verificação segura dos hashes das senhas dos usuários.</li>
+
+  <li><b>HTML5:</b> utilizado para estruturação das páginas e dos conteúdos apresentados pela aplicação.</li>
+
+  <li><b>CSS3:</b> utilizado para estilização, responsividade e definição da identidade visual das interfaces.</li>
+
+  <li><b>JavaScript:</b> utilizado para comportamentos e interações executadas no lado do cliente.</li>
+
+  <li><b>SQLite:</b> banco de dados utilizado durante o desenvolvimento local da aplicação.</li>
+
+  <li><b>PostgreSQL:</b> sistema de gerenciamento de banco de dados utilizado no ambiente de produção.</li>
+
+  <li><b>Git:</b> sistema utilizado para controle de versão do código-fonte e da documentação do projeto.</li>
+
+  <li><b>GitHub:</b> plataforma utilizada para hospedagem do repositório, integração das alterações e armazenamento da documentação do projeto.</li>
+
+  <li><b>GitHub Projects:</b> ferramenta utilizada para gerenciamento e acompanhamento das atividades por meio de um quadro Kanban.</li>
+
+  <li><b>Render:</b> plataforma utilizada para hospedagem da aplicação web e do banco de dados PostgreSQL no ambiente de produção.</li>
+
+  <li><b>Gunicorn:</b> servidor WSGI utilizado para execução da aplicação Flask no ambiente de produção.</li>
+
+</ul>
+
+A combinação dessas ferramentas permite que o desenvolvimento seja realizado em ambiente local utilizando SQLite e, posteriormente, disponibilizado em ambiente de produção utilizando PostgreSQL e Render. O Git e o GitHub são utilizados para registrar e integrar as alterações realizadas pela equipe, enquanto o GitHub Projects auxilia no acompanhamento das atividades do projeto.
+
+Os principais ambientes e plataformas utilizados são apresentados na tabela a seguir.
+
+| AMBIENTE | PLATAFORMA / TECNOLOGIA | LINK DE ACESSO |
+|---|---|---|
+| Repositório de código-fonte | GitHub | [Repositório SR Beauty](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2026-2-e5-proj-empext-t6-SRBeauty) |
+| Documentação do projeto | GitHub | [Documentação](./) |
+| Gerenciamento do projeto | GitHub Projects | INSERIR LINK DO PROJECT |
+| Ambiente de desenvolvimento | Visual Studio Code | — |
+| Backend | Python / Flask | — |
+| Frontend | HTML5 / CSS3 / JavaScript | — |
+| Banco de dados local | SQLite | — |
+| Banco de dados de produção | PostgreSQL | — |
+| Hospedagem da aplicação | Render | INSERIR LINK DA APLICAÇÃO |
+| Servidor de aplicação | Gunicorn | — |
+
+### Estratégia de Organização de Codificação
+
+Todos os artefatos relacionados à implementação da aplicação estão concentrados na pasta [codigo-fonte](../codigo-fonte), mantendo o código-fonte separado da documentação e dos demais materiais do projeto.
+
+A organização da aplicação segue uma estrutura compatível com o desenvolvimento em Flask, distribuindo os arquivos conforme sua finalidade:
+
+<ul>
+
+  <li><b>app.py:</b> arquivo principal da aplicação, responsável pela configuração do Flask, definição das rotas, autenticação, integração com o banco de dados e regras de negócio implementadas.</li>
+
+  <li><b>templates/:</b> diretório destinado às páginas HTML renderizadas pela aplicação Flask.</li>
+
+  <li><b>static/:</b> diretório utilizado para arquivos estáticos da aplicação, como folhas de estilo, scripts e demais recursos utilizados pela interface.</li>
+
+  <li><b>requirements.txt:</b> arquivo que registra as dependências necessárias para execução da aplicação.</li>
+
+  <li><b>.env.example:</b> arquivo de referência para as variáveis de ambiente necessárias à configuração da aplicação.</li>
+
+</ul>
+
+Durante o desenvolvimento, o código é versionado com Git e armazenado no repositório do projeto no GitHub. As alterações são realizadas de forma incremental e integradas ao repositório conforme a evolução das funcionalidades.
+
+Essa organização busca facilitar a manutenção do código, a localização dos arquivos, o controle de versões e a separação entre interface, configuração e lógica da aplicação.

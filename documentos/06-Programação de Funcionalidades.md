@@ -1,279 +1,221 @@
 # Programação de Funcionalidades
 
-<span style="color:red">Pré-requisitos: <a href="https://github.com/ICEI-PUC-Minas-PMV-ADS/ads-e1-exemplo-vida-de-estudante/tree/main/documentos/02-Especificação%20do%20Projeto.md"> Especificação do Projeto</a></span>, <a href="https://github.com/ICEI-PUC-Minas-PMV-ADS/ads-e1-exemplo-vida-de-estudante/tree/main/documentos/03-Metodologia.md"> Metodologia</a>, <a href="https://github.com/ICEI-PUC-Minas-PMV-ADS/ads-e1-exemplo-vida-de-estudante/tree/main/documentos/04-Projeto%20de%20Interface.md"> Projeto de Interface</a>, <a href="https://github.com/ICEI-PUC-Minas-PMV-ADS/ads-e1-exemplo-vida-de-estudante/tree/main/documentos/05-Arquitetura%20da%20Solução.md"> Arquitetura da Solução</a>
+<span style="color:red">Pré-requisitos:
+<a href="02-Especificação do Projeto.md">Especificação do Projeto</a>,
+<a href="03-Metodologia.md">Metodologia</a>,
+<a href="04-Projeto de Interface.md">Projeto de Interface</a> e
+<a href="05-Template padrão do Site.md">Template padrão da Aplicação</a>
+</span>
+
+As funcionalidades descritas nesta seção correspondem à versão desenvolvida do SR Beauty até o momento. Nesta etapa foram implementados o cadastro de usuários, autenticação, gerenciamento de sessão, acesso à área principal da aplicação, consulta e atualização dos dados da conta e logout.
+
+A aplicação utiliza Python e Flask no backend, Flask-Login para gerenciamento das sessões dos usuários e Flask-SQLAlchemy para integração com o banco de dados. Durante o desenvolvimento local é utilizado SQLite, enquanto o ambiente de produção utiliza PostgreSQL.
 
 
-### Tela de Cadastro (RF-001)
+### Cadastro de Usuário (RF-01)
 
-Responsável: Ana
+Responsável: Luiz Guilherme Martins Franchim
 
-O acesso a tela de cadastro poderá ser feito através da opção de menu “Cadastre-se”. 
+A funcionalidade de Cadastro permite a criação de uma nova conta no SR Beauty. O usuário informa os dados necessários para seu registro e define uma senha para acesso à aplicação.
 
-Exemplo da tela de cadastro: 
+Antes da criação da conta, os dados informados são validados pela aplicação. O sistema também verifica se já existe um usuário cadastrado com o mesmo endereço de e-mail.
 
+As senhas não são armazenadas em texto simples. Antes da persistência no banco de dados, são processadas utilizando mecanismo seguro de hash.
 
-![Untitled Diagram-Page-1 drawio](https://user-images.githubusercontent.com/81182674/168495024-300e1d7f-128d-4243-9561-8499c0ddf770.png)
-
-
-
-#### Requisito atendido
-
-RF-001: O site deve permitir ao usuário cadastrar uma conta.
-
-
-#### Artefatos da funcionalidade
-
-●cadastre-se.html
-
-●cadastro.css
-
-●script.js
-
-●mobile-navbar.js
-
-
-
-#### Instruções de acesso
-
-Abra um navegador de Internet e informe a seguinte URL: https://icei-puc-minas-pmv-ads.github.io/pmv-ads-2022-1-e1-proj-web-t3-vida-de-estudante/src/paginaHome/index.html
-
-Ao clicar em “Cadastre-se” no canto superior direito da tela, terá acesso a página de cadastro.
-
-<hr>
-
-### Tela de Login (RF-002)
-
-Responsável: Maria
-
-O acesso a tela de login poderá ser feito através do menu “Entrar”.
-
-Exemplo da tela de login: 
-
-
-![pagina-login](https://user-images.githubusercontent.com/98122346/168496445-2cd1d62a-962c-47b3-b6f1-bb6ba6b55c54.jpeg)
-
+![Cadastro de usuário](img/rf002.gif)
 
 #### Requisito atendido
 
-RF-002: O site deve permitir ao usuário fazer o login da sua conta.
+**RF-01:** A aplicação deve permitir ao usuário realizar cadastro, login e logout, além de consultar e atualizar os dados de sua conta.
 
 #### Artefatos da funcionalidade
 
-●	login.html 
-
-●	style-login.css
-
-●	script-login.js
-
-●	mobile-navbar.js
-
-
+- `app.py`
+- `templates/`
+- `static/`
+- Flask-SQLAlchemy
+- Werkzeug
+- banco de dados da aplicação
 
 #### Instruções de acesso
 
-1.	Abra um navegador de Internet e informe a seguinte URL: https://icei-puc-minas-pmv-ads.github.io/pmv-ads-2022-1-e1-proj-web-t3-vida-de-estudante/src/paginaHome/index.html
-2.	Ao clicar em “Entrar” no canto superior direito da tela, terá acesso a página de login.
+1. Acesse a página inicial do SR Beauty;
+2. Selecione a opção **Cadastre-se**;
+3. Preencha os dados solicitados;
+4. Confirme o cadastro;
+5. Após a criação da conta, o usuário poderá acessar a área autenticada da aplicação.
 
 <hr>
 
-### Filtro de pesquisa (RF-003)
 
-Responsável: Pedro
+### Login e Autenticação (RF-01)
 
-O filtro de pesquisa está disponível nas páginas de Livros e Tutorias. O acesso às páginas de Livros e Tutorias poderá ser feito através menu superior. As estruturas de dados foram baseadas em HTML, CSS e JS.
+Responsável: Luiz Guilherme Martins Franchim
 
-Exemplo do filtro de pesquisa na tela de Livros:
+A funcionalidade de Login permite que usuários cadastrados acessem o SR Beauty utilizando e-mail e senha.
 
-![Captura de Tela 2022-06-15 às 11 49 39](https://user-images.githubusercontent.com/100447878/173857385-bd1ea51a-2ba7-43e5-ac71-6502b1a13773.png)
+As credenciais informadas são verificadas no servidor. Quando são válidas, uma sessão autenticada é criada e o usuário é direcionado para a Home.
 
+Quando o e-mail informado não está cadastrado ou a senha está incorreta, o acesso é impedido e uma mensagem de erro é apresentada ao usuário.
 
-#### Requisitos atendidos
+![Validação de Login](img/rf000.gif)
 
-RF-003	O site deve oferecer uma funcionalidade de filtro/pesquisa para permitir ao usuário localizar livros e disciplinas das tutorias disponíveis.
+#### Requisito atendido
 
+**RF-01:** A aplicação deve permitir ao usuário realizar cadastro, login e logout, além de consultar e atualizar os dados de sua conta.
 
 #### Artefatos da funcionalidade
 
-●	paginaLivros.html 
-
-●	style-livros.css
-
+- `app.py`
+- `templates/`
+- `static/`
+- Flask-Login
+- Werkzeug
+- banco de dados da aplicação
 
 #### Instruções de acesso
-1.	Abra um navegador de Internet e informe a seguinte URL: https://icei-puc-minas-pmv-ads.github.io/pmv-ads-2022-1-e1-proj-web-t3-vida-de-estudante/src/paginaHome/index.html
-2.	Ao clicar em “Livros” no canto superior direito da tela, terá acesso a página de livros e ao filtro de pesquisa.
-3.	Digite o termo que deseja pesquisar no filtro de pesquisa.
-4.	Veja os resultados da sua pesquisa na tela.
+
+1. Acesse a página de Login;
+2. Informe o e-mail e a senha cadastrados;
+3. Se as credenciais forem válidas, o sistema direcionará o usuário para a Home;
+4. Caso as credenciais sejam inválidas, o acesso será impedido e uma mensagem de erro será apresentada.
 
 <hr>
 
-### Tela de Cadastro de Livros (RF-004)
 
-Responsável: João
+### Validação de Credenciais (RF-01)
 
-O acesso a tela de cadastro de livros poderá ser feito após o login do usuário. As estruturas de dados foram baseadas em HTML, CSS e JS.
+Responsável: Luiz Guilherme Martins Franchim
 
-Exemplo da tela de Cadastro de livros:
+Durante o processo de autenticação, a aplicação verifica os dados informados antes de permitir o acesso às áreas protegidas.
 
-![Captura de Tela 2022-06-15 às 12 03 16](https://user-images.githubusercontent.com/100447878/173860896-42a2e521-b057-44db-988f-9007ec60c450.png)
+Credenciais inválidas não iniciam uma sessão de usuário e o sistema permanece na tela de Login, apresentando uma mensagem informativa para que uma nova tentativa seja realizada.
 
+![Mensagem de credenciais inválidas](img/rf001.gif)
 
-#### Requisitos atendidos
- 
-RF-004	O site deve permitir ao usuário fazer o cadastro de livros.
+#### Requisito atendido
+
+**RF-01:** A aplicação deve permitir ao usuário realizar cadastro, login e logout, além de consultar e atualizar os dados de sua conta.
 
 #### Artefatos da funcionalidade
 
-●	cadastroLivros.html 
-
-●	style.css
-
-●	script2.js
-
-●	mobile-navbar.js
-
+- `app.py`
+- `templates/`
+- Flask-Login
+- Werkzeug
 
 #### Instruções de acesso
-1.	Abra um navegador de Internet e informe a seguinte URL: https://icei-puc-minas-pmv-ads.github.io/pmv-ads-2022-1-e1-proj-web-t3-vida-de-estudante/src/paginaHome/index.html
-2.	Ao clicar em “Login” no canto superior direito da tela, terá acesso a página de login.
-3.	Informe seu e-mail e senha cadastrados e terá acesso à página de Perfil.
-4.	Clique em "Cadastro de livros" no menu lateral e verá a página para o cadastro de livros.
+
+1. Acesse a página de Login;
+2. Informe um e-mail inexistente ou uma senha incorreta;
+3. Selecione a opção de entrada;
+4. O sistema impedirá o acesso e apresentará a mensagem de credenciais inválidas.
 
 <hr>
 
-### Tela de Cadastro de Tutores (RF-005)
 
-Responsável: Beatriz
+### Home e Controle de Sessão (RF-01)
 
-O acesso a tela de cadastro de tutores poderá ser feito após o login do usuário. 
+Responsável: Luiz Guilherme Martins Franchim
 
-Exemplo da tela de Cadastro de tutores:
+Após a autenticação bem-sucedida, o usuário é direcionado para a Home do SR Beauty, que funciona como ponto principal de navegação da aplicação.
 
-![Captura de Tela 2022-06-15 às 12 04 02](https://user-images.githubusercontent.com/100447878/173863307-b5e241d1-6b14-4997-a9cd-11021181022f.png)
+As páginas destinadas à área autenticada são protegidas por controle de sessão. Dessa forma, usuários não autenticados não podem acessar diretamente essas páginas e são redirecionados para a tela de Login.
 
+A interface também identifica o usuário autenticado e apresenta seu perfil cadastrado no sistema.
 
-#### Requisitos atendidos
- 
-RF-005	O site deve permitir ao usuário disponibilizar informações das disciplinas de tutoria e suas informações para contato.
+#### Requisito atendido
+
+**RF-01:** A aplicação deve permitir ao usuário realizar cadastro, login e logout, além de consultar e atualizar os dados de sua conta.
 
 #### Artefatos da funcionalidade
 
-●	cadastroTutorias.html 
-
-●	style.css
-
-●	script.js
-
-●	mobile-navbar.js
-
+- `app.py`
+- `templates/`
+- `static/`
+- Flask-Login
 
 #### Instruções de acesso
-1.	Abra um navegador de Internet e informe a seguinte URL: https://icei-puc-minas-pmv-ads.github.io/pmv-ads-2022-1-e1-proj-web-t3-vida-de-estudante/src/paginaHome/index.html
-2.	Ao clicar em “Login” no canto superior direito da tela, terá acesso a página de login.
-3.	Informe seu e-mail e senha cadastrados e terá acesso à página de Perfil.
-4.	Clique em "Cadastro de tutores" no menu lateral e verá a página para o cadastro de tutores.
+
+1. Realize o Login utilizando uma conta cadastrada;
+2. Após a autenticação, o sistema direcionará o usuário para a Home;
+3. O acesso direto às páginas protegidas sem autenticação redirecionará o usuário para a tela de Login.
 
 <hr>
 
-### Tela de Livros (RF-006, RF-007)
 
-Responsável: Silvia
+### Minha Conta (RF-01)
 
-O acesso a tela de livros poderá ser feito através da opção do menu “Livros”.
+Responsável: Luiz Guilherme Martins Franchim
 
-Exemplo da tela de Livros:
+A funcionalidade **Minha Conta** permite que o usuário autenticado consulte e atualize as informações associadas ao seu cadastro.
 
-![Captura de Tela 2022-06-15 às 10 54 01](https://user-images.githubusercontent.com/100447878/173845088-cdca11c1-3496-42f1-a3f7-9eb0aba491ed.png)
+As alterações são validadas pela aplicação e persistidas no banco de dados. Dessa forma, os dados atualizados permanecem associados à conta e podem ser recuperados posteriormente.
 
+![Atualização dos dados da conta](img/rf003.gif)
 
-#### Requisitos atendidos
- 
- RF-006 O site deve apresentar, para cada livro, uma imagem correspondente à capa
- 
- RF-007	O site deve permitir ao usuário visualizar os detalhes do livro
+#### Requisito atendido
 
+**RF-01:** A aplicação deve permitir ao usuário realizar cadastro, login e logout, além de consultar e atualizar os dados de sua conta.
 
 #### Artefatos da funcionalidade
 
-●	paginaLivros.html 
-
-●	style-livros.css
-
-●	livros.js
-
-●	mobile-navbar.js
-
+- `app.py`
+- `templates/`
+- `static/`
+- Flask-Login
+- Flask-SQLAlchemy
+- banco de dados da aplicação
 
 #### Instruções de acesso
-1.	Abra um navegador de Internet e informe a seguinte URL: https://icei-puc-minas-pmv-ads.github.io/pmv-ads-2022-1-e1-proj-web-t3-vida-de-estudante/src/paginaHome/index.html
-2.	Ao clicar em “Livros” no canto superior direito da tela, terá acesso a página de livros.
+
+1. Realize o Login;
+2. Na Home, acesse a opção **Minha Conta**;
+3. Consulte ou altere os dados disponíveis;
+4. Salve as alterações;
+5. Os dados atualizados permanecerão registrados no banco de dados.
 
 <hr>
 
-### Tela de Tutores (RF-008)
 
-Responsável: Clara
+### Logout (RF-01)
 
-O acesso a tela de Tutores poderá ser feito através do menu, na opção “Tutorias”. 
+Responsável: Luiz Guilherme Martins Franchim
 
-Exemplo da tela de Tutores: 
+A funcionalidade de Logout permite que o usuário encerre sua sessão no SR Beauty.
 
-![Captura de Tela 2022-06-23 às 11 39 52](https://user-images.githubusercontent.com/100447878/175326567-30cd220c-1a9d-4d53-8b58-424f434f40da.png)
+Após o encerramento da sessão, o usuário é direcionado novamente para a tela de Login e deixa de ter acesso às páginas protegidas até realizar uma nova autenticação.
 
-### Requisito atendido
+#### Requisito atendido
 
-RF-008	O site deve permitir ao usuário visualizar os detalhes dos tutores.
-
-### Artefatos da funcionalidade
-
-●	paginaTutorias.html 
-
-●	style-tutorias.css
-
-●	tutores.js
-
-●	mobile-navbar.js
-
-
-### Instruções de acesso
-
-1.	Abra um navegador de Internet e informe a seguinte URL: https://icei-puc-minas-pmv-ads.github.io/pmv-ads-2022-1-e1-proj-web-t3-vida-de-estudante/src/paginaHome/index.html
-	
-2.	Clicar na opção “Tutores” no canto superior direito da tela (na barra de Menu), e terá acesso a página de Tutores.
-
-<hr>
-
-### Tela de Perfil (RF-009)
-
-Responsável: Vânia
-
-O acesso a tela de perfil é feito após o login do usuário na página Entrar, disponível no menu superior. 
-
-Exemplo da tela de Perfil:
-
-![Captura de Tela 2022-06-15 às 11 48 32](https://user-images.githubusercontent.com/100447878/173857481-7c32caf4-26f0-4f6a-8c92-3199552ebaed.png)
-
-
-#### Requisitos atendidos
- 
-RF-009	O site deve permitir ao usuário verificar as informações registradas no cadastro na página Perfil, após fazer seu login.
-
+**RF-01:** A aplicação deve permitir ao usuário realizar cadastro, login e logout, além de consultar e atualizar os dados de sua conta.
 
 #### Artefatos da funcionalidade
 
-●	perfil.html 
-
-●	style.css
-
-●	perfil.js
-
-●	mobile-navbar.js
-
+- `app.py`
+- Flask-Login
 
 #### Instruções de acesso
-1.	Abra um navegador de Internet e informe a seguinte URL: https://icei-puc-minas-pmv-ads.github.io/pmv-ads-2022-1-e1-proj-web-t3-vida-de-estudante/src/paginaHome/index.html
-2.	Ao clicar em “Cadastrar” no canto superior direito da tela, terá acesso a página de cadastro.
-3.	Digite suas informações pessoais nos campos indicados e clique em "Cadastrar".
-4.	Após o cadastro, terá acesso à tela de login.
-5.	Informe seu e-mail e senha cadastrados e terá acesso à página de Perfil.
 
+1. Acesse o sistema utilizando uma conta autenticada;
+2. Selecione a opção **Sair**;
+3. A sessão será encerrada;
+4. O sistema retornará para a tela de Login.
+
+
+## Controle de Acesso por Perfil
+
+O cadastro dos usuários já permite diferenciá-los entre os perfis **Cliente**, **Profissional** e **Proprietária**.
+
+A implementação atual utiliza essa informação para identificar o perfil associado à conta. O controle de permissões específicas para cada perfil será desenvolvido nas próximas etapas da aplicação.
+
+Dessa forma, o **RF-13 — controle de acesso às funcionalidades de acordo com o perfil do usuário — encontra-se parcialmente implementado**.
+
+
+## Persistência e Segurança das Credenciais
+
+Os usuários cadastrados são armazenados no banco de dados da aplicação. Durante o desenvolvimento local é utilizado SQLite e, no ambiente de produção, PostgreSQL.
+
+As senhas são armazenadas somente após a aplicação de mecanismo seguro de hash, utilizando recursos disponibilizados pelo Werkzeug. A senha original não é mantida em texto simples no banco de dados.
+
+Esse mecanismo contribui para o atendimento do requisito não funcional **RNF-02**, relacionado ao armazenamento seguro das credenciais dos usuários.
