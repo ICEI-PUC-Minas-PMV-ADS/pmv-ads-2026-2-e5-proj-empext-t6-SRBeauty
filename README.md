@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="documentos/img/NOME-DO-ARQUIVO-DA-LOGO.png" alt="Logo SR Beauty" width="260">
+  <img src="documentos/img/logo.png" alt="Logo SR Beauty" width="260">
 </p>
 
 # SR Beauty

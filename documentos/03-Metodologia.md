@@ -61,7 +61,7 @@ Essa organização permite acompanhar de forma visual o progresso das funcionali
 
 O quadro Kanban do projeto está disponível no GitHub Projects e é apresentado, em seu estado atual, na figura abaixo:
 
-[GitHub Projects](INSERIR_LINK_DO_PROJECT)
+[GitHub Projects](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2026-2-e5-proj-empext-t6-SRBeauty/projects)
 
 <figure>
 
@@ -141,19 +141,19 @@ Os principais ambientes e plataformas utilizados são apresentados na tabela a s
 | AMBIENTE | PLATAFORMA / TECNOLOGIA | LINK DE ACESSO |
 |---|---|---|
 | Repositório de código-fonte | GitHub | [Repositório SR Beauty](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2026-2-e5-proj-empext-t6-SRBeauty) |
-| Documentação do projeto | GitHub | [Documentação](./) |
-| Gerenciamento do projeto | GitHub Projects | INSERIR LINK DO PROJECT |
+| Documentação do projeto | GitHub | [Documentação](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2026-2-e5-proj-empext-t6-SRBeauty/tree/main/documentos) |
+| Gerenciamento do projeto | GitHub Projects | https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2026-2-e5-proj-empext-t6-SRBeauty/projects |
 | Ambiente de desenvolvimento | Visual Studio Code | — |
 | Backend | Python / Flask | — |
 | Frontend | HTML5 / CSS3 / JavaScript | — |
 | Banco de dados local | SQLite | — |
 | Banco de dados de produção | PostgreSQL | — |
-| Hospedagem da aplicação | Render | INSERIR LINK DA APLICAÇÃO |
+| Hospedagem da aplicação | Render | https://srbeauty-app.onrender.com/ |
 | Servidor de aplicação | Gunicorn | — |
 
 ### Estratégia de Organização de Codificação
 
-Todos os artefatos relacionados à implementação da aplicação estão concentrados na pasta [codigo-fonte](../codigo-fonte), mantendo o código-fonte separado da documentação e dos demais materiais do projeto.
+Todos os artefatos relacionados à implementação da aplicação estão concentrados na pasta [codigo-fonte](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2026-2-e5-proj-empext-t6-SRBeauty/tree/main/codigo-fonte), mantendo o código-fonte separado da documentação e dos demais materiais do projeto.
 
 A organização da aplicação segue uma estrutura compatível com o desenvolvimento em Flask, distribuindo os arquivos conforme sua finalidade:
 

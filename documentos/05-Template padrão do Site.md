@@ -72,4 +72,4 @@ Após a autenticação, a aplicação apresenta uma estrutura baseada em menu la
 
 Os arquivos utilizados na construção das interfaces estão organizados na pasta `codigo-fonte`, incluindo os templates HTML e os recursos utilizados na apresentação da aplicação.
 
-O código-fonte pode ser consultado em [codigo-fonte](../codigo-fonte), enquanto os recursos visuais utilizados na documentação estão disponíveis em [documentos/img](img/).
+O código-fonte pode ser consultado em [codigo-fonte](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2026-2-e5-proj-empext-t6-SRBeauty/tree/main/codigo-fonte), enquanto os recursos visuais utilizados na documentação estão disponíveis em [documentos/img](img/).
