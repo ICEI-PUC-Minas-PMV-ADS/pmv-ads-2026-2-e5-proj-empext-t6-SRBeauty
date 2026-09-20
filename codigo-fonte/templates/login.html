@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SR Beauty | Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="brand-panel" aria-label="SR Beauty">
+      <div class="brand-logo-wrap">
+        <img class="brand-logo" src="{{ url_for('documentos_img', filename='logo.png') }}" alt="SR Beauty - Simone Rodrigues Espaço de Beleza">
+      </div>
+      <div class="brand-beauty" aria-hidden="true">BEAUTY</div>
+      <div class="logo-subtitle brand-subtitle" aria-hidden="true">
+        <span>SIMONE RODRIGUES</span>
+        <span>ESPAÇO DE BELEZA</span>
+      </div>
+      <div class="brand-message" aria-hidden="true">
+        <span></span>
+        <p>BELEZA<br>BEM-ESTAR<br>CONFIANÇA<br>EM UM SÓ LUGAR</p>
+        <span></span>
+      </div>
+      <div class="leaf leaf-one"></div>
+      <div class="leaf leaf-two"></div>
+    </section>
+
+    <section class="login-side">
+      <div class="login-card">
+        <p class="eyebrow">BEM-VINDO(A) AO</p>
+        <div class="login-logo-wrap">
+          <img class="login-logo" src="{{ url_for('documentos_img', filename='logo.png') }}" alt="SR Beauty">
+        </div>
+        <div class="logo-subtitle login-subtitle" aria-hidden="true">
+          <span>SIMONE RODRIGUES</span>
+          <span>ESPAÇO DE BELEZA</span>
+        </div>
+        <span class="accent-line"></span>
+        <h1>Faça seu login para continuar</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-list">
+              {% for category, message in messages %}
+                <p class="flash {{ category }}">{{ message }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form id="loginForm" method="post" action="{{ url_for('login') }}">
+          <label class="field" for="email">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 6l9 7 9-7"/></svg>
+            <input id="email" name="email" type="email" value="{{ email or '' }}" placeholder="E-mail" autocomplete="email" required>
+          </label>
+          <p class="error" id="emailError" aria-live="polite"></p>
+
+          <label class="field" for="password">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+            <input id="password" name="senha" type="password" placeholder="Senha" autocomplete="current-password" required>
+            <button class="eye" id="togglePassword" type="button" aria-label="Mostrar senha">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.5"/></svg>
+            </button>
+          </label>
+          <p class="error" id="passwordError" aria-live="polite"></p>
+
+          <div class="forgot"><a href="#" title="Recuperação de senha será implementada depois">Esqueci minha senha?</a></div>
+          <button class="submit" type="submit">ENTRAR <span>→</span></button>
+        </form>
+
+        <div class="or"><span></span><em>OU</em><span></span></div>
+        <p class="register">Não possui uma conta?<br><a href="{{ url_for('cadastro') }}">Cadastre-se</a></p>
+        <p class="copyright">© 2026 SR Beauty. Todos os direitos reservados.</p>
+        <span class="bottom-line"></span>
+      </div>
+    </section>
+  </main>
+  <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+</body>
+</html>

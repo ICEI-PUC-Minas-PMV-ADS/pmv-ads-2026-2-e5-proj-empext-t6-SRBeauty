@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SR Beauty | Minha conta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+  <aside>
+    <div class="aside-brand"><div class="aside-logo-wrap"><img class="aside-logo" src="{{ url_for('documentos_img', filename='logo.png') }}" alt="SR Beauty"></div><div class="aside-subtitle"><span>SIMONE RODRIGUES</span><span>ESPAÇO DE BELEZA</span></div></div>
+    <nav><a href="{{ url_for('home') }}">⌂ <span>Início</span></a><a class="active" href="{{ url_for('perfil') }}">⚙ <span>Minha conta</span></a></nav>
+    <a class="logout" href="{{ url_for('logout') }}">↪ <span>Sair</span></a>
+  </aside>
+  <main class="profile-page">
+    <header><div><h1>Minha conta</h1><p>Seus dados de acesso ao SR Beauty.</p></div></header>
+    {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-list">{% for category, message in messages %}<p class="flash {{ category }}">{{ message }}</p>{% endfor %}</div>{% endif %}{% endwith %}
+    <section class="profile-card">
+      <div class="avatar">{{ current_user.nome[0]|upper }}</div>
+      <div class="identity"><h2>{{ current_user.nome }}</h2><span>{{ current_user.tipo_label }}</span></div>
+      <form method="post">
+        <label>Nome completo<input name="nome" value="{{ current_user.nome }}" required></label>
+        <label>E-mail<input name="email" type="email" value="{{ current_user.email }}" required></label>
+        <label>Tipo de usuário<input value="{{ current_user.tipo_label }}" disabled></label>
+        <button type="submit">SALVAR ALTERAÇÕES</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

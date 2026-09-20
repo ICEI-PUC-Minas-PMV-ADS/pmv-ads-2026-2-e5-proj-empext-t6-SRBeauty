@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SR Beauty | Cadastro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="brand-panel" aria-label="SR Beauty">
+      <div class="brand-logo-wrap"><img class="brand-logo" src="{{ url_for('documentos_img', filename='logo.png') }}" alt="SR Beauty"></div>
+      <div class="brand-beauty">BEAUTY</div>
+      <div class="logo-subtitle brand-subtitle"><span>SIMONE RODRIGUES</span><span>ESPAÇO DE BELEZA</span></div>
+      <div class="brand-message"><span></span><p>BELEZA<br>BEM-ESTAR<br>CONFIANÇA<br>EM UM SÓ LUGAR</p><span></span></div>
+      <div class="leaf leaf-one"></div><div class="leaf leaf-two"></div>
+    </section>
+
+    <section class="login-side">
+      <div class="login-card cadastro-card">
+        <p class="eyebrow">CRIE SUA CONTA</p>
+        <h1>Cadastre-se no SR Beauty</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}<div class="flash-list">{% for category, message in messages %}<p class="flash {{ category }}">{{ message }}</p>{% endfor %}</div>{% endif %}
+        {% endwith %}
+
+        <form method="post" action="{{ url_for('cadastro') }}">
+          <label class="field"><input name="nome" type="text" value="{{ nome or '' }}" placeholder="Nome completo" autocomplete="name" required></label>
+          <div class="form-gap"></div>
+          <label class="field"><input name="email" type="email" value="{{ email or '' }}" placeholder="E-mail" autocomplete="email" required></label>
+          <div class="form-gap"></div>
+          <label class="field"><input name="senha" type="password" placeholder="Senha (mínimo 6 caracteres)" autocomplete="new-password" required></label>
+          <div class="form-gap"></div>
+          <label class="field"><input name="confirmar_senha" type="password" placeholder="Confirmar senha" autocomplete="new-password" required></label>
+          <div class="form-gap"></div>
+          <label class="field select-field">
+            <select name="tipo" required>
+              <option value="cliente" {% if tipo == 'cliente' %}selected{% endif %}>Cliente</option>
+              <option value="profissional" {% if tipo == 'profissional' %}selected{% endif %}>Profissional</option>
+              <option value="proprietario" {% if tipo == 'proprietario' %}selected{% endif %}>Proprietário</option>
+            </select>
+          </label>
+          <div class="form-gap large"></div>
+          <button class="submit" type="submit">CRIAR CONTA <span>→</span></button>
+        </form>
+
+        <p class="register">Já possui uma conta?<br><a href="{{ url_for('login') }}">Voltar para o login</a></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
