@@ -317,8 +317,8 @@ Após a execução dos casos de teste, os resultados deverão ser registrados pe
 
 | Caso de Teste | Resultado | Observação |
 |---|---|---|
-| CT-1 | Aprovado | [Observação] |
-| CT-2 | [Aprovado/Reprovado] | Cadastro e login realizados com sucesso, conforme comportamento esperado. |
+| CT-1 | Aprovado | Cadastro e login realizados com sucesso, conforme comportamento esperado. |
+| CT-2 | [Aprovado/Reprovado] | [Observação] |
 | CT-3 | [Aprovado/Reprovado] | [Observação] |
 | CT-4 | [Aprovado/Reprovado] | [Observação] |
 | CT-5 | [Aprovado/Reprovado] | [Observação] |
