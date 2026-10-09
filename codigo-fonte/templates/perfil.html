@@ -11,7 +11,7 @@
 <body>
   <aside>
     <div class="aside-brand"><div class="aside-logo-wrap"><img class="aside-logo" src="{{ url_for('documentos_img', filename='logo.png') }}" alt="SR Beauty"></div><div class="aside-subtitle"><span>SIMONE RODRIGUES</span><span>ESPAÇO DE BELEZA</span></div></div>
-    <nav><a href="{{ url_for('home') }}">⌂ <span>Início</span></a><a class="active" href="{{ url_for('perfil') }}">⚙ <span>Minha conta</span></a></nav>
+    <nav><a href="{{ url_for('home') }}">⌂ <span>Início</span></a><a href="{{ url_for('pagina_servicos') }}">◇ <span>Serviços</span></a><a href="{{ url_for('pagina_atendimentos') }}">✦ <span>Atendimentos</span></a><a class="active" href="{{ url_for('perfil') }}">⚙ <span>Minha conta</span></a></nav>
     <a class="logout" href="{{ url_for('logout') }}">↪ <span>Sair</span></a>
   </aside>
   <main class="profile-page">

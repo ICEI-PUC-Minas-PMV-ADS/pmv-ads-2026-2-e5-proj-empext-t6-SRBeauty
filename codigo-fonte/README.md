@@ -1,5 +1,11 @@
 # Instruções de utilização
 
+## Módulo de Serviços e Execução de Atendimentos
+
+A aplicação Flask inclui endpoints JSON e interface web para catálogo de serviços e execução de atendimentos, definidos dentro do escopo do Desenvolvedor 3. Após entrar no sistema, acesse `/servicos` e `/atendimentos`. Consulte [SERVICES_API.md](SERVICES_API.md) para documentação de entidades, endpoints, exemplos, dependências de integração e instruções de teste.
+
+Execute a aplicação com `python app.py` e rode os testes do módulo com `python -m unittest discover -s tests -v`, ambos na pasta `codigo-fonte`.
+
 ## Estratégia de Organização de Codificação 
 
 Nesse primeiro eixo do curso, para simplificar a utilização do Git e a organização das pastas e artefatos de implementação no sistema de arquivos, sugerimos que o projeto seja estruturado de modo que cada aluno trabalhe com seus arquivos nas suas respectivas pastas, identificadas por nomes das suas respectivas telas. Por exemplo:
