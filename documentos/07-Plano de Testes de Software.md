@@ -255,7 +255,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O sistema deve calcular o repasse aplicando corretamente o percentual definido para o tipo de serviço, independentemente da profissional.</td>
-   <td>[Nome do responsável]</td>
+   <td>[Flávia Sergina Rodrigues]</td>
  </tr>
 </table>
 
@@ -289,7 +289,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O repasse deve ser identificado como pago após o registro, deixando de constar como pendente.</td>
-   <td>[Nome do responsável]</td>
+   <td>[Flávia Sergina Rodrigues]</td>
  </tr>
 </table>
 
