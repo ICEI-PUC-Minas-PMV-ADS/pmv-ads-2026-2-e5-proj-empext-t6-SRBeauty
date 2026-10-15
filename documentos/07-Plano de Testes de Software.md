@@ -81,7 +81,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O sistema deve apresentar corretamente os horários disponíveis da profissional selecionada, considerando sua jornada de trabalho e os horários já ocupados.</td>
-   <td>[Pâmella Almeida da Silva]</td>
+   <td>Pâmella Almeida da Silva</td>
  </tr>
 </table>
 
@@ -116,7 +116,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O agendamento deve ser registrado corretamente e o horário deve passar a constar como ocupado na agenda da profissional.</td>
-   <td>[Pâmella Almeida da Silva]</td>
+   <td>Pâmella Almeida da Silva</td>
  </tr>
 </table>
 
@@ -149,7 +149,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O sistema deve impedir o segundo agendamento e informar que o horário selecionado já está ocupado.</td>
-   <td>[Pâmella Almeida da Silva]</td>
+   <td>Pâmella Almeida da Silva</td>
  </tr>
 </table>
 
@@ -184,7 +184,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O atendimento deve ser registrado corretamente com o serviço realizado e a forma de pagamento informada.</td>
-   <td>[Pâmella Almeida da Silva]</td>
+   <td>Pâmella Almeida da Silva</td>
  </tr>
 </table>
 
@@ -220,7 +220,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O sistema deve registrar o pagamento como cartão e permitir o registro da taxa da maquininha informada.</td>
-   <td>[Pâmella Almeida da Silva]</td>
+   <td>Pâmella Almeida da Silva</td>
  </tr>
 </table>
 
@@ -554,11 +554,11 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
 | Caso de Teste | Resultado | Observação |
 |---|---|---|
 | CT-1 | Aprovado | Cadastro e login realizados com sucesso, conforme comportamento esperado. |
-| CT-2 | Aprovado | [Observação] |
-| CT-3 | Aprovado | [Observação] |
-| CT-4 | Aprovado | [Observação] |
-| CT-5 | Aprovado | [Observação] |
-| CT-6 | Aprovado | [Observação] |
+| CT-2 | Aprovado | A visualização da disponibilidade de horários das profissionais ocorreu conforme o esperado, considerando a jornada de trabalho e os registros existentes. |
+| CT-3 | Aprovado | O agendamento de atendimento foi realizado com sucesso e o respectivo horário passou a constar como ocupado na agenda da profissional. |
+| CT-4 | Aprovado | O bloqueio de conflito de horários funcionou perfeitamente, impedindo duplicidades para a mesma profissional no mesmo horário. |
+| CT-5 | Aprovado | O registro do atendimento realizado foi concluído com sucesso, salvando corretamente o tipo de serviço e a forma de pagamento informada. |
+| CT-6 | Aprovado | A forma de pagamento em cartão e o registro da taxa da maquininha foram processados e salvos adequadamente pelo sistema. |
 | CT-7 | [Aprovado/Reprovado] | [Observação] |
 | CT-8 | [Aprovado/Reprovado] | [Observação] |
 | CT-9 | [Aprovado/Reprovado] | [Observação] |
