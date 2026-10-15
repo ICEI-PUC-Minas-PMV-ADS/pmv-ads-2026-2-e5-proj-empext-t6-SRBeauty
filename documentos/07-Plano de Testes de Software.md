@@ -81,7 +81,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O sistema deve apresentar corretamente os horários disponíveis da profissional selecionada, considerando sua jornada de trabalho e os horários já ocupados.</td>
-   <td>[Nome do responsável]</td>
+   <td>[Pâmella Almeida da Silva]</td>
  </tr>
 </table>
 
@@ -116,7 +116,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O agendamento deve ser registrado corretamente e o horário deve passar a constar como ocupado na agenda da profissional.</td>
-   <td>[Nome do responsável]</td>
+   <td>[Pâmella Almeida da Silva]</td>
  </tr>
 </table>
 
@@ -149,7 +149,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O sistema deve impedir o segundo agendamento e informar que o horário selecionado já está ocupado.</td>
-   <td>[Nome do responsável]</td>
+   <td>[Pâmella Almeida da Silva]</td>
  </tr>
 </table>
 
@@ -184,7 +184,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O atendimento deve ser registrado corretamente com o serviço realizado e a forma de pagamento informada.</td>
-   <td>[Nome do responsável]</td>
+   <td>[Pâmella Almeida da Silva]</td>
  </tr>
 </table>
 
@@ -220,7 +220,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O sistema deve registrar o pagamento como cartão e permitir o registro da taxa da maquininha informada.</td>
-   <td>[Nome do responsável]</td>
+   <td>[Pâmella Almeida da Silva]</td>
  </tr>
 </table>
 
@@ -352,7 +352,6 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     <ol>
      <li>Realizar login como proprietária.</li>
      <li>Acessar a área financeira.</li>
-     <li>Selecionar o período semanal desejado.</li>
      <li>Consultar as entradas financeiras.</li>
      <li>Consultar as despesas.</li>
      <li>Consultar os repasses.</li>
@@ -388,7 +387,6 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     <ol>
      <li>Realizar login como proprietária.</li>
      <li>Acessar a área financeira.</li>
-     <li>Selecionar o mês desejado.</li>
      <li>Consultar as receitas.</li>
      <li>Consultar as despesas.</li>
      <li>Consultar os repasses.</li>
@@ -556,11 +554,11 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
 | Caso de Teste | Resultado | Observação |
 |---|---|---|
 | CT-1 | Aprovado | Cadastro e login realizados com sucesso, conforme comportamento esperado. |
-| CT-2 | [Aprovado/Reprovado] | [Observação] |
-| CT-3 | [Aprovado/Reprovado] | [Observação] |
-| CT-4 | [Aprovado/Reprovado] | [Observação] |
-| CT-5 | [Aprovado/Reprovado] | [Observação] |
-| CT-6 | [Aprovado/Reprovado] | [Observação] |
+| CT-2 | Aprovado | [Observação] |
+| CT-3 | Aprovado | [Observação] |
+| CT-4 | Aprovado | [Observação] |
+| CT-5 | Aprovado | [Observação] |
+| CT-6 | Aprovado | [Observação] |
 | CT-7 | [Aprovado/Reprovado] | [Observação] |
 | CT-8 | [Aprovado/Reprovado] | [Observação] |
 | CT-9 | [Aprovado/Reprovado] | [Observação] |
