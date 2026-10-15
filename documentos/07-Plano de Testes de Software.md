@@ -551,8 +551,6 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
 
 | Caso de Teste | Resultado | Observação |
 |---|---|---|
-| Caso de Teste | Resultado | Observação |
-|---|---|---|
 | CT-1 | Aprovado | Cadastro e login realizados com sucesso, conforme comportamento esperado. |
 | CT-2 | Aprovado | A visualização da disponibilidade de horários das profissionais ocorreu conforme o esperado, considerando a jornada de trabalho e os registros existentes. |
 | CT-3 | Aprovado | O agendamento de atendimento foi realizado com sucesso e o respectivo horário passou a constar como ocupado na agenda da profissional. |
