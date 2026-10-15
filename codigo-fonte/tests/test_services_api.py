@@ -1,5 +1,6 @@
 import os
 import unittest
+from datetime import datetime, timedelta
 
 database_url_before_import = os.environ.get("DATABASE_URL")
 os.environ["DATABASE_URL"] = "sqlite://"
@@ -129,12 +130,15 @@ class ServicesApiTestCase(unittest.TestCase):
         )
         self.assertEqual(started.status_code, 200)
         self.assertIsNotNone(started.json["iniciado_em"])
+        completed_at = (
+            datetime.fromisoformat(started.json["iniciado_em"]) + timedelta(minutes=35)
+        ).isoformat()
 
         completed = self.client.patch(
             f"/api/atendimentos/{appointment_id}/status",
             json={
                 "status": "concluido",
-                "concluido_em": "2026-10-09T10:35:00-03:00",
+                "concluido_em": completed_at,
                 "duracao_real_minutos": 35,
                 "observacoes": "Atendimento concluído.",
             },
