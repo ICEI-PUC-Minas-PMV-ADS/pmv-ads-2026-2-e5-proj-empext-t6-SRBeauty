@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SR Beauty — Financeiro</title>
+  <style>
+    :root{--sage:#8FA89A;--sage-dark:#657e70;--cream:#FAF8F5;--sand:#E8D8C8;--wine:#8C4A5A;--wine-dark:#713746;--ink:#343434;--muted:#716e69;--line:#E5E2DE;--white:#fff;--success:#557765;--warning:#9b7138;--danger:#a44848;--shadow:0 18px 50px rgba(52,52,52,.08);--radius:20px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.5 Inter,"Segoe UI",Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(143,168,154,.45);outline-offset:2px}.hidden{display:none!important}
+    
+    .app{min-height:100vh;display:grid;grid-template-columns:268px minmax(0,1fr)}
+    .sidebar{position:sticky;top:0;height:100vh;background:#351f2a;color:white;padding:28px 20px;display:flex;flex-direction:column;overflow-y:auto}
+    .sidebar .logo{padding:0 8px;margin-bottom:34px;display:flex;align-items:center;gap:14px}.sidebar .logo-mark{width:43px;height:43px;border-radius:14px;object-fit:cover}.sidebar .logo strong{font-size:18px;display:block;font-family:Georgia,serif}.sidebar .logo small{opacity:.82}
+    .role-label{margin:0 0 15px;padding:9px 11px;border-radius:10px;background:rgba(143,168,154,.2);color:#e4ede8;font-size:13px;font-weight:750}
+    .nav{display:grid;gap:6px}.nav button,.nav a{border:0;background:transparent;color:#cbd8d1;padding:11px 13px;border-radius:11px;text-align:left;display:flex;gap:12px;align-items:center;font-weight:650;text-decoration:none}.nav button:hover,.nav button.active,.nav a:hover,.nav a.active{background:#563243;color:white}.nav .ico{width:22px;text-align:center;font-size:17px}
+    
+    .user-card{margin-top:auto;border-top:1px solid rgba(255,255,255,.14);padding:20px 0 0;display:flex;align-items:center;gap:10px;width:100%}
+    .avatar{width:40px;height:40px;border-radius:13px;background:var(--sand);color:var(--wine);display:grid;place-items:center;font-weight:900;flex-shrink:0}
+    .user-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+    .user-info strong{font-size:13px;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+    .user-info small{color:#bfcfc6;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+    
+    .main{min-width:0}
+    .topbar{height:78px;position:sticky;top:0;z-index:5;background:rgba(250,248,245,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:0 34px;display:flex;align-items:center;justify-content:space-between}
+    .topbar h1{font:700 25px Georgia,serif;margin:0}.topbar-right{display:flex;align-items:center;gap:14px}.today{font-size:14px;color:var(--muted)}
+    .notification{width:38px;height:38px;border:1px solid var(--line);background:white;border-radius:12px;display:grid;place-items:center;position:relative}.notification:after{content:"";width:7px;height:7px;background:var(--wine);border-radius:50%;position:absolute;right:8px;top:7px}
+    .content{max-width:1450px;margin:auto;padding:30px 34px 58px}
+    .heading{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:23px}.heading h2{font:700 30px Georgia,serif;margin:0 0 4px}.heading p{margin:0;color:var(--muted)}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:22px}
+    .metric,.panel{background:white;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .metric{padding:20px;position:relative;overflow:hidden}.metric:before{content:"";position:absolute;width:5px;height:40px;background:var(--sage);left:0;top:22px;border-radius:0 5px 5px 0}
+    .metric.wine:before{background:var(--wine)}.metric.sand:before{background:#c3a47f}
+    .metric .label{color:var(--muted);font-size:14px}.metric strong{display:block;font-size:27px;margin:7px 0 2px}.metric small{color:var(--success)}
+    .panel{padding:22px}.panel h3{margin:0 0 18px;font-size:18px}
+    .table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:700px}.table th,.table td{text-align:left;padding:14px;border-bottom:1px solid var(--line)}.table th{font-size:13px;color:var(--muted);background:#fcfbf9}.money{font-weight:800}.positive{color:var(--success)}.negative{color:var(--danger)}
+    .primary,.secondary{border:0;border-radius:12px;padding:12px 17px;font-weight:800}.primary{background:var(--wine);color:white}.secondary{background:white;color:var(--ink);border:1px solid var(--line)}
+    .modal{display:none;position:fixed;inset:0;background:rgba(38,43,40,.56);z-index:30;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.dialog{width:min(650px,100%);max-height:92vh;overflow:auto;background:white;border-radius:22px;padding:25px;box-shadow:0 28px 80px rgba(0,0,0,.22)}.dialog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:21px}.dialog-head h2{font:700 25px Georgia,serif;margin:0}.close{border:0;width:37px;height:37px;border-radius:50%;background:var(--cream);font-size:20px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.form-grid .field{margin:0;display:grid;gap:8px}.form-grid label{font-weight:750;font-size:14px}.form-grid input,.form-grid select{width:100%;border:1px solid var(--line);background:white;border-radius:12px;padding:13px 14px;min-height:48px}.full{grid-column:1/-1}.actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}.toast{position:fixed;right:26px;bottom:26px;background:#351f2a;color:white;padding:14px 18px;border-radius:13px;opacity:0;transition:.25s;z-index:40}.toast.show{opacity:1}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo"><img src="images/logo.jpeg" alt="Logo" class="logo-mark"><span><strong>SR Beauty</strong><small>Beleza & Cuidado</small></span></div>
+      <div class="role-label">Acesso: Proprietária</div>
+      <nav class="nav">
+        <button onclick="carregarSemCarregar('Visão geral')"><span class="ico">⌂</span><span>Visão geral</span></button>
+        <button onclick="carregarSemCarregar('Agenda')"><span class="ico">▦</span><span>Agenda</span></button>
+        <button onclick="carregarSemCarregar('Atendimentos')"><span class="ico">✓</span><span>Atendimentos</span></button>
+        <button onclick="carregarSemCarregar('Serviços')"><span class="ico">✦</span><span>Serviços</span></button>
+        <button onclick="carregarSemCarregar('Profissionais')"><span class="ico">♙</span><span>Profissionais</span></button>
+        <button onclick="carregarSemCarregar('Repasses')"><span class="ico">⇄</span><span>Repasses</span></button>
+        <a href="financeiro.html" class="active"><span class="ico">R$</span><span>Financeiro</span></a>
+        <a href="relatorios.html"><span class="ico">▤</span><span>Relatórios</span></a>
+      </nav>
+      <div class="user-card">
+        <div class="avatar">SR</div>
+        <div class="user-info"><strong>Simone Rodrigues</strong><small>Proprietária</small></div>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><h1 id="pageTitle">Financeiro</h1><div class="topbar-right"><span class="today">Quinta-feira, 17 de setembro</span><button class="notification">♢</button></div></header>
+      <div class="content" id="content">
+        <div class="heading">
+          <div><h2>Financeiro</h2><p>Entradas, despesas e fechamento do caixa.</p></div>
+          <div style="display:flex;gap:10px;">
+            <button class="secondary" id="btnConfigurarTaxas">⚙ Configurar Taxas</button>
+            <button class="secondary" id="btnFechamentoCaixa">🔒 Fechar Caixa do Dia</button>
+            <button class="primary" id="btnLancarMovimentacao">+ Registrar Movimentação</button>
+          </div>
+        </div>
+        <div class="cards">
+          <div class="metric"><span class="label">Entradas</span><strong class="positive" id="finEntradas">R$ 0,00</strong></div>
+          <div class="metric wine"><span class="label">Despesas</span><strong class="negative" id="finSaidas">R$ 0,00</strong></div>
+          <div class="metric sand"><span class="label">Taxas de cartão</span><strong id="finTaxas">R$ 0,00</strong></div>
+          <div class="metric"><span class="label">Saldo Líquido</span><strong id="finSaldo">R$ 0,00</strong></div>
+        </div>
+        <div class="panel table-wrap">
+          <h3>Movimentações recentes</h3>
+          <table class="table">
+            <thead>
+              <tr><th>Data</th><th>Profissional</th><th>Descrição</th><th>Categoria</th><th>Forma</th><th>Valor Bruto</th><th>Taxa</th><th>Valor Líquido</th></tr>
+            </thead>
+            <tbody id="tblMovimentacoes">
+              <tr><td colspan="8">Carregando dados do banco...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal" id="modal"><div class="dialog"><div class="dialog-head"><h2 id="modalTitle"></h2><button class="close" onclick="closeModal()">×</button></div><div id="modalBody"></div></div></div>
+  <div class="toast" id="toast">Operação realizada com sucesso.</div>
+
+  <script>
+    const API_BASE = "http://127.0.0.1:8000/api";
+
+    function formatarMoeda(valor) {
+      return (valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function caixaEstaFechadoHoje() {
+      const dataHoje = new Date().toLocaleDateString('pt-BR');
+      return localStorage.getItem('caixa_fechado_data') === dataHoje;
+    }
+
+    function carregarSemCarregar(nomeTela) {
+      document.getElementById('pageTitle').textContent = nomeTela;
+      document.getElementById('content').innerHTML = `<div class="heading"><div><h2>${nomeTela}</h2><p>Esta área não carrega dados nesta demonstração.</p></div></div>`;
+    }
+
+    function exibirCaixaFechadoVisualmente() {
+      document.getElementById('finEntradas').textContent = formatarMoeda(0);
+      document.getElementById('finSaidas').textContent = formatarMoeda(0);
+      document.getElementById('finTaxas').textContent = formatarMoeda(0);
+      document.getElementById('finSaldo').textContent = formatarMoeda(0);
+
+      document.getElementById('tblMovimentacoes').innerHTML = `
+        <tr>
+          <td colspan="8" style="text-align: center; color: var(--muted); padding: 24px;">
+            🔒 <b>Caixa do dia encerrado.</b><br>
+            <small>Os valores foram salvos no relatório. Registre uma nova movimentação para reabrir o caixa do dia.</small>
+          </td>
+        </tr>
+      `;
+    }
+
+    async function carregarDadosFinanceiros() {
+      if (caixaEstaFechadoHoje()) {
+        exibirCaixaFechadoVisualmente();
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/financeiro/movimentacoes`);
+        const movs = await res.json();
+
+        let totalEntradas = 0, totalSaidas = 0, totalTaxas = 0;
+        const tbody = document.getElementById('tblMovimentacoes');
+        
+        if (!movs || movs.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="8">Nenhuma movimentação cadastrada no banco.</td></tr>`;
+        } else {
+          tbody.innerHTML = movs.map(m => {
+            if (m.tipo === 'entrada') { totalEntradas += m.valor_bruto; totalTaxas += m.taxa_cartao; }
+            else { totalSaidas += m.valor_bruto; }
+            const isEntrada = m.tipo === 'entrada';
+            const nomeProf = m.profissional || 'Salão';
+            return `<tr>
+              <td>${new Date(m.data).toLocaleDateString('pt-BR')}</td>
+              <td><b>${nomeProf}</b></td>
+              <td>${m.descricao}</td><td>${m.categoria}</td>
+              <td>${m.forma_pagamento.toUpperCase()}</td>
+              <td class="money ${isEntrada ? 'positive' : 'negative'}">${isEntrada ? '+' : '-'} ${formatarMoeda(m.valor_bruto)}</td>
+              <td>${formatarMoeda(m.taxa_cartao)}</td>
+              <td class="money">${formatarMoeda(m.valor_liquido)}</td>
+            </tr>`;
+          }).join('');
+        }
+
+        const saldo = totalEntradas - totalSaidas - totalTaxas;
+        document.getElementById('finEntradas').textContent = formatarMoeda(totalEntradas);
+        document.getElementById('finSaidas').textContent = formatarMoeda(totalSaidas);
+        document.getElementById('finTaxas').textContent = formatarMoeda(totalTaxas);
+        document.getElementById('finSaldo').textContent = formatarMoeda(saldo);
+      } catch (err) {
+        showToast("Backend inacessível. Certifique-se de rodar: uvicorn app:app --reload");
+      }
+    }
+
+    document.getElementById('btnLancarMovimentacao').onclick = () => {
+      openModal('Lançar Movimentação', `
+        <form id="formMovimentacao">
+          <div class="form-grid">
+            <div class="field"><label>Tipo</label><select name="tipo" required><option value="entrada">Entrada (Recebimento)</option><option value="saida">Saída (Despesa)</option></select></div>
+            <div class="field"><label>Profissional</label><select name="profissional" required><option value="Salão">Não se aplica / Salão</option><option value="Simone Rodrigues">Simone Rodrigues</option><option value="Ana Souza">Ana Souza</option><option value="Júlia Lima">Júlia Lima</option></select></div>
+            <div class="field"><label>Categoria</label><input name="categoria" placeholder="Ex.: Atendimento, Luz" required></div>
+            <div class="field"><label>Forma de Pagamento</label><select name="forma_pagamento" required><option value="pix">Pix</option><option value="dinheiro">Dinheiro</option><option value="cartao_debito">Cartão Débito</option><option value="cartao_credito">Cartão Crédito</option></select></div>
+            <div class="field full"><label>Descrição</label><input name="descricao" placeholder="Ex.: Atendimento Mariana" required></div>
+            <div class="field full"><label>Valor (R$)</label><input name="valor" type="number" step="0.01" min="0.01" placeholder="0,00" required></div>
+          </div>
+          <div class="actions"><button type="button" class="secondary" onclick="closeModal()">Cancelar</button><button type="submit" class="primary">Salvar</button></div>
+        </form>
+      `);
+
+      document.getElementById('formMovimentacao').onsubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const payload = {
+          tipo: formData.get('tipo'),
+          profissional: formData.get('profissional'),
+          categoria: formData.get('categoria'),
+          descricao: formData.get('descricao'),
+          forma_pagamento: formData.get('forma_pagamento'),
+          valor: parseFloat(formData.get('valor'))
+        };
+
+        try {
+          const res = await fetch(`${API_BASE}/financeiro/movimentacao`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if(res.ok) {
+            localStorage.removeItem('caixa_fechado_data');
+            closeModal();
+            showToast('Movimentação salva com sucesso!');
+            await carregarDadosFinanceiros();
+          } else {
+            showToast('Erro ao salvar movimentação no banco.');
+          }
+        } catch (err) {
+          showToast('Inicie o backend FastAPI para registrar.');
+        }
+      };
+    };
+
+    document.getElementById('btnConfigurarTaxas').onclick = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/financeiro/taxas`);
+        const taxas = await res.json();
+        const mapaTaxas = {};
+        taxas.forEach(t => mapaTaxas[t.forma_pagamento] = t.percentual);
+
+        openModal('Configurar Taxas das Formas de Pagamento', `
+          <form id="formConfigTaxas">
+            <div class="form-grid">
+              <div class="field"><label>Pix (%)</label><input type="number" step="0.01" min="0" name="pix" value="${mapaTaxas['pix'] ?? 0}"></div>
+              <div class="field"><label>Dinheiro (%)</label><input type="number" step="0.01" min="0" name="dinheiro" value="${mapaTaxas['dinheiro'] ?? 0}"></div>
+              <div class="field"><label>Cartão de Débito (%)</label><input type="number" step="0.01" min="0" name="cartao_debito" value="${mapaTaxas['cartao_debito'] ?? 1.99}"></div>
+              <div class="field"><label>Cartão de Crédito (%)</label><input type="number" step="0.01" min="0" name="cartao_credito" value="${mapaTaxas['cartao_credito'] ?? 3.99}"></div>
+            </div>
+            <div class="actions"><button type="button" class="secondary" onclick="closeModal()">Cancelar</button><button type="submit" class="primary">Salvar Taxas</button></div>
+          </form>
+        `);
+
+        document.getElementById('formConfigTaxas').onsubmit = async (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const payload = {
+            taxas: [
+              { forma_pagamento: "pix", percentual: parseFloat(formData.get('pix')) || 0 },
+              { forma_pagamento: "dinheiro", percentual: parseFloat(formData.get('dinheiro')) || 0 },
+              { forma_pagamento: "cartao_debito", percentual: parseFloat(formData.get('cartao_debito')) || 0 },
+              { forma_pagamento: "cartao_credito", percentual: parseFloat(formData.get('cartao_credito')) || 0 },
+            ]
+          };
+
+          const resUpdate = await fetch(`${API_BASE}/financeiro/taxas`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (resUpdate.ok) {
+            closeModal();
+            showToast('Taxas personalizadas salvas com sucesso!');
+            await carregarDadosFinanceiros();
+          } else {
+            showToast('Erro ao atualizar taxas.');
+          }
+        };
+      } catch (err) {
+        showToast('Não foi possível carregar as taxas.');
+      }
+    };
+
+    document.getElementById('btnFechamentoCaixa').onclick = async () => {
+      try {
+        const resFechamento = await fetch(`${API_BASE}/financeiro/fechamento`, { method: 'POST' });
+        if (!resFechamento.ok) throw new Error("Erro ao fechar caixa");
+
+        const fechamento = await resFechamento.json();
+        
+        const dataHoje = new Date().toLocaleDateString('pt-BR');
+        localStorage.setItem('caixa_fechado_data', dataHoje);
+
+        showToast(`Caixa Fechado! Saldo Líquido: ${formatarMoeda(fechamento.saldo_liquido)}`);
+        exibirCaixaFechadoVisualmente();
+      } catch (err) {
+        showToast('Erro ao fechar caixa do dia.');
+      }
+    };
+
+    function openModal(title,body){document.getElementById('modalTitle').textContent=title;document.getElementById('modalBody').innerHTML=body;document.getElementById('modal').classList.add('open')}
+    function closeModal(){document.getElementById('modal').classList.remove('open')}
+    function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
+
+    carregarDadosFinanceiros();
+  </script>
+</body>
+</html>
