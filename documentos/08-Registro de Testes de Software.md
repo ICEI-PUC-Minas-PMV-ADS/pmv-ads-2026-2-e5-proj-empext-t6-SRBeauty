@@ -76,7 +76,7 @@ https://github.com/user-attachments/assets/b83e0691-c6b4-4464-ab34-fedbef6e13b3
 - Confirmação do agendamento;
 - Exibição do agendamento na agenda.
 
-**Responsável:** [Virgílio Zenith]
+**Responsável:** Virgílio Zenith
 
 **Evidência:**
 
@@ -117,11 +117,12 @@ https://github.com/user-attachments/assets/b83e0691-c6b4-4464-ab34-fedbef6e13b3
 - Confirmação do atendimento realizado;
 - Atualização do status do agendamento.
 
-**Responsável:** [Nome do integrante]
+**Responsável:** Virgílio Zenith 
 
 **Evidência:**
 
-[Inserir imagem ou vídeo do teste]
+<img width="1577" height="613" alt="image" src="https://github.com/user-attachments/assets/482a6777-868d-4458-8706-5e6be093bdf3" />
+
 
 <hr>
 
