@@ -46,7 +46,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O cadastro deve ser realizado com sucesso e o usuário deve conseguir acessar o sistema utilizando as credenciais cadastradas.</td>
-   <td>Júlio César Villaça Cardoso</td>
+   <td>Pâmella Almeida da Silva</td>
  </tr>
 </table>
 
@@ -81,7 +81,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O sistema deve apresentar corretamente os horários disponíveis da profissional selecionada, considerando sua jornada de trabalho e os horários já ocupados.</td>
-   <td>Pâmella Almeida da Silva</td>
+   <td>Júlio César Villaça Cardoso</td>
  </tr>
 </table>
 
@@ -116,7 +116,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O agendamento deve ser registrado corretamente e o horário deve passar a constar como ocupado na agenda da profissional.</td>
-   <td>Pâmella Almeida da Silva</td>
+   <td>Virgilio Zenith</td>
  </tr>
 </table>
 
@@ -149,7 +149,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O sistema deve impedir o segundo agendamento e informar que o horário selecionado já está ocupado.</td>
-   <td>Pâmella Almeida da Silva</td>
+   <td>Júlio César Villaça Cardoso</td>
  </tr>
 </table>
 
@@ -184,7 +184,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O atendimento deve ser registrado corretamente com o serviço realizado e a forma de pagamento informada.</td>
-   <td>Pâmella Almeida da Silva</td>
+   <td>Virgílio Zenith</td>
  </tr>
 </table>
 
