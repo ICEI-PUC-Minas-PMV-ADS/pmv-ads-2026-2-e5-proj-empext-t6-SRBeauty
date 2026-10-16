@@ -4,7 +4,27 @@
 
 A aplicação Flask inclui endpoints JSON e interface web para catálogo de serviços e execução de atendimentos, definidos dentro do escopo do Desenvolvedor 3. Após entrar no sistema, acesse `/servicos` e `/atendimentos`. Consulte [SERVICES_API.md](SERVICES_API.md) para documentação de entidades, endpoints, exemplos, dependências de integração e instruções de teste.
 
-Execute a aplicação com `python app.py` e rode os testes do módulo com `python -m unittest discover -s tests -v`, ambos na pasta `codigo-fonte`.
+### Executar localmente no Windows
+
+Abra o PowerShell na raiz do repositório (`C:\SRBeauty`) e ative o ambiente virtual:
+
+```powershell
+.\venv\Scripts\Activate.ps1
+Set-Location .\pmv-ads-2026-2-e5-proj-empext-t6-SRBeauty\codigo-fonte
+python app.py
+```
+
+Acesse `http://127.0.0.1:5000`. Se o comando `python` não for reconhecido ou a ativação estiver bloqueada, execute diretamente pelo ambiente virtual, ainda na pasta `codigo-fonte`:
+
+```powershell
+& ..\..\venv\Scripts\python.exe app.py
+```
+
+Para rodar os testes, na mesma pasta e com o ambiente virtual ativo:
+
+```powershell
+python -m unittest discover -s tests -v
+```
 
 ## Estratégia de Organização de Codificação 
 
