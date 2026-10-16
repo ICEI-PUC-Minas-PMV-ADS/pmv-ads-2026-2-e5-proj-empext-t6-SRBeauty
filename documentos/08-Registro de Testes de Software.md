@@ -76,11 +76,12 @@ https://github.com/user-attachments/assets/b83e0691-c6b4-4464-ab34-fedbef6e13b3
 - Confirmação do agendamento;
 - Exibição do agendamento na agenda.
 
-**Responsável:** [Nome do integrante]
+**Responsável:** [Virgílio Zenith]
 
 **Evidência:**
 
-[Inserir imagem ou vídeo do teste]
+<img width="1916" height="907" alt="Captura de tela 2026-10-16 115057" src="https://github.com/user-attachments/assets/f2ef54fe-33b0-4b70-b882-9aa4fcdf2df4" />
+
 
 <hr>
 
