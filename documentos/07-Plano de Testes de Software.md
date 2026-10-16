@@ -429,7 +429,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>A agenda deve apresentar corretamente os horários agendados, disponíveis e os atendimentos realizados no dia selecionado.</td>
-   <td>[Nome do responsável]</td>
+   <td>Virgílio Zenith</td>
  </tr>
 </table>
 
@@ -464,7 +464,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>Os horários configurados devem ser armazenados e considerados na disponibilidade apresentada na agenda.</td>
-   <td>[Nome do responsável]</td>
+   <td>Virgílio Zenith</td>
  </tr>
 </table>
 
@@ -562,7 +562,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
 | CT-9 | [Aprovado/Reprovado] | [Observação] |
 | CT-10 | [Aprovado/Reprovado] | [Observação] |
 | CT-11 | [Aprovado/Reprovado] | [Observação] |
-| CT-12 | [Aprovado/Reprovado] | [Observação] |
-| CT-13 | [Aprovado/Reprovado] | [Observação] |
+| CT-12 | Aprovado | Sistema de agendamento realizado com sucesso, permitindo a proprietária visualizar os horários agendados, horários disponíveis e atendimentos realizados no dia. |
+| CT-13 | Aprovado | O sistema permite o gerenciamento dos horários de trabalho das profissionais perfeitamente. |
 | CT-14 | [Aprovado/Reprovado] | [Observação] |
 | CT-15 | [Aprovado/Reprovado] | [Observação] |
