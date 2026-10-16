@@ -429,7 +429,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>A agenda deve apresentar corretamente os horários agendados, disponíveis e os atendimentos realizados no dia selecionado.</td>
-   <td>Virgílio Zenith</td>
+   <td>Júlio César Villaça Cardoso</td>
  </tr>
 </table>
 
@@ -464,7 +464,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>Os horários configurados devem ser armazenados e considerados na disponibilidade apresentada na agenda.</td>
-   <td>Virgílio Zenith</td>
+   <td>Júlio César Villaça Cardoso</td>
  </tr>
 </table>
 
