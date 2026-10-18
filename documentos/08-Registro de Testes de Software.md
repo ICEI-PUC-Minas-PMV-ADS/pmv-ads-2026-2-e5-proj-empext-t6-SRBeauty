@@ -190,11 +190,19 @@ https://github.com/user-attachments/assets/b83e0691-c6b4-4464-ab34-fedbef6e13b3
 - Alteração do status para pago;
 - Atualização do registro após a confirmação do pagamento.
 
-**Responsável:** [Nome do integrante]
+**Responsável:** Flávia Sergina Rodrigues
 
-**Evidência:**
+**Evidência 1:**
 
-[Inserir imagem ou vídeo do teste]
+<img width="1241" height="889" alt="Image" src="https://github.com/user-attachments/assets/13347bbd-2796-4034-b731-d20cd15cdba5" />
+
+**Evidência 2:**
+
+<img width="1241" height="880" alt="Image" src="https://github.com/user-attachments/assets/e6305fe7-c5f1-4d8a-a40a-353dc11e2279" />
+
+**Evidência 3:**
+
+<img width="1238" height="884" alt="Image" src="https://github.com/user-attachments/assets/4ff15506-a584-4515-93b4-e071000d429c" />
 
 <hr>
 
@@ -338,8 +346,8 @@ Após a execução dos casos de teste, os resultados deverão ser registrados pe
 | CT-5 | [Aprovado/Reprovado] | [Observação] |
 | CT-6 | [Aprovado/Reprovado] | [Observação] |
 | CT-7 | [Aprovado/Reprovado] | [Observação] |
-| CT-8 | [Aprovado/Reprovado] | [Observação] |
-| CT-9 | [Aprovado/Reprovado] | [Observação] |
+| CT-8 | Aprovado | Registro de repasse realizado com sucesso |
+| CT-9 | Aprovado | Confirmação de pagamento de repasses executado com sucesso |
 | CT-10 | [Aprovado/Reprovado] | [Observação] |
 | CT-11 | [Aprovado/Reprovado] | [Observação] |
 | CT-12 | [Aprovado/Reprovado] | [Observação] |
