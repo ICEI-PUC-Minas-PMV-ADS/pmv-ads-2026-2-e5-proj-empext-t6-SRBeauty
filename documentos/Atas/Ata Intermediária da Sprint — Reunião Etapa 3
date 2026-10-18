@@ -1,0 +1,144 @@
+# Ata Intermediária da Sprint — Reunião Etapa 3
+
+**Projeto:** SR Beauty — Sistema de Gestão para Salão de Beleza  
+**Sprint:** 03  
+**Tipo de reunião:** Acompanhamento intermediário da Sprint e validação de escopo com o cliente  
+**Data:** 16/10/2026 
+**Horário:** 21:00 
+**Local/Plataforma:** Equipes 
+**Participantes:** Equipe de desenvolvimento e cliente
+
+## 1. Objetivo da reunião
+
+A reunião teve como objetivo acompanhar o desenvolvimento do sistema SR Beauty durante a Etapa 3 — Desenvolvimento da Solução, revisar o escopo das funcionalidades planejadas para o Sprint e alinhar as próximas atividades de implementação e testes.
+
+Também busque validar se as funcionalidades em desenvolvimento estão alinhadas às necessidades do proprietário do salão, priorizando a organização dos agendamentos, dos cadastros essenciais e dos processos administrativos e financeiros.
+
+## 2. Contexto do sistema
+
+O SR Beauty é um sistema sociotécnico desenvolvido para auxiliar na gestão de um salão de beleza, centralizando informações sobre clientes, profissionais, serviços, agendamentos e controles administrativos e financeiros.
+
+O sistema considera três perfis principais de usuários:
+
+- **Cliente:** consulta serviços disponíveis, realiza agendamentos e acompanha suas marcações.
+- **Profissional:** consulte sua agenda e acompanhe os atendimentos realizados.
+- **Proprietária:** administra os serviços, profissionais, horários, agendamentos, despesas, repasses e informações financeiras.
+
+Nas etapas anteriores, foram levantadas as regras de negócio e elaborado um protótipo para validar os principais fluxos de utilização. Nesta etapa, o foco é a implementação das funcionalidades, incluindo front-end e back-end, com prioridade para os cadastros e as operações corretas ao funcionamento do sistema.
+
+## 3. Situação dos requisitos e entregáveis
+
+Nesta etapa, a equipe deve acompanhar a implementação das funcionalidades feitas para o Sprint, considerando a integração entre a interface, a lógica de negócio e o armazenamento dos dados.
+
+As atividades contempladas incluem:
+
+- Desenvolvimento de cadastros e operações de consulta, edição e exclusão de registros.
+- Implementação das funcionalidades previstas no planejamento da Sprint.
+- Validação das regras de negócio relacionadas com agendamentos e disponibilidade dos profissionais.
+- Elaboração do plano de testes das funcionalidades desenvolvidas.
+- Execução de testes e organização de provas.
+- Realização dos testes por pares, conforme as orientações da disciplina.
+- Atualização do código-fonte e das tarefas individuais no GitHub Classroom.
+
+A situação de cada requisito deverá ser registrada de acordo com o andamento real da implementação e com as evidências disponíveis.
+
+## 4. Situação atual do quadro Kanban
+
+O quadro Kanban é utilizado para monitorar o planejamento e a execução das atividades da equipe, permitindo visualizar as tarefas pendentes, em andamento, em análise e concluídas.
+
+As tarefas devem ser organizadas conforme os seguintes status:
+
+**A fazer / Preparar**
+- Funcionalidades programadas e ainda não iniciadas.
+- Requisitos que precisam de detalhamento ou priorização.
+
+**Em andamento**
+- Desenvolvimento das funcionalidades do Sprint.
+- Integração entre front-end e back-end.
+- Elaboração e execução dos planos de teste.
+
+**Em análise**
+- Funcionalidades aguardando revisão ou validação.
+- Testes pendentes de conferência.
+- Ajustes identificados durante o desenvolvimento.
+
+**Feito**
+- Funcionalidades finalizadas e verificadas.
+- Casos de testes concluídos e documentados.
+- Atividades com provas correspondentes.
+
+O status das tarefas deverá refletir o quadro Kanban atualizado no GitHub, com a identificação dos responsáveis ​​por cada atividade.
+
+## 5. Pontos discutidos
+
+Durante o acompanhamento da Sprint, foram avaliados os seguintes pontos:
+
+- Aderência das funcionalidades desenvolvidas às necessidades do proprietário.
+- Organização dos cadastros de clientes, profissionais e serviços.
+- Fluxo de agendamento, considerando serviço, profissional, dados e horário.
+- Prevenção de conflitos de horário para uma mesma profissional.
+- Organização das informações dos atendimentos realizados.
+- Controle dos registros financeiros, despesas e repasses.
+- Separação dos acessos de acordo com os perfis do usuário.
+- Identificação de dificuldades técnicas e necessidades de ajustes.
+- Planejamento dos testes funcionais e dos testes por pares.
+
+## 6. Decisões e encaminhamentos
+
+Como direcionamento para a continuidade do Sprint, foram definidos os seguintes pontos de trabalho:
+
+1. Priorizar as funcionalidades previstas no planejamento da Sprint.
+2. Dar preferência aos CRUDs necessários para sustentar as demais operações do sistema.
+3. Verifique as regras de negócio e as validações antes de considerar uma funcionalidade concluída.
+4. Mantenha o código-fonte e as tarefas individuais atualizadas no GitHub Classroom.
+5. Elaborar casos de teste específicos para as funcionalidades desenvolvidas nesta Sprint.
+6. Executar os testes e registrar os resultados obtidos.
+7. Realizar testes por pares em funcionalidades desenvolvidas por outros integrantes da equipe.
+8. Registrador de restrições de alteração identificadas durante a validação do escopo.
+9. Atualizar o Kanban conforme o andamento real das atividades.
+
+## 7. Próximas atividades
+
+Para dar continuidade ao desenvolvimento da SR Beauty, estão previstas as seguintes atividades:
+
+- Finalizar as funcionalidades priorizadas para a Sprint.
+- Revisar a integração entre front-end, back-end e banco de dados.
+- Verifique as validações e o tratamento de situações inválidas.
+- Elaborar e executar os casos de teste das funcionalidades inovadoras.
+- Registrar os resultados dos testes e confirmar os problemas identificados.
+- Realizar os testes por pares, utilizando os planos de testes elaborados pelos colegas.
+- Gravar os vídeos de evidência dos testes por pares, com voz e identificação dos participantes.
+- Atualizar a documentação e organizar as evidências da Sprint.
+- Manter as tarefas e os status relevantes atualizados no GitHub Classroom.
+- Validar com as possíveis configurações necessárias ao escopo.
+
+## 8. Pendências
+
+As seguintes questões devem ser acompanhadas pela equipe, conforme a situação real do projeto:
+
+- Conclusão das funcionalidades ainda em desenvolvimento.
+- Validação das regras de negócio que dependem do empresário.
+- Finalização dos cadastros e das operações ao sistema.
+- Elaboração e execução dos planos de teste.
+- Realização dos testes por pares e gravação das provas em vídeo.
+- Correção de falhas identificadas durante os testes.
+- Atualização do Kanban e das tarefas individuais.
+- Organização da documentação e das evidências para a entrega.
+- Inserção da evidência visual da reunião de validação do escopo.
+
+## 9. Evidência da reunião
+
+<img width="1598" height="847" alt="Imagem" src="https://github.com/user-attachments/assets/b445f620-2782-4b4f-9fc7-45e0109120da" />
+
+*Legenda: Evidência da reunião de acompanhamento da Sprint 03 e validação do escopo do projeto SR Beauty.*
+
+## 10. Encaminhamento final
+
+A reunião da Sprint 03 teve como propósito acompanhar o desenvolvimento do SR Beauty, revisar o escopo das funcionalidades e organizar as atividades permitidas para a continuidade da implementação.
+
+Como encaminhamento, a equipe deverá dar continuidade às funcionalidades planejadas, verificar as regras de negócio, executar os testes correspondentes e documentar os resultados obtidos. O andamento das atividades deverá ser refletido no Kanban e sustentado pelas evidências produzidas durante o desenvolvimento e a validação.
+
+O registro final deverá refletir sobre as decisões tomadas com a proprietária, as funcionalidades realmente inovadoras e os resultados dos testes realizados.
+
+**Responsável pelo registro dos dados:** Flávia Sergina Rodrigues
+**Data do registro:** 18/10/2026
