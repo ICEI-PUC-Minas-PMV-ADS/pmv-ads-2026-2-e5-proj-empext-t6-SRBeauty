@@ -14,7 +14,7 @@
     <nav>
       <a href="{{ url_for('home') }}">⌂ <span>Início</span></a>
       {% if current_user.tipo in ["proprietario", "profissional"] %}<a href="{{ url_for('pagina_agenda') }}">▣ <span>Agendamentos</span></a>{% endif %}<a href="#">♙ <span>Clientes</span></a><a href="#">✂ <span>Profissionais</span></a>
-      <a href="{{ url_for('pagina_servicos') }}">◇ <span>Serviços</span></a><a class="active" href="{{ url_for('pagina_atendimentos') }}">✦ <span>Atendimentos</span></a><a href="#">▥ <span>Financeiro</span></a>
+  <a href="{{ url_for('pagina_servicos') }}">◇ <span>Serviços</span></a><a class="active" href="{{ url_for('pagina_atendimentos') }}">✦ <span>Atendimentos</span></a><a href="#">▥ <span>Financeiro</span></a><a href="{{ url_for('repasses.pagina_repasses') }}">⇄ <span>Repasses</span></a>
       <a href="{{ url_for('perfil') }}">⚙ <span>Minha conta</span></a>
     </nav>
     <a class="logout" href="{{ url_for('logout') }}">↪ <span>Sair</span></a>
