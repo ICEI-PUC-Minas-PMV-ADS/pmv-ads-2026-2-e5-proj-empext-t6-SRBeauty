@@ -553,9 +553,9 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
 |---|---|---|
 | CT-1 | Aprovado | Cadastro e login realizados com sucesso, conforme comportamento esperado. |
 | CT-2 | Aprovado | A visualização da disponibilidade de horários das profissionais ocorreu conforme o esperado, considerando a jornada de trabalho e os registros existentes. |
-| CT-3 | Aprovado | O agendamento de atendimento foi realizado com sucesso e o respectivo horário passou a constar como ocupado na agenda da profissional. |
+| CT-3 | Aprovado | O agendamento de atendimento foi realizado com sucesso e o respectivo horário de atendimento passou a constar como ocupado na agenda da profissional. |
 | CT-4 | Aprovado | O bloqueio de conflito de horários funcionou perfeitamente, impedindo duplicidades para a mesma profissional no mesmo horário. |
-| CT-5 | Aprovado | O registro do atendimento realizado foi concluído com sucesso, salvando corretamente o tipo de serviço e a forma de pagamento informada. |
+| CT-5 | Aprovado | O registro do atendimento realizado foi concluído com sucesso, salvando corretamente o tipo de serviço e a forma de pagamento no qual informada. |
 | CT-6 | Aprovado | A forma de pagamento em cartão e o registro da taxa da maquininha foram processados e salvos adequadamente pelo sistema. |
 | CT-7 | [Aprovado/Reprovado] | [Observação] |
 | CT-8 | [Aprovado/Reprovado] | [Observação] |
