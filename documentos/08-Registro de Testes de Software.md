@@ -158,11 +158,23 @@ https://github.com/user-attachments/assets/b83e0691-c6b4-4464-ab34-fedbef6e13b3
 - Exibição do valor destinado ao salão;
 - Conferência dos valores calculados.
 
-**Responsável:** [Nome do integrante]
+**Responsável:** Flávia Sergina Rodrigues
 
-**Evidência:**
+**Evidência 1:**
 
-[Inserir imagem ou vídeo do teste]
+<img width="1241" alt="Evidência 1" src="https://github.com/user-attachments/assets/f854a74e-fbb7-485f-9e2b-f9b0b2a75ee6" />
+
+**Evidência 2:**
+
+<img width="1241" alt="Evidência 2" src="https://github.com/user-attachments/assets/89f199ce-d173-4d70-9e80-0068774a6ba0" />
+
+**Evidência 3:**
+
+<img width="1241" alt="Evidência 3" src="https://github.com/user-attachments/assets/8e018415-2138-49d0-bfda-8b9f40ad0fd4" />
+
+**Evidência 4:**
+
+<img width="1241" alt="Evidência 4" src="https://github.com/user-attachments/assets/1b601aa1-2474-4f7d-a45c-0415300dadf9" />
 
 <hr>
 
