@@ -114,10 +114,77 @@ class AgendaApiTestCase(unittest.TestCase):
             service_id, at="2026-10-09T13:00:00Z"
         )
         self.assertEqual(same_minute_other_offset.status_code, 409)
+        self.assertIn("atendimento nesse intervalo", same_minute_other_offset.json["erro"].lower())
         overlap = self.create_appointment(service_id, at="2026-10-09T10:30:00-03:00")
         self.assertEqual(overlap.status_code, 409)
+        self.assertIn("atendimento nesse intervalo", overlap.json["erro"].lower())
         exact_end = self.create_appointment(service_id, at="2026-10-09T11:00:00-03:00")
         self.assertEqual(exact_end.status_code, 201)
+        appointments = self.client.get("/api/atendimentos").json
+        self.assertEqual([item["id"] for item in appointments], [first.json["id"], exact_end.json["id"]])
+        self.assertEqual(appointments[0]["agendado_para"], first.json["agendado_para"])
+
+    def test_daily_and_weekly_agenda_reports_available_periods_and_occupied_hours(self):
+        self.login_as(4)
+        self.client.post(
+            "/api/horarios",
+            json={"profissional_id": 2, "dia_semana": 4, "inicio": "09:00", "fim": "12:00"},
+        )
+        service_id = self.create_service(duration=60)
+        appointment = self.create_appointment(service_id, at="2026-10-09T10:00:00-03:00")
+        self.assertEqual(appointment.status_code, 201)
+
+        daily = self.client.get(
+            "/api/agenda/diaria?data=2026-10-09&profissional_id=2"
+        )
+        self.assertEqual(daily.status_code, 200)
+        self.assertEqual(daily.json["inicio"], "2026-10-09")
+        self.assertEqual(
+            daily.json["disponibilidades"],
+            [
+                {"data": "2026-10-09", "profissional_id": 2, "inicio": "09:00", "fim": "10:00"},
+                {"data": "2026-10-09", "profissional_id": 2, "inicio": "11:00", "fim": "12:00"},
+            ],
+        )
+        self.assertEqual(
+            [(event["inicio"], event["fim"]) for event in daily.json["eventos"]],
+            [("2026-10-09T13:00:00+00:00", "2026-10-09T14:00:00+00:00")],
+        )
+
+        weekly = self.client.get(
+            "/api/agenda/semanal?semana=2026-10-09&profissional_id=2"
+        )
+        self.assertEqual(weekly.status_code, 200)
+        self.assertEqual((weekly.json["inicio"], weekly.json["fim"]), ("2026-10-05", "2026-10-11"))
+        self.assertEqual(weekly.json["disponibilidades"], daily.json["disponibilidades"])
+
+        no_scale = self.client.get(
+            "/api/agenda/diaria?data=2026-10-10&profissional_id=2"
+        )
+        self.assertEqual(no_scale.status_code, 200)
+        self.assertEqual(no_scale.json["disponibilidades"], [])
+        self.assertEqual(
+            self.client.get("/api/agenda/diaria?data=invalid").status_code,
+            400,
+        )
+
+    def test_agenda_reports_no_free_period_when_shift_is_fully_occupied(self):
+        self.login_as(4)
+        self.client.post(
+            "/api/horarios",
+            json={"profissional_id": 2, "dia_semana": 4, "inicio": "09:00", "fim": "10:00"},
+        )
+        service_id = self.create_service(duration=60)
+        self.assertEqual(
+            self.create_appointment(service_id, at="2026-10-09T09:00:00-03:00").status_code,
+            201,
+        )
+
+        daily = self.client.get(
+            "/api/agenda/diaria?data=2026-10-09&profissional_id=2"
+        )
+        self.assertEqual(daily.status_code, 200)
+        self.assertEqual(daily.json["disponibilidades"], [])
 
     def test_schedule_enforces_day_and_lunch_gap_for_bookings(self):
         self.login_as(4)

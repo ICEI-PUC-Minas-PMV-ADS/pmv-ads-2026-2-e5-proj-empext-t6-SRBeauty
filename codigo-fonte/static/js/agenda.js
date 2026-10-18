@@ -153,10 +153,23 @@
         const professionalEvents = dayEvents.filter((event) => (
           event.profissional_id === professional.id
         ));
+        const availablePeriods = payload.disponibilidades.filter((period) => (
+          period.data === date && period.profissional_id === professional.id
+        ));
+        if (professionalSchedules.length) {
+          const availability = document.createElement("p");
+          availability.className = "agenda-availability";
+          availability.textContent = availablePeriods.length
+            ? `Períodos livres: ${availablePeriods.map((period) => `${period.inicio}–${period.fim}`).join(" · ")}`
+            : "Sem períodos livres nesta escala.";
+          card.append(availability);
+        }
         if (!professionalEvents.length) {
           const empty = document.createElement("p");
           empty.className = "agenda-empty";
-          empty.textContent = "Nenhum atendimento ou bloqueio.";
+          empty.textContent = professionalSchedules.length
+            ? "Nenhum atendimento ou bloqueio."
+            : "Nenhum atendimento, bloqueio ou escala.";
           card.append(empty);
         }
         professionalEvents.forEach((event) => {

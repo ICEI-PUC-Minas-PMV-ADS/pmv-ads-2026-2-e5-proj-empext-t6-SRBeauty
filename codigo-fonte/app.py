@@ -455,11 +455,45 @@ def agenda_range_events(start_date, end_date, professional_ids):
                 "observacoes": appointment.observacoes,
             })
     events.sort(key=lambda item: item["inicio"])
+    availability = []
+    for offset in range((end_date - start_date).days + 1):
+        selected_day = start_date + timedelta(days=offset)
+        for schedule in schedules:
+            if schedule.dia_semana != selected_day.weekday():
+                continue
+            shift_start = datetime.combine(selected_day, schedule.inicio, SALON_TIMEZONE)
+            shift_end = datetime.combine(selected_day, schedule.fim, SALON_TIMEZONE)
+            cursor = shift_start
+            busy_periods = []
+            for event in events:
+                if event["profissional_id"] != schedule.profissional_id:
+                    continue
+                busy_start = max(datetime.fromisoformat(event["inicio"]).astimezone(SALON_TIMEZONE), shift_start)
+                busy_end = min(datetime.fromisoformat(event["fim"]).astimezone(SALON_TIMEZONE), shift_end)
+                if busy_start < busy_end:
+                    busy_periods.append((busy_start, busy_end))
+            for busy_start, busy_end in sorted(busy_periods):
+                if busy_start > cursor:
+                    availability.append({
+                        "data": selected_day.isoformat(),
+                        "profissional_id": schedule.profissional_id,
+                        "inicio": cursor.strftime("%H:%M"),
+                        "fim": busy_start.strftime("%H:%M"),
+                    })
+                cursor = max(cursor, busy_end)
+            if cursor < shift_end:
+                availability.append({
+                    "data": selected_day.isoformat(),
+                    "profissional_id": schedule.profissional_id,
+                    "inicio": cursor.strftime("%H:%M"),
+                    "fim": shift_end.strftime("%H:%M"),
+                })
     return {
         "inicio": start_date.isoformat(),
         "fim": end_date.isoformat(),
         "eventos": events,
         "horarios": [schedule_json(item) for item in schedules],
+        "disponibilidades": availability,
         "profissionais": [
             {"id": user.id, "nome": user.nome}
             for user in User.query.filter(User.id.in_(professional_ids)).order_by(User.nome).all()

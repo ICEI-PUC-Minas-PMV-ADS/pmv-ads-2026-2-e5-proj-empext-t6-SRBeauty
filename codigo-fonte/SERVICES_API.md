@@ -93,7 +93,7 @@ Bloqueios usam `inicio` e `fim` ISO 8601 com fuso e `motivo` (até 120 caractere
 }
 ```
 
-As visões diárias e semanais retornam `inicio`, `fim`, `eventos`, `horarios` e `profissionais`. Cada evento indica `tipo` (`atendimento` ou `bloqueio`) e seu período. Sem `profissional_id`, a proprietária recebe as profissionais; a profissional autenticada recebe somente seus próprios dados. Datas não informadas usam a data atual em `America/Sao_Paulo`.
+As visões diárias e semanais retornam `inicio`, `fim`, `eventos`, `horarios`, `disponibilidades` e `profissionais`. Cada evento indica `tipo` (`atendimento` ou `bloqueio`) e seu período. `disponibilidades` contém períodos livres por data e profissional, subtraindo atendimentos e bloqueios de cada intervalo da escala; os horários usam `HH:MM` local. Esses períodos não são específicos a um serviço: a criação do atendimento ainda valida se a duração total dos serviços cabe no intervalo. Sem `profissional_id`, a proprietária recebe as profissionais; a profissional autenticada recebe somente seus próprios dados. Datas não informadas usam a data atual em `America/Sao_Paulo`.
 
 ### Serviços
 
