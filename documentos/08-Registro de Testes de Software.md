@@ -23,6 +23,10 @@ Os testes funcionais realizados na aplicação web **SR Beauty** são descritos 
 **Evidência:**
 
 https://github.com/user-attachments/assets/b83e0691-c6b4-4464-ab34-fedbef6e13b3
+<img width="1360" height="593" alt="cadastro sr beauty" src="https://github.com/user-attachments/assets/36115239-7bf6-4997-8cc5-290e22d7546a" />
+<img width="1365" height="646" alt="login sr beauty" src="https://github.com/user-attachments/assets/990af364-5df9-418b-b90e-6f0d300aedbb" />
+<img width="1365" height="595" alt="profissional sr beauty" src="https://github.com/user-attachments/assets/78d8015a-e8e7-4ca7-bb37-0759dccfe081" />
+
 
 <hr>
 
