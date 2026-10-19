@@ -17,7 +17,8 @@ Os testes funcionais realizados na aplicação web **SR Beauty** são descritos 
 - Login com credenciais válidas;
 - Impedimento de acesso com credenciais inválidas;
 - Direcionamento do usuário para a área correspondente ao seu perfil.
-
+  
+**Responsável:** Luiz Guilherme Martins Franchim
 **Responsável:** Pâmella Almeida da Silva
 
 **Evidência:**
