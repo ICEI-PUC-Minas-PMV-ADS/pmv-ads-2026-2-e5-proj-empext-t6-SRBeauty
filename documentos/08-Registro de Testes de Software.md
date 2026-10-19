@@ -56,7 +56,7 @@ https://github.com/user-attachments/assets/b83e0691-c6b4-4464-ab34-fedbef6e13b3
 - Identificação dos horários já ocupados;
 - Exibição correta da agenda conforme o período selecionado.
 
-**Responsável:** Júlio César Villaça (teste realizado para Virgílio Zenith)
+**Responsável:** Júlio César Villaça / Luiz Guilherme Martins Franchim(teste realizado para Virgílio Zenith)
 
 **Evidências da execução funcional na interface (base SQLite temporária e isolada):**
 
