@@ -46,7 +46,8 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O cadastro deve ser realizado com sucesso e o usuário deve conseguir acessar o sistema utilizando as credenciais cadastradas.</td>
-   <td>Luiz Guilherme Martins Franchim/Pâmella Almeida da Silva</td>
+   <td>Luiz Guilherme Martins Franchim
+    Pâmella Almeida da Silva</td>
  </tr>
 </table>
 
