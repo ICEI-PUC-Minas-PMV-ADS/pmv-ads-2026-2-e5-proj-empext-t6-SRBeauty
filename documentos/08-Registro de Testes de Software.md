@@ -295,23 +295,30 @@ Foi criado pela interface um primeiro atendimento válido para **20/10/2026 às 
 
 <hr>
 
-13. CT-13: Verificar o funcionamento do cadastro de profissionais.
+13. CT-13: Verificar a configuração dos horários de trabalho das profissionais.
 
-**Objetivo:** Verificar se a proprietária consegue cadastrar e consultar as profissionais que trabalham no salão.
+**Objetivo:** Verificar se a proprietária consegue cadastrar, consultar, alterar e remover os horários de trabalho de uma profissional e se esses horários são considerados na disponibilidade apresentada na agenda.
 
 **Verificações:**
-- Preenchimento dos dados da profissional;
-- Validação dos campos obrigatórios;
-- Salvamento do cadastro;
-- Consulta da profissional cadastrada;
-- Alteração das informações;
-- Ativação ou desativação da profissional, quando aplicável.
+- Seleção de uma profissional existente;
+- Cadastro de um ou mais períodos de trabalho por dia;
+- Consulta dos horários cadastrados;
+- Alteração e remoção de um horário;
+- Rejeição de períodos sobrepostos;
+- Exibição dos períodos livres na agenda conforme a escala e os atendimentos;
+- Ausência de disponibilidade em dias sem escala.
 
-**Responsável:** [Nome do integrante]
+**Responsável:** Júlio César Villaça Cardoso
 
-**Evidência:**
+**Execução funcional automatizada:** os testes foram realizados com o cliente Flask e banco SQLite temporário em memória, sem alterar a base de desenvolvimento. Como proprietária autenticada, foi configurada uma profissional de teste. A escala de sexta-feira foi cadastrada com os períodos **09:00–12:00** e **13:00–18:00**; a tentativa de inserir um período sobreposto (**11:30–14:00**) foi recusada com HTTP 409. O primeiro período foi alterado para **08:30–12:00** e removido, mantendo o segundo período. Também foi testado o cadastro em lote de segunda a sábado, das **09:00 às 18:00**; uma tentativa conflitante que incluía segunda-feira foi recusada integralmente, sem salvar a escala de domingo.
 
-[Inserir imagem ou vídeo do teste]
+Na consulta da agenda de **09/10/2026**, com escala de **09:00–12:00** e atendimento ocupado entre **10:00–11:00**, a disponibilidade retornada foi **09:00–10:00** e **11:00–12:00**. Para **10/10/2026**, sem escala, a agenda não retornou períodos livres. A consulta semanal também apresentou os horários configurados.
+
+**Evidência da interface web (base SQLite temporária e isolada):** a captura mostra a escala cadastrada, o intervalo entre períodos, a disponibilidade calculada e o atendimento ocupado.
+
+![Agenda diária da profissional de teste, exibindo escala, períodos livres e atendimento ocupado](evidencias/CT-13-agenda-profissional.png)
+
+**Resultado do CT-13: Aprovado.** Os três testes automatizados direcionados passaram, e o fluxo foi conferido visualmente na interface usando dados sintéticos isolados.
 
 <hr>
 
@@ -375,16 +382,24 @@ Após a execução dos casos de teste, os resultados deverão ser registrados pe
 | CT-10 | [Aprovado/Reprovado] | [Observação] |
 | CT-11 | [Aprovado/Reprovado] | [Observação] |
 | CT-12 | [Aprovado/Reprovado] | [Observação] |
-| CT-13 | [Aprovado/Reprovado] | [Observação] |
+| CT-13 | Aprovado | Testes automatizados em SQLite isolado confirmaram cadastro, consulta, alteração e remoção de horários, rejeição de sobreposição, gravação atômica em lote e reflexo da escala e de atendimento ocupado na disponibilidade diária e semanal. Evidência da interface em `evidencias/CT-13-agenda-profissional.png`. |
 | CT-14 | [Aprovado/Reprovado] | [Observação] |
 | CT-15 | [Aprovado/Reprovado] | [Observação] |
 
-## Execução automatizada registrada para CT-3 e CT-5
+## Execução automatizada registrada para CT-3, CT-5 e CT-13
 
 Comando dos testes direcionados:
 
 ```powershell
 python -m unittest tests.test_agenda_api.AgendaApiTestCase.test_daily_and_weekly_agenda_reports_available_periods_and_occupied_hours tests.test_agenda_api.AgendaApiTestCase.test_agenda_reports_no_free_period_when_shift_is_fully_occupied tests.test_agenda_api.AgendaApiTestCase.test_appointment_rejects_overlapping_duration_and_accepts_adjacent_slot -v
+```
+
+Resultado: **3 testes passaram**.
+
+Comando dos testes direcionados de CT-13:
+
+```powershell
+python -m unittest tests.test_agenda_api.AgendaApiTestCase.test_schedule_crud_multiple_intervals_and_overlap_validation tests.test_agenda_api.AgendaApiTestCase.test_schedule_batch_creates_same_interval_for_multiple_weekdays_atomically tests.test_agenda_api.AgendaApiTestCase.test_daily_and_weekly_agenda_reports_available_periods_and_occupied_hours -v
 ```
 
 Resultado: **3 testes passaram**.
