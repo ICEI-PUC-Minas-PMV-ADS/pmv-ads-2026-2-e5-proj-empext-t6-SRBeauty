@@ -555,8 +555,8 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
 | CT-5 | Aprovado | O bloqueio de conflito de horários funcionou perfeitamente, impedindo duplicidades para a mesma profissional no mesmo horário. |
 | CT-6 | Aprovado | O registro do atendimento realizado foi concluído com sucesso, salvando corretamente o tipo de serviço e a forma de pagamento no qual informada. |
 | CT-7 | Aprovado | A forma de pagamento em cartão e o registro da taxa da maquininha foram processados e salvos adequadamente pelo sistema. |
-| CT-8 | [Aprovado/Reprovado] | [Observação] |
-| CT-9 | [Aprovado/Reprovado] | [Observação] |
+| CT-8 | Aprovado | Registro de repasse realizado com sucesso. |
+| CT-9 | Aprovado |	Confirmação de pagamento de repasses executado com sucesso. |
 | CT-10 | [Aprovado/Reprovado] | [Observação] |
 | CT-11 | [Aprovado/Reprovado] | [Observação] |
 | CT-12 | [Aprovado/Reprovado] | [Observação] |
