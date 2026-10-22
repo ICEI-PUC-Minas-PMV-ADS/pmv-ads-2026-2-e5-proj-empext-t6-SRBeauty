@@ -370,9 +370,9 @@ Após a execução dos casos de teste, os resultados deverão ser registrados pe
 | CT-1 | Aprovado | Cadastro e login realizados com sucesso, conforme comportamento esperado. |
 | CT-2 | [Aprovado/Reprovado] | [Observação] |
 | CT-3 | Aprovado | Interface e testes automatizados confirmaram escala, períodos livres, período ocupado, dia sem escala, escala totalmente ocupada e rejeição de data inválida. Evidência em `evidencias/CT-3-agenda.png`. |
-| CT-4 | [Aprovado/Reprovado] | [Observação] |
+| CT-4 | Aprovado | O agendamento de atendimento foi realizado com sucesso e o respectivo horário de atendimento passou a constar como ocupado na agenda da profissional. |
 | CT-5 | Aprovado | Interface rejeitou duplicidade com HTTP 409 e manteve o primeiro registro; testes automatizados confirmaram sobreposição rejeitada e horário adjacente aceito. Concorrência simultânea não foi testada. Evidências em `evidencias/CT-5-*.png`. |
-| CT-6 | [Aprovado/Reprovado] | [Observação] |
+| CT-6 | Aprovado | O registro do atendimento realizado foi concluído com sucesso, salvando corretamente o tipo de serviço e a forma de pagamento no qual informada. |
 | CT-7 | [Aprovado/Reprovado] | [Observação] |
 | CT-8 | Aprovado | Registro de repasse realizado com sucesso |
 | CT-9 | Aprovado | Confirmação de pagamento de repasses executado com sucesso |
