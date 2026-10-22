@@ -248,11 +248,10 @@ Foi criado pela interface um primeiro atendimento válido para **20/10/2026 às 
 - Informações de valor e data;
 - Salvamento e consulta das despesas cadastradas.
 
-**Responsável:** [Nome do integrante]
+**Responsável:** Luiz Guilherme Martins Franchim
 
-**Evidência:**
+**Evidência:** ![Evidencia](img/CT-10.png)
 
-[Inserir imagem ou vídeo do teste]
 
 <hr>
 
