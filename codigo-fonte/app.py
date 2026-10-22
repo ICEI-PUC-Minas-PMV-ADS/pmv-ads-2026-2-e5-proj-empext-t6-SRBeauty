@@ -1223,6 +1223,17 @@ def logout():
     return redirect(url_for("login"))
 
 
+from Repasses.blueprint import create_repasses_blueprint
+
+repasses_blueprint, CategoriaRepasse, RepasseRegistro = create_repasses_blueprint(
+    db,
+    User,
+    Appointment,
+    AppointmentService,
+)
+app.register_blueprint(repasses_blueprint)
+
+
 @app.cli.command("init-db")
 def init_db():
     db.create_all()

@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SR Beauty | Repasses</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/module.css') }}">
+  <style>
+    .repasse-page { max-width: 1440px; }
+    .repasse-toolbar { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; margin-bottom: 18px; }
+    .repasse-period { display: grid; gap: 6px; color: var(--muted); font-size: 12px; }
+    .repasse-period input, .repasse-config-form select { min-height: 42px; padding: 0 12px; border: 1px solid #eee5e2; border-radius: 8px; background: #fff; color: var(--ink); font: 400 12px Montserrat, sans-serif; }
+    .repasse-actions { display: flex; flex-wrap: wrap; gap: 9px; }
+    .repasse-rules { display: flex; flex-wrap: wrap; gap: 9px; margin: 0 0 18px; }
+    .repasse-rule { padding: 8px 11px; border-radius: 8px; background: var(--soft); color: #80514d; font-size: 11px; }
+    .repasse-rule strong { margin-left: 6px; font-weight: 600; }
+    .repasse-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0 0 18px; }
+    .repasse-cards article { padding: 19px 20px; border: 1px solid #eee5e2; border-radius: 14px; background: #fff; }
+    .repasse-cards span { display: block; color: var(--muted); font-size: 11px; }
+    .repasse-cards strong { display: block; margin-top: 6px; font-size: 23px; font-weight: 500; }
+    .repasse-table .selection { width: 17px; height: 17px; accent-color: var(--rose); vertical-align: middle; }
+    .repasse-row-actions { display: flex; gap: 6px; }
+    .repasse-row-actions .icon-button { width: 34px; height: 34px; }
+    .repasse-status { display: inline-flex; padding: 6px 10px; border-radius: 20px; font-size: 10px; white-space: nowrap; }
+    .repasse-status.pending { background: #f7eddf; color: #805b2d; }
+    .repasse-status.paid { background: #e7f3eb; color: #44715a; }
+    .repasse-batch { display: flex; justify-content: flex-end; margin-top: 16px; }
+    .repasse-config-form { display: grid; gap: 14px; }
+    .repasse-config-form label { display: grid; gap: 6px; font-size: 11px; font-weight: 500; }
+    .repasse-config-form select { width: 100%; }
+    .repasse-message { margin: 0 0 14px; }
+    @media (max-width: 760px) {
+      .repasse-toolbar { align-items: stretch; flex-direction: column; }
+      .repasse-period input { width: 100%; }
+      .repasse-actions { display: grid; grid-template-columns: 1fr; }
+      .repasse-cards { grid-template-columns: 1fr; gap: 10px; }
+      .repasse-cards article { padding: 16px; }
+      .repasse-batch .button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="aside-brand">
+      <div class="aside-logo-wrap"><img class="aside-logo" src="{{ url_for('documentos_img', filename='logo.png') }}" alt="SR Beauty"></div>
+      <div class="aside-subtitle"><span>SIMONE RODRIGUES</span><span>ESPAÇO DE BELEZA</span></div>
+    </div>
+    <nav aria-label="Navegação principal">
+      <a href="{{ url_for('home') }}">⌂ <span>Início</span></a>
+      <a href="#">▣ <span>Agendamentos</span></a>
+      <a href="#">♙ <span>Clientes</span></a>
+      <a href="#">✂ <span>Profissionais</span></a>
+      <a href="{{ url_for('pagina_servicos') }}">◇ <span>Serviços</span></a>
+      <a href="{{ url_for('pagina_atendimentos') }}">✦ <span>Atendimentos</span></a>
+      <a href="#">▥ <span>Financeiro</span></a>
+      <a class="active" href="{{ url_for('repasses.pagina_repasses') }}" aria-current="page">⇄ <span>Repasses</span></a>
+      <a href="{{ url_for('perfil') }}">⚙ <span>Minha conta</span></a>
+    </nav>
+    <a class="logout" href="{{ url_for('logout') }}">↪ <span>Sair</span></a>
+  </aside>
+
+  <main class="module-page repasse-page">
+    <header>
+      <div><h1>Repasses</h1><p>Valores de atendimentos concluídos destinados ao salão.</p></div>
+      <a class="profile-link" href="{{ url_for('perfil') }}">
+        <div class="profile"><span>{{ current_user.nome[0]|upper }}</span><div>{{ current_user.nome }}<small>{{ current_user.tipo_label }}</small></div></div>
+      </a>
+    </header>
+
+    <div class="notice info repasse-message" id="operationNotice" role="status" aria-live="polite" hidden></div>
+    <div class="notice info repasse-message" id="categoryNotice" role="status" aria-live="polite" hidden></div>
+
+    <section class="module-panel">
+      <div class="panel-heading">
+        <div><h2>Fechamento semanal</h2><p>Selecione os repasses recebidos para confirmar em lote.</p></div>
+        <button class="button button-secondary" id="configureCategories" type="button">Configurar profissionais</button>
+      </div>
+
+      <div class="repasse-toolbar">
+        <label class="repasse-period" for="repasseWeekInput">Semana iniciada em
+          <input id="repasseWeekInput" type="date" required>
+        </label>
+        <div class="repasse-actions">
+          <button class="button button-secondary" id="generateRepasses" type="button">Gerar repasses da semana</button>
+          <button class="button button-secondary" id="exportCsv" type="button">Exportar CSV</button>
+          <button class="button button-primary" id="confirmBatch" type="button" disabled>Confirmar selecionados</button>
+        </div>
+      </div>
+
+      <div class="repasse-rules" aria-label="Percentuais aplicados aos serviços">
+        <div class="repasse-rule">Manicure<strong>20% para o salão</strong></div>
+        <div class="repasse-rule">Cabeleireira<strong>30% para o salão</strong></div>
+      </div>
+
+      <div class="repasse-cards">
+        <article><span>Repasse pendente</span><strong id="pendingTotal">R$ 0,00</strong></article>
+        <article><span>Recebido pelo salão</span><strong id="paidTotal">R$ 0,00</strong></article>
+        <article><span>Profissionais pendentes</span><strong id="pendingCount">0</strong></article>
+      </div>
+
+      <div class="panel-heading"><div><h2>Pendentes e pagos</h2></div></div>
+      <div class="table-wrap">
+        <table class="repasse-table">
+          <thead>
+            <tr>
+              <th><input class="selection" id="selectAll" type="checkbox" aria-label="Selecionar todos os repasses pendentes"></th>
+              <th>Profissional</th><th>Serviços</th><th>Base de cálculo</th><th>Repasse ao salão</th><th>Status</th><th>Confirmado em</th><th class="actions-heading">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="repasseRows"><tr><td colspan="8" class="table-message">Carregando repasses…</td></tr></tbody>
+        </table>
+      </div>
+      <div class="repasse-batch"><button class="button button-primary" id="confirmBatchBottom" type="button" disabled>Confirmar pagamentos selecionados</button></div>
+    </section>
+  </main>
+
+  <dialog class="module-dialog" id="repasseDialog" aria-labelledby="repasseDialogTitle">
+    <form id="repasseForm">
+      <div class="dialog-heading">
+        <div><h2 id="repasseDialogTitle">Editar repasse</h2><p>Atualize os dados e o status deste registro.</p></div>
+        <button class="icon-button" id="closeRepasseDialog" type="button" aria-label="Fechar">×</button>
+      </div>
+      <input id="repasseId" name="id" type="hidden">
+      <div class="form-grid">
+        <label class="field-full">Profissional<select id="editProfessional" name="profissional_id" required></select></label>
+        <label>Quantidade de serviços<input id="editQuantity" name="quantidade_servicos" type="number" min="1" step="1" required></label>
+        <label>Status<select id="editStatus" name="status" required><option value="pendente">Pendente</option><option value="pago">Pago</option></select></label>
+        <label>Base de cálculo (R$)<input id="editBase" name="base_calculo" type="number" min="0" step="0.01" required></label>
+        <label>Valor do repasse (R$)<input id="editAmount" name="valor_repasse" type="number" min="0" step="0.01" required></label>
+      </div>
+      <div class="form-error" id="repasseFormError" role="alert" hidden></div>
+      <div class="dialog-actions"><button class="button button-secondary" id="cancelRepasseDialog" type="button">Voltar</button><button class="button button-primary" type="submit">Salvar alterações</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="module-dialog" id="categoryDialog" aria-labelledby="categoryDialogTitle">
+    <form id="categoryForm" class="dialog-content repasse-config-form">
+      <div class="dialog-heading">
+        <div><h2 id="categoryDialogTitle">Configurar profissional</h2><p>A categoria define o percentual aplicado.</p></div>
+        <button class="icon-button" id="closeDialog" type="button" aria-label="Fechar">×</button>
+      </div>
+      <label>Profissional<select id="professionalSelect" name="profissional_id" required></select></label>
+      <label>Categoria<select id="categorySelect" name="categoria" required><option value="manicure">Manicure · 20%</option><option value="cabeleireira">Cabeleireira · 30%</option></select></label>
+      <div class="form-error" id="categoryError" role="alert" hidden></div>
+      <div class="dialog-actions"><button class="button button-secondary" id="cancelDialog" type="button">Cancelar</button><button class="button button-primary" type="submit">Salvar categoria</button></div>
+    </form>
+  </dialog>
+
+  <script>
+    const weekInput = document.getElementById("repasseWeekInput");
+    const categoryDialog = document.getElementById("categoryDialog");
+    const currency = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+    let repasseData = [];
+    let profissionais = [];
+    let toastTimer;
+
+    function localIsoDate(date = new Date()) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function mondayOf(value) {
+      const date = new Date(`${value}T12:00:00`);
+      date.setDate(date.getDate() - ((date.getDay() + 6) % 7));
+      return localIsoDate(date);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[character]);
+    }
+
+    async function api(path, options = {}) {
+      const response = await fetch(path, {
+        ...options,
+        headers: { "Content-Type": "application/json", ...(options.headers || {}) }
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.erro || "Não foi possível concluir a operação.");
+      return data;
+    }
+
+    function mostrarAviso(elementId, message, kind = "info") {
+      const element = document.getElementById(elementId);
+      element.textContent = message;
+      element.className = `notice ${kind} repasse-message`;
+      element.hidden = !message;
+    }
+
+    function mostrarToast(message) {
+      mostrarAviso("operationNotice", message, "info");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => mostrarAviso("operationNotice", ""), 3500);
+    }
+
+    function atualizarAcaoLote() {
+      const selecionados = document.querySelectorAll(".repasse-check:checked").length;
+      document.getElementById("confirmBatch").disabled = selecionados === 0;
+      document.getElementById("confirmBatchBottom").disabled = selecionados === 0;
+      const pendentes = document.querySelectorAll(".repasse-check");
+      const todos = document.getElementById("selectAll");
+      todos.checked = pendentes.length > 0 && selecionados === pendentes.length;
+      todos.indeterminate = selecionados > 0 && selecionados < pendentes.length;
+    }
+
+    async function carregarRepasses() {
+      const rows = document.getElementById("repasseRows");
+      try {
+        const report = await api(`/api/repasses?semana_inicio=${weekInput.value}`);
+        repasseData = report.itens;
+        const pendentes = repasseData.filter(item => item.status === "pendente");
+        document.getElementById("pendingTotal").textContent = currency.format(report.total_pendente);
+        document.getElementById("paidTotal").textContent = currency.format(report.total_pago);
+        document.getElementById("pendingCount").textContent = pendentes.length;
+        mostrarAviso(
+          "categoryNotice",
+          report.sem_categoria.length
+            ? `Configure a categoria de: ${report.sem_categoria.map(item => item.profissional).join(", ")}.`
+            : ""
+        );
+          rows.innerHTML = repasseData.length ? repasseData.map(item => `
+          <tr>
+            <td>${item.status === "pendente" ? `<input class="selection repasse-check" type="checkbox" value="${item.id}" aria-label="Selecionar repasse de ${escapeHtml(item.profissional)}">` : ""}</td>
+            <td><strong>${escapeHtml(item.profissional)}</strong></td>
+            <td>${item.quantidade_servicos}</td>
+            <td>${currency.format(item.base_calculo)}</td>
+            <td><strong>${currency.format(item.valor_repasse)}</strong></td>
+                <td><span class="repasse-status ${item.status === "pago" ? "paid" : item.status === "cancelado" ? "cancelled" : "pending"}">${item.status === "pago" ? "Pago ao salão" : item.status === "cancelado" ? "Cancelado" : "Pendente"}</span></td>
+            <td>${item.pago_em ? new Date(item.pago_em).toLocaleString("pt-BR") : "—"}</td>
+                <td><div class="repasse-row-actions">
+                  <button class="icon-button repasse-edit" type="button" data-id="${item.id}" aria-label="Editar repasse de ${escapeHtml(item.profissional)}" title="Editar">✎</button>
+                  ${item.status !== "cancelado" ? `<button class="icon-button repasse-delete" type="button" data-id="${item.id}" aria-label="Cancelar repasse de ${escapeHtml(item.profissional)}" title="Cancelar">×</button>` : ""}
+                  <button class="icon-button repasse-permanent-delete" type="button" data-id="${item.id}" aria-label="Excluir definitivamente repasse de ${escapeHtml(item.profissional)}" title="Excluir definitivamente">⌫</button>
+                </div></td>
+          </tr>`).join("") : '<tr><td colspan="7" class="table-message">Nenhum atendimento concluído nesta semana.</td></tr>';
+        document.querySelectorAll(".repasse-check").forEach(input => input.addEventListener("change", atualizarAcaoLote));
+          document.querySelectorAll(".repasse-edit").forEach(button => button.addEventListener("click", () => editarRepasse(Number(button.dataset.id))));
+          document.querySelectorAll(".repasse-delete").forEach(button => button.addEventListener("click", () => cancelarRepasse(Number(button.dataset.id))));
+        document.querySelectorAll(".repasse-permanent-delete").forEach(button => button.addEventListener("click", () => excluirRepassePermanentemente(Number(button.dataset.id))));
+        atualizarAcaoLote();
+      } catch (error) {
+          rows.innerHTML = `<tr><td colspan="8" class="table-message">${escapeHtml(error.message)}</td></tr>`;
+      }
+    }
+
+    async function carregarProfissionais() {
+      const select = document.getElementById("professionalSelect");
+      const saveButton = document.querySelector('#categoryForm button[type="submit"]');
+      try {
+        profissionais = await api("/api/repasses/profissionais");
+        select.innerHTML = profissionais.length
+          ? profissionais.map(item => `<option value="${item.id}">${escapeHtml(item.nome)}${item.categoria ? ` · ${item.categoria === "manicure" ? "Manicure" : "Cabeleireira"}` : " · sem categoria"}</option>`).join("")
+          : '<option value="">Nenhuma profissional cadastrada</option>';
+        select.disabled = profissionais.length === 0;
+        const editProfessional = document.getElementById("editProfessional");
+        editProfessional.innerHTML = profissionais.length
+          ? profissionais.map(item => `<option value="${item.id}">${escapeHtml(item.nome)}</option>`).join("")
+          : '<option value="">Nenhuma profissional cadastrada</option>';
+        saveButton.disabled = profissionais.length === 0;
+        atualizarCategoriaSelecionada();
+      } catch (error) {
+        mostrarAviso("categoryError", error.message, "error");
+      }
+    }
+
+    function atualizarCategoriaSelecionada() {
+      const profissional = profissionais.find(item => String(item.id) === document.getElementById("professionalSelect").value);
+      if (profissional?.categoria) document.getElementById("categorySelect").value = profissional.categoria;
+    }
+
+    async function confirmarLote() {
+      const ids = [...document.querySelectorAll(".repasse-check:checked")].map(input => Number(input.value));
+      if (!ids.length) return;
+      const total = repasseData
+        .filter(item => ids.includes(item.id) && item.status === "pendente")
+        .reduce((sum, item) => sum + item.valor_repasse, 0);
+      if (!window.confirm(`Confirmar o recebimento de ${currency.format(total)} de ${ids.length} repasse(s)?`)) return;
+      try {
+        await api("/api/repasses/pagamentos-lote", {
+          method: "POST",
+          body: JSON.stringify({ semana_inicio: weekInput.value, repasses: ids })
+        });
+        mostrarToast(`${ids.length} repasse(s) confirmado(s): ${currency.format(total)}.`);
+        await carregarRepasses();
+      } catch (error) {
+        mostrarToast(error.message);
+      }
+    }
+
+    async function gerarRepasses() {
+      try {
+        const result = await api("/api/repasses/gerar", {
+          method: "POST",
+          body: JSON.stringify({ semana_inicio: weekInput.value })
+        });
+        mostrarToast(`${result.criados} repasse(s) gerado(s) para a semana.`);
+        await carregarRepasses();
+      } catch (error) {
+        mostrarToast(error.message);
+      }
+    }
+
+    function editarRepasse(repasseId) {
+      const registro = repasseData.find(item => item.id === repasseId);
+      if (!registro) return;
+      document.getElementById("repasseFormError").hidden = true;
+      document.getElementById("repasseId").value = registro.id;
+      document.getElementById("editProfessional").value = String(registro.profissional_id);
+      document.getElementById("editQuantity").value = registro.quantidade_servicos;
+      document.getElementById("editStatus").value = registro.status === "pago" ? "pago" : "pendente";
+      document.getElementById("editBase").value = registro.base_calculo.toFixed(2);
+      document.getElementById("editAmount").value = registro.valor_repasse.toFixed(2);
+      document.getElementById("repasseDialog").showModal();
+    }
+
+    async function cancelarRepasse(repasseId) {
+      if (!window.confirm("Cancelar este repasse? O registro será mantido no histórico.")) return;
+      try {
+        await api(`/api/repasses/${repasseId}`, { method: "DELETE" });
+        mostrarToast("Repasse cancelado e mantido no histórico.");
+        await carregarRepasses();
+      } catch (error) {
+        mostrarToast(error.message);
+      }
+    }
+
+    async function excluirRepassePermanentemente(repasseId) {
+      const registro = repasseData.find(item => item.id === repasseId);
+      if (!registro) return;
+      const message = `Excluir definitivamente o repasse de ${registro.profissional}, no valor de ${currency.format(registro.valor_repasse)}? Esta ação não pode ser desfeita.`;
+      if (!window.confirm(message)) return;
+      try {
+        await api(`/api/repasses/${repasseId}/definitivo`, { method: "DELETE" });
+        mostrarToast("Repasse excluído definitivamente.");
+        await carregarRepasses();
+      } catch (error) {
+        mostrarToast(error.message);
+      }
+    }
+
+    weekInput.addEventListener("change", () => {
+      weekInput.value = mondayOf(weekInput.value || localIsoDate());
+      carregarRepasses();
+    });
+    document.getElementById("selectAll").addEventListener("change", event => {
+      document.querySelectorAll(".repasse-check").forEach(input => { input.checked = event.target.checked; });
+      atualizarAcaoLote();
+    });
+    document.getElementById("confirmBatch").addEventListener("click", confirmarLote);
+    document.getElementById("confirmBatchBottom").addEventListener("click", confirmarLote);
+    document.getElementById("generateRepasses").addEventListener("click", gerarRepasses);
+    document.getElementById("exportCsv").addEventListener("click", () => {
+      window.location.href = `/api/repasses/relatorio.csv?semana_inicio=${weekInput.value}`;
+    });
+    document.getElementById("configureCategories").addEventListener("click", async () => {
+      document.getElementById("categoryError").hidden = true;
+      await carregarProfissionais();
+      categoryDialog.showModal();
+    });
+    document.getElementById("professionalSelect").addEventListener("change", atualizarCategoriaSelecionada);
+    document.getElementById("closeDialog").addEventListener("click", () => categoryDialog.close());
+    document.getElementById("cancelDialog").addEventListener("click", () => categoryDialog.close());
+        document.getElementById("closeRepasseDialog").addEventListener("click", () => document.getElementById("repasseDialog").close());
+        document.getElementById("cancelRepasseDialog").addEventListener("click", () => document.getElementById("repasseDialog").close());
+        document.getElementById("repasseForm").addEventListener("submit", async event => {
+          event.preventDefault();
+          const form = event.currentTarget;
+          const payload = Object.fromEntries(new FormData(form).entries());
+          const repasseId = payload.id;
+          delete payload.id;
+          payload.profissional_id = Number(payload.profissional_id);
+          payload.quantidade_servicos = Number(payload.quantidade_servicos);
+          try {
+            await api(`/api/repasses/${repasseId}`, { method: "PUT", body: JSON.stringify(payload) });
+            document.getElementById("repasseDialog").close();
+            mostrarToast("Repasse atualizado.");
+            await carregarRepasses();
+          } catch (error) {
+            mostrarAviso("repasseFormError", error.message, "error");
+          }
+        });
+    document.getElementById("categoryForm").addEventListener("submit", async event => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const payload = Object.fromEntries(new FormData(form).entries());
+      const profissionalId = payload.profissional_id;
+      delete payload.profissional_id;
+      try {
+        await api(`/api/repasses/profissionais/${profissionalId}/categoria`, {
+          method: "PUT",
+          body: JSON.stringify(payload)
+        });
+        categoryDialog.close();
+        mostrarToast("Categoria da profissional salva.");
+        await Promise.all([carregarProfissionais(), carregarRepasses()]);
+      } catch (error) {
+        mostrarAviso("categoryError", error.message, "error");
+      }
+    });
+
+    document.getElementById("todayLabel")?.replaceChildren();
+    document.getElementById("repasseWeekInput").value = mondayOf(localIsoDate());
+    document.getElementById("todayLabel")?.append(document.createTextNode(new Intl.DateTimeFormat("pt-BR", {
+      weekday: "long", day: "2-digit", month: "long", year: "numeric"
+    }).format(new Date())));
+    Promise.all([carregarRepasses(), carregarProfissionais()]);
+  </script>
+</body>
+</html>

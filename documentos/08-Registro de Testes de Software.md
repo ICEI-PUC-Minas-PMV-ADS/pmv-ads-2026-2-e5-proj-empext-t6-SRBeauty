@@ -17,12 +17,16 @@ Os testes funcionais realizados na aplicação web **SR Beauty** são descritos 
 - Login com credenciais válidas;
 - Impedimento de acesso com credenciais inválidas;
 - Direcionamento do usuário para a área correspondente ao seu perfil.
-
-**Responsável:** Pâmella Almeida da Silva
+  
+**Responsável:** Luiz Guilherme Martins Franchim/Pâmella Almeida da Silva
 
 **Evidência:**
 
 https://github.com/user-attachments/assets/b83e0691-c6b4-4464-ab34-fedbef6e13b3
+<img width="1360" height="593" alt="cadastro sr beauty" src="https://github.com/user-attachments/assets/36115239-7bf6-4997-8cc5-290e22d7546a" />
+<img width="1365" height="646" alt="login sr beauty" src="https://github.com/user-attachments/assets/990af364-5df9-418b-b90e-6f0d300aedbb" />
+<img width="1365" height="595" alt="profissional sr beauty" src="https://github.com/user-attachments/assets/78d8015a-e8e7-4ca7-bb37-0759dccfe081" />
+
 
 <hr>
 
@@ -56,7 +60,7 @@ https://github.com/user-attachments/assets/b83e0691-c6b4-4464-ab34-fedbef6e13b3
 - Identificação dos horários já ocupados;
 - Exibição correta da agenda conforme o período selecionado.
 
-**Responsável:** Júlio César Villaça (teste realizado para Virgílio Zenith)
+**Responsável:** Júlio César Villaça / Luiz Guilherme Martins Franchim(teste realizado para Virgílio Zenith)
 
 **Evidências da execução funcional na interface (base SQLite temporária e isolada):**
 
@@ -82,7 +86,7 @@ Na agenda diária de **19/10/2026**, foi selecionada a profissional de teste. A 
 - Confirmação do agendamento;
 - Exibição do agendamento na agenda.
 
-**Responsável:** Virgílio Zenith
+**Responsável:** Virgílio Zenith (teste realizado para Júlio César)
 
 **Evidência:**
 
@@ -141,7 +145,7 @@ Foi criado pela interface um primeiro atendimento válido para **20/10/2026 às 
 - Confirmação do atendimento realizado;
 - Atualização do status do agendamento.
 
-**Responsável:** Virgílio Zenith 
+**Responsável:** Virgílio Zenith (teste realizado para Júlio César)
 
 **Evidência:**
 
@@ -244,11 +248,10 @@ Foi criado pela interface um primeiro atendimento válido para **20/10/2026 às 
 - Informações de valor e data;
 - Salvamento e consulta das despesas cadastradas.
 
-**Responsável:** [Nome do integrante]
+**Responsável:** Luiz Guilherme Martins Franchim
 
-**Evidência:**
+**Evidência:** ![Evidencia](img/CT-10.gif)
 
-[Inserir imagem ou vídeo do teste]
 
 <hr>
 
@@ -373,9 +376,9 @@ Após a execução dos casos de teste, os resultados deverão ser registrados pe
 | CT-1 | Aprovado | Cadastro e login realizados com sucesso, conforme comportamento esperado. |
 | CT-2 | [Aprovado/Reprovado] | [Observação] |
 | CT-3 | Aprovado | Interface e testes automatizados confirmaram escala, períodos livres, período ocupado, dia sem escala, escala totalmente ocupada e rejeição de data inválida. Evidência em `evidencias/CT-3-agenda.png`. |
-| CT-4 | [Aprovado/Reprovado] | [Observação] |
+| CT-4 | Aprovado | O agendamento de atendimento foi realizado com sucesso e o respectivo horário de atendimento passou a constar como ocupado na agenda da profissional. |
 | CT-5 | Aprovado | Interface rejeitou duplicidade com HTTP 409 e manteve o primeiro registro; testes automatizados confirmaram sobreposição rejeitada e horário adjacente aceito. Concorrência simultânea não foi testada. Evidências em `evidencias/CT-5-*.png`. |
-| CT-6 | [Aprovado/Reprovado] | [Observação] |
+| CT-6 | Aprovado | O registro do atendimento realizado foi concluído com sucesso, salvando corretamente o tipo de serviço e a forma de pagamento no qual informada. |
 | CT-7 | [Aprovado/Reprovado] | [Observação] |
 | CT-8 | Aprovado | Registro de repasse realizado com sucesso |
 | CT-9 | Aprovado | Confirmação de pagamento de repasses executado com sucesso |

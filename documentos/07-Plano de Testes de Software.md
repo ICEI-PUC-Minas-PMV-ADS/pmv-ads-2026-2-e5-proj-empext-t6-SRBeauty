@@ -51,7 +51,39 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
 </table>
 
 ---
+<table>
+ <tr>
+   <th>Caso de teste</th>
+   <th>Requisitos associados</th>
+   <th>Objetivo do teste</th>
+   <th>Passos</th>
+   <th>Critérios de êxito</th>
+   <th>Responsável</th>
+ </tr>
+ <tr>
+   <td>CT-2: Verificar o funcionamento do Dashboard conforme o perfil do usuário.</td>
+   <td>
+    <ul>
+     <li>RF-13: O sistema deve controlar o acesso às funcionalidades de acordo com o perfil do usuário: Cliente, Profissional ou Proprietária.</li>
+    </ul>
+   </td>
+   <td>Verificar se o sistema apresenta as informações e funcionalidades correspondentes ao perfil de acesso do usuário.</td>
+   <td>
+    <ol>
+     <li>Acessar a tela de login do sistema.</li>
+     <li>Realizar login utilizando credenciais de um perfil específico (Cliente, Profissional ou Proprietária).</li>
+     <li>Navegar até a tela inicial (Dashboard).</li>
+     <li>Verificar as informações principais e os módulos exibidos na interface.</li>
+     <li>Tentar acessar funcionalidades exclusivas de outros perfis por navegação ou URL.</li>
+     <li>Realizar logout e repetir os passos para os demais perfis.</li>
+    </ol>
+   </td>
+   <td>O sistema deve exibir um Dashboard personalizado para cada perfil, liberando a navegação apenas para as funcionalidades permitidas e restringindo o acesso a qualquer área não autorizada.</td>
+   <td>[Nome do integrante]</td>
+ </tr>
+</table>
 
+---
 <table>
  <tr>
    <th>Caso de teste</th>
@@ -63,7 +95,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
  </tr>
 
  <tr>
-   <td>CT-2: Verificar a visualização da disponibilidade das profissionais.</td>
+   <td>CT-3: Verificar a visualização da disponibilidade das profissionais.</td>
    <td>
     <ul>
      <li>RF-01: O cliente deve poder consultar a disponibilidade de horários das profissionais.</li>
@@ -98,7 +130,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
  </tr>
 
  <tr>
-   <td>CT-3: Verificar o funcionamento do agendamento de atendimento.</td>
+   <td>CT-4: Verificar o funcionamento do agendamento de atendimento.</td>
    <td>
     <ul>
      <li>RF-02: O cliente ou profissional deve poder realizar o agendamento de um atendimento.</li>
@@ -133,7 +165,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
  </tr>
 
  <tr>
-   <td>CT-4: Verificar o bloqueio de conflito de horários.</td>
+   <td>CT-5: Verificar o bloqueio de conflito de horários.</td>
    <td>
     <ul>
      <li>RF-02: O sistema deve impedir conflitos ou duplicidade de agendamento para uma mesma profissional.</li>
@@ -166,7 +198,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
  </tr>
 
  <tr>
-   <td>CT-5: Verificar o registro do atendimento realizado.</td>
+   <td>CT-6: Verificar o registro do atendimento realizado.</td>
    <td>
     <ul>
      <li>RF-03: O profissional deve poder registrar o atendimento realizado, incluindo o tipo de serviço e a forma de pagamento.</li>
@@ -201,7 +233,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
  </tr>
 
  <tr>
-   <td>CT-6: Verificar o registro da forma de pagamento e taxa da maquininha.</td>
+   <td>CT-7: Verificar o registro da forma de pagamento e taxa da maquininha.</td>
    <td>
     <ul>
      <li>RF-03: O profissional deve registrar a forma de pagamento do atendimento.</li>
@@ -220,7 +252,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
     </ol>
    </td>
    <td>O sistema deve registrar o pagamento como cartão e permitir o registro da taxa da maquininha informada.</td>
-   <td>Pâmella Almeida da Silva</td>
+   <td>Luiz Guilherme Martins Franchim</td>
  </tr>
 </table>
 
@@ -237,7 +269,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
  </tr>
 
  <tr>
-   <td>CT-7: Verificar o cálculo do repasse ao salão.</td>
+   <td>CT-8: Verificar o cálculo do repasse ao salão.</td>
    <td>
     <ul>
      <li>RF-04: O sistema deve calcular o valor do repasse ao salão com base no percentual definido para o tipo de serviço.</li>
@@ -272,7 +304,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
  </tr>
 
  <tr>
-   <td>CT-8: Verificar o registro do pagamento do repasse ao salão.</td>
+   <td>CT-9: Verificar o registro do pagamento do repasse ao salão.</td>
    <td>
     <ul>
      <li>RF-06: O sistema deve permitir registrar quando o repasse da profissional ao salão foi efetivamente pago.</li>
@@ -306,7 +338,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
  </tr>
 
  <tr>
-   <td>CT-9: Verificar o cadastro de despesas do salão.</td>
+   <td>CT-10: Verificar o cadastro de despesas do salão.</td>
    <td>
     <ul>
      <li>RF-07: A proprietária deve poder registrar as despesas do salão.</li>
@@ -341,7 +373,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
  </tr>
 
  <tr>
-   <td>CT-10: Verificar o fechamento financeiro semanal.</td>
+   <td>CT-11: Verificar o fechamento financeiro semanal.</td>
    <td>
     <ul>
      <li>RF-08: O sistema deve permitir o fechamento financeiro semanal, consolidando entradas, saídas e resultado do período.</li>
@@ -376,7 +408,7 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
  </tr>
 
  <tr>
-   <td>CT-11: Verificar o relatório financeiro mensal.</td>
+   <td>CT-12: Verificar o relatório financeiro mensal.</td>
    <td>
     <ul>
      <li>RF-10: O sistema deve permitir a visualização mensal das receitas, despesas, valores recebidos, repasses realizados e resultado do período.</li>
@@ -395,41 +427,6 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
    </td>
    <td>O sistema deve apresentar corretamente as receitas, despesas, repasses e resultado financeiro referentes ao mês selecionado.</td>
    <td>[Nome do responsável]</td>
- </tr>
-</table>
-
----
-
-<table>
- <tr>
-   <th>Caso de teste</th>
-   <th>Requisitos associados</th>
-   <th>Objetivo do teste</th>
-   <th>Passos</th>
-   <th>Critérios de êxito</th>
-   <th>Responsável</th>
- </tr>
-
- <tr>
-   <td>CT-12: Verificar a visualização da agenda diária pela proprietária.</td>
-   <td>
-    <ul>
-     <li>RF-09: O sistema deve permitir à proprietária visualizar os horários agendados, horários disponíveis e atendimentos realizados no dia.</li>
-    </ul>
-   </td>
-   <td>Verificar se a proprietária consegue visualizar corretamente a situação dos atendimentos do dia.</td>
-   <td>
-    <ol>
-     <li>Realizar login como proprietária.</li>
-     <li>Acessar o dashboard ou agenda.</li>
-     <li>Selecionar o dia desejado.</li>
-     <li>Visualizar os horários agendados.</li>
-     <li>Visualizar os horários disponíveis.</li>
-     <li>Visualizar os atendimentos realizados.</li>
-    </ol>
-   </td>
-   <td>A agenda deve apresentar corretamente os horários agendados, disponíveis e os atendimentos realizados no dia selecionado.</td>
-   <td>Júlio César Villaça Cardoso</td>
  </tr>
 </table>
 
@@ -552,17 +549,18 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
 | Caso de Teste | Resultado | Observação |
 |---|---|---|
 | CT-1 | Aprovado | Cadastro e login realizados com sucesso, conforme comportamento esperado. |
-| CT-2 | Aprovado | A visualização da disponibilidade de horários das profissionais ocorreu conforme o esperado, considerando a jornada de trabalho e os registros existentes. |
-| CT-3 | Aprovado | O agendamento de atendimento foi realizado com sucesso e o respectivo horário de atendimento passou a constar como ocupado na agenda da profissional. |
-| CT-4 | Aprovado | O bloqueio de conflito de horários funcionou perfeitamente, impedindo duplicidades para a mesma profissional no mesmo horário. |
-| CT-5 | Aprovado | O registro do atendimento realizado foi concluído com sucesso, salvando corretamente o tipo de serviço e a forma de pagamento no qual informada. |
-| CT-6 | Aprovado | A forma de pagamento em cartão e o registro da taxa da maquininha foram processados e salvos adequadamente pelo sistema. |
-| CT-7 | [Aprovado/Reprovado] | [Observação] |
-| CT-8 | [Aprovado/Reprovado] | [Observação] |
-| CT-9 | [Aprovado/Reprovado] | [Observação] |
+| CT-2 | Aprovado | [Aprovado/Reprovado] | [Observação] |
+| CT-3 | Aprovado | A visualização da disponibilidade de horários das profissionais ocorreu conforme o esperado, considerando a jornada de trabalho e os registros existentes. |
+| CT-4 | Aprovado | O agendamento de atendimento foi realizado com sucesso e o respectivo horário de atendimento passou a constar como ocupado na agenda da profissional. |
+| CT-5 | Aprovado | O bloqueio de conflito de horários funcionou perfeitamente, impedindo duplicidades para a mesma profissional no mesmo horário. |
+| CT-6 | Aprovado | O registro do atendimento realizado foi concluído com sucesso, salvando corretamente o tipo de serviço e a forma de pagamento no qual informada. |
+| CT-7 | Aprovado | A forma de pagamento em cartão e o registro da taxa da maquininha foram processados e salvos adequadamente pelo sistema. |
+| CT-8 | Aprovado | Registro de repasse realizado com sucesso. |
+| CT-9 | Aprovado |	Confirmação de pagamento de repasses executado com sucesso. |
 | CT-10 | [Aprovado/Reprovado] | [Observação] |
 | CT-11 | [Aprovado/Reprovado] | [Observação] |
-| CT-12 | Aprovado | Sistema de agendamento realizado com sucesso, permitindo a proprietária visualizar os horários agendados, horários disponíveis e atendimentos realizados no dia. |
+| CT-12 | [Aprovado/Reprovado] | [Observação] |
 | CT-13 | Aprovado | O sistema permite o gerenciamento dos horários de trabalho das profissionais perfeitamente. |
 | CT-14 | [Aprovado/Reprovado] | [Observação] |
 | CT-15 | [Aprovado/Reprovado] | [Observação] |
+
