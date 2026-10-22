@@ -250,7 +250,7 @@ Foi criado pela interface um primeiro atendimento válido para **20/10/2026 às 
 
 **Responsável:** Luiz Guilherme Martins Franchim
 
-**Evidência:** ![Evidencia](img/CT-10.png)
+**Evidência:** ![Evidencia](img/CT-10.gif)
 
 
 <hr>
