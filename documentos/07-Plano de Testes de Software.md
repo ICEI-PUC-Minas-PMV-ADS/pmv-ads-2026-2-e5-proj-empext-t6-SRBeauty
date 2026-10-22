@@ -51,7 +51,39 @@ Os testes funcionais a serem realizados na aplicação SR Beauty são descritos 
 </table>
 
 ---
+<table>
+ <tr>
+   <th>Caso de teste</th>
+   <th>Requisitos associados</th>
+   <th>Objetivo do teste</th>
+   <th>Passos</th>
+   <th>Critérios de êxito</th>
+   <th>Responsável</th>
+ </tr>
+ <tr>
+   <td>CT-2: Verificar o funcionamento do Dashboard conforme o perfil do usuário.</td>
+   <td>
+    <ul>
+     <li>RF-13: O sistema deve controlar o acesso às funcionalidades de acordo com o perfil do usuário: Cliente, Profissional ou Proprietária.</li>
+    </ul>
+   </td>
+   <td>Verificar se o sistema apresenta as informações e funcionalidades correspondentes ao perfil de acesso do usuário.</td>
+   <td>
+    <ol>
+     <li>Acessar a tela de login do sistema.</li>
+     <li>Realizar login utilizando credenciais de um perfil específico (Cliente, Profissional ou Proprietária).</li>
+     <li>Navegar até a tela inicial (Dashboard).</li>
+     <li>Verificar as informações principais e os módulos exibidos na interface.</li>
+     <li>Tentar acessar funcionalidades exclusivas de outros perfis por navegação ou URL.</li>
+     <li>Realizar logout e repetir os passos para os demais perfis.</li>
+    </ol>
+   </td>
+   <td>O sistema deve exibir um Dashboard personalizado para cada perfil, liberando a navegação apenas para as funcionalidades permitidas e restringindo o acesso a qualquer área não autorizada.</td>
+   <td>[Nome do integrante]</td>
+ </tr>
+</table>
 
+---
 <table>
  <tr>
    <th>Caso de teste</th>
