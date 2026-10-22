@@ -86,7 +86,7 @@ Na agenda diária de **19/10/2026**, foi selecionada a profissional de teste. A 
 - Confirmação do agendamento;
 - Exibição do agendamento na agenda.
 
-**Responsável:** Virgílio Zenith
+**Responsável:** Virgílio Zenith (teste realizado para Júlio César)
 
 **Evidência:**
 
@@ -145,7 +145,7 @@ Foi criado pela interface um primeiro atendimento válido para **20/10/2026 às 
 - Confirmação do atendimento realizado;
 - Atualização do status do agendamento.
 
-**Responsável:** Virgílio Zenith 
+**Responsável:** Virgílio Zenith (teste realizado para Júlio César)
 
 **Evidência:**
 
