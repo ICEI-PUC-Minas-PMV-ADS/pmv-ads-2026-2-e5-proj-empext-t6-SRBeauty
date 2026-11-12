@@ -2,6 +2,7 @@
   const page = document.querySelector("#servicesPage");
   if (!page) return;
 
+  const canManageServices = page.dataset.canManage === "true";
   const body = document.querySelector("#servicesTableBody");
   const notice = document.querySelector("#servicesNotice");
   const dialog = document.querySelector("#serviceDialog");
@@ -46,7 +47,7 @@
 
   function renderMessage(message) {
     const cell = document.createElement("td");
-    cell.colSpan = 5;
+    cell.colSpan = canManageServices ? 5 : 3;
     cell.className = "table-message";
     cell.textContent = message;
     const row = document.createElement("tr");
@@ -69,35 +70,42 @@
     const badge = document.createElement("span");
     badge.className = `status-badge ${service.ativo ? "status-active" : "status-inactive"}`;
     badge.textContent = service.ativo ? "Ativo" : "Inativo";
-    row.append(makeCell(badge));
+    if (canManageServices) {
+      row.append(makeCell(badge));
 
-    const actions = document.createElement("div");
-    actions.className = "row-actions";
-    const edit = document.createElement("button");
-    edit.type = "button";
-    edit.className = "small-button";
-    edit.textContent = "Editar";
-    edit.addEventListener("click", () => openEdit(service.id));
-    actions.append(edit);
-    if (service.ativo) {
-      const deactivate = document.createElement("button");
-      deactivate.type = "button";
-      deactivate.className = "small-button danger";
-      deactivate.textContent = "Desativar";
-      deactivate.addEventListener("click", () => deactivateService(service));
-      actions.append(deactivate);
+      const actions = document.createElement("div");
+      actions.className = "row-actions";
+      const edit = document.createElement("button");
+      edit.type = "button";
+      edit.className = "small-button";
+      edit.textContent = "Editar";
+      edit.addEventListener("click", () => openEdit(service.id));
+      actions.append(edit);
+      if (service.ativo) {
+        const deactivate = document.createElement("button");
+        deactivate.type = "button";
+        deactivate.className = "small-button danger";
+        deactivate.textContent = "Desativar";
+        deactivate.addEventListener("click", () => deactivateService(service));
+        actions.append(deactivate);
+      }
+      row.append(makeCell(actions, "actions-heading"));
     }
-    row.append(makeCell(actions, "actions-heading"));
     body.append(row);
   }
 
   async function loadServices() {
     renderMessage("Carregando serviços…");
     try {
-      const services = await request("/api/servicos?incluir_inativos=true");
+      const endpoint = canManageServices ? "/api/servicos?incluir_inativos=true" : "/api/servicos";
+      const services = await request(endpoint);
       body.replaceChildren();
       if (!services.length) {
-        renderMessage("Nenhum serviço cadastrado. Selecione “Novo serviço” para cadastrar o primeiro.");
+        renderMessage(
+          canManageServices
+            ? "Nenhum serviço cadastrado. Selecione “Novo serviço” para cadastrar o primeiro."
+            : "Nenhum serviço disponível no momento.",
+        );
         return;
       }
       services.forEach(renderService);
@@ -158,7 +166,8 @@
     }
   }
 
-  form.addEventListener("submit", async (event) => {
+  if (canManageServices) {
+    form.addEventListener("submit", async (event) => {
     event.preventDefault();
     formError.hidden = true;
     if (!form.reportValidity()) return;
@@ -199,12 +208,14 @@
       saveButton.disabled = false;
       saveButton.textContent = editingId === null ? "Salvar serviço" : "Salvar alterações";
     }
-  });
+    });
 
-  document.querySelector("#newServiceButton").addEventListener("click", openCreate);
-  dialog.querySelectorAll("[data-close-dialog]").forEach((button) => {
-    button.addEventListener("click", () => dialog.close());
-  });
-  dialog.addEventListener("close", resetForm);
+    document.querySelector("#newServiceButton").addEventListener("click", openCreate);
+    dialog.querySelectorAll("[data-close-dialog]").forEach((button) => {
+      button.addEventListener("click", () => dialog.close());
+    });
+    dialog.addEventListener("close", resetForm);
+  }
+
   loadServices();
 })();

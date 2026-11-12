@@ -13,30 +13,33 @@
     <div class="aside-brand"><div class="aside-logo-wrap"><img class="aside-logo" src="{{ url_for('documentos_img', filename='logo.png') }}" alt="SR Beauty"></div><div class="aside-subtitle"><span>SIMONE RODRIGUES</span><span>ESPAÇO DE BELEZA</span></div></div>
     <nav>
       <a href="{{ url_for('home') }}">⌂ <span>Início</span></a>
-      <a href="#">▣ <span>Agendamentos</span></a><a href="#">♙ <span>Clientes</span></a><a href="#">✂ <span>Profissionais</span></a>
-      <a class="active" href="{{ url_for('pagina_servicos') }}">◇ <span>Serviços</span></a><a href="{{ url_for('pagina_atendimentos') }}">✦ <span>Atendimentos</span></a><a href="#">▥ <span>Financeiro</span></a><a href="{{ url_for('repasses.pagina_repasses') }}">⇄ <span>Repasses</span></a>
+      {% if current_user.tipo in ["proprietario", "profissional"] %}<a href="{{ url_for('pagina_agenda') }}">▣ <span>Agendamentos</span></a>{% endif %}
+      <a class="active" href="{{ url_for('pagina_servicos') }}">◇ <span>Serviços</span></a><a href="{{ url_for('pagina_atendimentos') }}">✦ <span>Atendimentos</span></a>{% if current_user.tipo == "proprietario" %}<a href="{{ url_for('financeiro.pagina_financeiro') }}">▥ <span>Financeiro</span></a><a href="{{ url_for('financeiro.pagina_relatorios') }}">▤ <span>Relatórios</span></a><a href="{{ url_for('repasses.pagina_repasses') }}">⇄ <span>Repasses</span></a>{% endif %}
       <a href="{{ url_for('perfil') }}">⚙ <span>Minha conta</span></a>
     </nav>
     <a class="logout" href="{{ url_for('logout') }}">↪ <span>Sair</span></a>
   </aside>
-  <main class="module-page" id="servicesPage">
+  <main class="module-page" id="servicesPage" data-can-manage="{{ 'true' if current_user.tipo in ['proprietario', 'profissional'] else 'false' }}">
     <header>
-      <div><h1>Serviços</h1><p>Gerencie os serviços oferecidos pelo salão.</p></div>
+      <div><h1>Serviços</h1><p>{% if current_user.tipo in ["proprietario", "profissional"] %}Gerencie os serviços oferecidos pelo salão.{% else %}Consulte os serviços disponíveis e seus valores.{% endif %}</p></div>
       <a class="profile-link" href="{{ url_for('perfil') }}"><div class="profile"><span>{{ current_user.nome[0]|upper }}</span><div>{{ current_user.nome }}<small>{{ current_user.tipo_label }}</small></div></div></a>
     </header>
     <div class="notice" id="servicesNotice" role="status" aria-live="polite" hidden></div>
     <section class="module-panel">
       <div class="panel-heading">
-        <div><h2>Catálogo de serviços</h2><p>Consulte e atualize preços, duração e disponibilidade.</p></div>
+        <div><h2>Catálogo de serviços</h2><p>{% if current_user.tipo in ["proprietario", "profissional"] %}Consulte e atualize preços, duração e disponibilidade.{% else %}Consulte os preços e a duração dos serviços disponíveis.{% endif %}</p></div>
+        {% if current_user.tipo in ["proprietario", "profissional"] %}
         <button class="button button-primary" id="newServiceButton" type="button">＋ Novo serviço</button>
+        {% endif %}
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Serviço</th><th>Preço</th><th>Duração</th><th>Status</th><th class="actions-heading">Ações</th></tr></thead>
-          <tbody id="servicesTableBody"><tr><td colspan="5" class="table-message">Carregando serviços…</td></tr></tbody>
+          <thead><tr><th>Serviço</th><th>Preço</th><th>Duração</th>{% if current_user.tipo in ["proprietario", "profissional"] %}<th>Status</th><th class="actions-heading">Ações</th>{% endif %}</tr></thead>
+          <tbody id="servicesTableBody"><tr><td colspan="{{ 5 if current_user.tipo in ['proprietario', 'profissional'] else 3 }}" class="table-message">Carregando serviços…</td></tr></tbody>
         </table>
       </div>
     </section>
+    {% if current_user.tipo in ["proprietario", "profissional"] %}
     <dialog class="module-dialog" id="serviceDialog" aria-labelledby="serviceDialogTitle">
       <form id="serviceForm">
         <div class="dialog-heading"><div><h2 id="serviceDialogTitle">Novo serviço</h2><p>Preencha os dados do serviço.</p></div><button class="icon-button" type="button" data-close-dialog aria-label="Fechar">×</button></div>
@@ -51,6 +54,7 @@
         <div class="dialog-actions"><button class="button button-secondary" type="button" data-close-dialog>Cancelar</button><button class="button button-primary" id="saveServiceButton" type="submit">Salvar serviço</button></div>
       </form>
     </dialog>
+    {% endif %}
   </main>
   <script src="{{ url_for('static', filename='js/services.js') }}" defer></script>
 </body>

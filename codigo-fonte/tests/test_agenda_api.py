@@ -26,6 +26,10 @@ class AgendaApiTestCase(unittest.TestCase):
             )
             db.session.commit()
         self.client = app.test_client()
+        self.service_client = app.test_client()
+        with self.service_client.session_transaction() as session:
+            session["_user_id"] = "4"
+            session["_fresh"] = True
 
     def tearDown(self):
         with app.app_context():
@@ -38,7 +42,7 @@ class AgendaApiTestCase(unittest.TestCase):
             session["_fresh"] = True
 
     def create_service(self, duration=60):
-        return self.client.post(
+        return self.service_client.post(
             "/api/servicos",
             json={
                 "nome": "Corte",

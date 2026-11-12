@@ -41,21 +41,20 @@
 <body>
   <div class="app">
     <aside class="sidebar">
-      <div class="logo"><img src="images/logo.jpeg" alt="Logo" class="logo-mark"><span><strong>SR Beauty</strong><small>Beleza & Cuidado</small></span></div>
-      <div class="role-label">Acesso: Proprietária</div>
+      <div class="logo"><img src="{{ url_for('documentos_img', filename='logo.png') }}" alt="Logo SR Beauty" class="logo-mark"><span><strong>SR Beauty</strong><small>Beleza & Cuidado</small></span></div>
+      <div class="role-label">Acesso: {{ current_user.tipo_label }}</div>
       <nav class="nav">
-        <button onclick="carregarSemCarregar('Visão geral')"><span class="ico">⌂</span><span>Visão geral</span></button>
-        <button onclick="carregarSemCarregar('Agenda')"><span class="ico">▦</span><span>Agenda</span></button>
-        <button onclick="carregarSemCarregar('Atendimentos')"><span class="ico">✓</span><span>Atendimentos</span></button>
-        <button onclick="carregarSemCarregar('Serviços')"><span class="ico">✦</span><span>Serviços</span></button>
-        <button onclick="carregarSemCarregar('Profissionais')"><span class="ico">♙</span><span>Profissionais</span></button>
-        <button onclick="carregarSemCarregar('Repasses')"><span class="ico">⇄</span><span>Repasses</span></button>
-        <a href="financeiro.html" class="active"><span class="ico">R$</span><span>Financeiro</span></a>
-        <a href="relatorios.html"><span class="ico">▤</span><span>Relatórios</span></a>
+        <a href="{{ url_for('home') }}"><span class="ico">⌂</span><span>Início</span></a>
+        <a href="{{ url_for('pagina_agenda') }}"><span class="ico">▦</span><span>Agenda</span></a>
+        <a href="{{ url_for('pagina_atendimentos') }}"><span class="ico">✓</span><span>Atendimentos</span></a>
+        <a href="{{ url_for('pagina_servicos') }}"><span class="ico">✦</span><span>Serviços</span></a>
+        <a href="{{ url_for('repasses.pagina_repasses') }}"><span class="ico">⇄</span><span>Repasses</span></a>
+        <a href="{{ url_for('financeiro.pagina_financeiro') }}" class="active" aria-current="page"><span class="ico">R$</span><span>Financeiro</span></a>
+        <a href="{{ url_for('financeiro.pagina_relatorios') }}"><span class="ico">▤</span><span>Relatórios</span></a>
       </nav>
       <div class="user-card">
-        <div class="avatar">SR</div>
-        <div class="user-info"><strong>Simone Rodrigues</strong><small>Proprietária</small></div>
+        <div class="avatar">{{ current_user.nome[0]|upper }}</div>
+        <div class="user-info"><strong>{{ current_user.nome }}</strong><small>{{ current_user.tipo_label }}</small></div>
       </div>
     </aside>
     <main class="main">
@@ -94,7 +93,7 @@
   <div class="toast" id="toast">Operação realizada com sucesso.</div>
 
   <script>
-    const API_BASE = "http://127.0.0.1:8000/api";
+    const API_BASE = "/api";
 
     function formatarMoeda(valor) {
       return (valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -103,11 +102,6 @@
     function caixaEstaFechadoHoje() {
       const dataHoje = new Date().toLocaleDateString('pt-BR');
       return localStorage.getItem('caixa_fechado_data') === dataHoje;
-    }
-
-    function carregarSemCarregar(nomeTela) {
-      document.getElementById('pageTitle').textContent = nomeTela;
-      document.getElementById('content').innerHTML = `<div class="heading"><div><h2>${nomeTela}</h2><p>Esta área não carrega dados nesta demonstração.</p></div></div>`;
     }
 
     function exibirCaixaFechadoVisualmente() {
@@ -165,7 +159,7 @@
         document.getElementById('finTaxas').textContent = formatarMoeda(totalTaxas);
         document.getElementById('finSaldo').textContent = formatarMoeda(saldo);
       } catch (err) {
-        showToast("Backend inacessível. Certifique-se de rodar: uvicorn app:app --reload");
+        showToast("Não foi possível acessar o SR Beauty. Verifique a conexão e tente novamente.");
       }
     }
 

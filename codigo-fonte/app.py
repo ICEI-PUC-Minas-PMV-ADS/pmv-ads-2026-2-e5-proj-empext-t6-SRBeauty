@@ -857,17 +857,32 @@ def api_agenda_semanal():
     return jsonify(agenda_range_events(monday, monday + timedelta(days=6), professional_ids))
 
 
+def service_management_error():
+    if not current_user.is_authenticated:
+        return api_error("Faça login para gerenciar serviços.", 401)
+    if current_user.tipo not in {"proprietario", "profissional"}:
+        return api_error("Apenas proprietárias e profissionais podem gerenciar serviços.", 403)
+    return None
+
+
 @app.route("/api/servicos", methods=["GET", "POST"])
 def api_servicos():
     if request.method == "GET":
         include_inactive = request.args.get("incluir_inativos", "false").lower()
         if include_inactive not in {"true", "false"}:
             return api_error("'incluir_inativos' deve ser true ou false.", 400)
+        if include_inactive == "true":
+            access_error = service_management_error()
+            if access_error:
+                return access_error
         query = Service.query
         if include_inactive != "true":
             query = query.filter_by(ativo=True)
         return jsonify([service_json(service) for service in query.order_by(Service.nome).all()])
 
+    access_error = service_management_error()
+    if access_error:
+        return access_error
     data = request.get_json(silent=True)
     if not isinstance(data, dict):
         return api_error("Envie um objeto JSON válido.", 400)
@@ -896,6 +911,10 @@ def api_servicos():
 
 @app.route("/api/servicos/<int:service_id>", methods=["GET", "PUT", "DELETE"])
 def api_servico_detalhe(service_id):
+    if request.method != "GET":
+        access_error = service_management_error()
+        if access_error:
+            return access_error
     service = db.session.get(Service, service_id)
     if service is None:
         return api_error("Serviço não encontrado.", 404)
@@ -1233,16 +1252,55 @@ repasses_blueprint, CategoriaRepasse, RepasseRegistro = create_repasses_blueprin
 )
 app.register_blueprint(repasses_blueprint)
 
+from financeiro import (
+    FormaPagamento,
+    create_financeiro_blueprint,
+    inicializar_taxas_padrao,
+    migrar_banco_financeiro_legado,
+)
+
+(
+    financeiro_blueprint,
+    Movimentacao,
+    FechamentoCaixa,
+    ConfiguracaoTaxa,
+) = create_financeiro_blueprint(db)
+app.register_blueprint(financeiro_blueprint)
+
 
 @app.cli.command("init-db")
 def init_db():
     db.create_all()
+    inicializar_taxas_padrao(db, ConfiguracaoTaxa, FormaPagamento)
     print("Banco inicializado.")
+
+
+@app.cli.command("migrate-finance-db")
+def migrate_finance_db():
+    db.create_all()
+    counts = migrar_banco_financeiro_legado(
+        db,
+        Movimentacao,
+        FechamentoCaixa,
+        ConfiguracaoTaxa,
+        BASE_DIR / "Financeiro e Relatorios" / "salao_financeiro.db",
+    )
+    print(
+        "Migração concluída: "
+        f"{counts['movimentacoes']} movimentações, "
+        f"{counts['fechamentos']} fechamentos e "
+        f"{counts['taxas']} taxas importadas."
+    )
 
 
 with app.app_context():
     db.create_all()
+    inicializar_taxas_padrao(db, ConfiguracaoTaxa, FormaPagamento)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.getenv("PORT", "5000")),
+        debug=os.getenv("FLASK_DEBUG") == "1",
+    )
