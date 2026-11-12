@@ -27,6 +27,9 @@ class ServicesApiTestCase(unittest.TestCase):
             )
             db.session.commit()
         self.client = app.test_client()
+        with self.client.session_transaction() as session:
+            session["_user_id"] = "4"
+            session["_fresh"] = True
 
     def tearDown(self):
         with app.app_context():
@@ -86,6 +89,88 @@ class ServicesApiTestCase(unittest.TestCase):
         ):
             with self.subTest(body=body):
                 self.assertEqual(self.client.post("/api/servicos", json=body).status_code, 400)
+
+    def test_cliente_consulta_servicos_sem_controles_ou_permissao_de_edicao(self):
+        created = self.create_service()
+        self.assertEqual(created.status_code, 201)
+        service_id = created.json["id"]
+        inactive_id = self.create_service(nome="Serviço inativo").json["id"]
+        self.assertEqual(self.client.delete(f"/api/servicos/{inactive_id}").status_code, 204)
+        with self.client.session_transaction() as session:
+            session["_user_id"] = "1"
+            session["_fresh"] = True
+
+        page = self.client.get("/servicos")
+        self.assertEqual(page.status_code, 200)
+        self.assertIn(b"Consulte os pre", page.data)
+        self.assertNotIn(b"newServiceButton", page.data)
+        self.assertNotIn(b"serviceDialog", page.data)
+
+        catalog = self.client.get("/api/servicos")
+        self.assertEqual(catalog.status_code, 200)
+        self.assertEqual([service["id"] for service in catalog.json], [service_id])
+        self.assertEqual(catalog.json[0]["preco"], "45.00")
+        self.assertEqual(
+            self.client.get("/api/servicos?incluir_inativos=true").status_code,
+            403,
+        )
+        self.assertEqual(
+            self.client.post(
+                "/api/servicos",
+                json={
+                    "nome": "Novo serviço",
+                    "preco": "30.00",
+                    "duracao_minutos": 30,
+                },
+            ).status_code,
+            403,
+        )
+        self.assertEqual(
+            self.client.put(
+                f"/api/servicos/{service_id}",
+                json={
+                    "nome": "Manicure alterada",
+                    "preco": "30.00",
+                    "duracao_minutos": 30,
+                },
+            ).status_code,
+            403,
+        )
+        self.assertEqual(self.client.delete(f"/api/servicos/{service_id}").status_code, 403)
+        self.assertEqual(
+            self.client.get(f"/api/servicos/{service_id}").json["nome"],
+            "Manicure",
+        )
+        self.assertEqual(
+            app.test_client().post(
+                "/api/servicos",
+                json={
+                    "nome": "Serviço sem sessão",
+                    "preco": "30.00",
+                    "duracao_minutos": 30,
+                },
+            ).status_code,
+            401,
+        )
+        self.assertEqual(
+            app.test_client().get("/api/servicos?incluir_inativos=true").status_code,
+            401,
+        )
+        professional_client = app.test_client()
+        with professional_client.session_transaction() as session:
+            session["_user_id"] = "2"
+            session["_fresh"] = True
+        self.assertEqual(
+            professional_client.post(
+                "/api/servicos",
+                json={
+                    "nome": "Corte",
+                    "preco": "50.00",
+                    "duracao_minutos": 45,
+                },
+            ).status_code,
+            201,
+        )
 
     def test_appointment_snapshots_historical_price_and_service_details(self):
         service = self.create_service().json
@@ -171,6 +256,8 @@ class ServicesApiTestCase(unittest.TestCase):
 
         services_page = self.client.get("/servicos")
         appointments_page = self.client.get("/atendimentos")
+        menu_paths = ("/home", "/agenda", "/perfil", "/repasses")
+        menu_pages = [self.client.get(path) for path in menu_paths]
         self.assertEqual(services_page.status_code, 200)
         self.assertIn(b"static/js/services.js", services_page.data)
         service_script = self.client.get("/static/js/services.js")
@@ -180,6 +267,13 @@ class ServicesApiTestCase(unittest.TestCase):
         self.assertIn(b"Cliente", appointments_page.data)
         self.assertIn(b"Profissional", appointments_page.data)
         self.assertIn(b"static/js/appointments.js", appointments_page.data)
+        for page in [services_page, appointments_page, *menu_pages]:
+            self.assertNotIn(b"<span>Clientes</span>", page.data)
+            self.assertNotIn(b"<span>Profissionais</span>", page.data)
+        for path, page in zip(menu_paths, menu_pages):
+            with self.subTest(path=path):
+                self.assertIn(b'href="/agenda"', page.data)
+        self.assertEqual(self.client.get("/agenda").status_code, 200)
         appointments_script = self.client.get("/static/js/appointments.js")
         self.assertIn(b"/api/atendimentos", appointments_script.data)
         appointments_script.close()

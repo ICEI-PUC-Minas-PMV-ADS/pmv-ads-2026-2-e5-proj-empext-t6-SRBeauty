@@ -1,6 +1,6 @@
 # Módulos de Agenda, Serviços e Execução de Atendimentos
 
-Os módulos estão integrados à aplicação Flask existente em `app.py` e expõem APIs JSON. A agenda tem interface web em `/agenda` e requer sessão Flask-Login para proprietárias e profissionais. As APIs de serviços e atendimentos mantêm o comportamento de autenticação preexistente. Pagamentos, caixa e comissões não são implementados aqui.
+Os módulos estão integrados à aplicação Flask existente em `app.py` e expõem APIs JSON. A agenda tem interface web em `/agenda` e requer sessão Flask-Login para proprietárias e profissionais. O catálogo de serviços ativos pode ser consultado sem sessão; somente proprietárias e profissionais podem ver serviços inativos ou alterar o catálogo. As APIs de atendimentos mantêm o comportamento de autenticação preexistente. As funcionalidades financeiras e de repasses são integradas em módulos próprios e estão descritas em [README.md](README.md).
 
 ## Executar e testar
 
@@ -100,11 +100,13 @@ As visões diárias e semanais retornam `inicio`, `fim`, `eventos`, `horarios`, 
 | Método e caminho | Descrição | Respostas principais |
 |---|---|---|
 | `GET /api/servicos` | Lista serviços ativos, por nome | `200` |
-| `GET /api/servicos?incluir_inativos=true` | Inclui serviços desativados | `200`, `400` |
-| `POST /api/servicos` | Cadastra serviço | `201`, `400` |
+| `GET /api/servicos?incluir_inativos=true` | Inclui serviços desativados; exige perfil proprietário ou profissional | `200`, `400`, `403`, `401` |
+| `POST /api/servicos` | Cadastra serviço; exige perfil proprietário ou profissional | `201`, `400`, `403`, `401` |
 | `GET /api/servicos/<id>` | Consulta serviço | `200`, `404` |
-| `PUT /api/servicos/<id>` | Atualiza nome, descrição, preço, duração e, opcionalmente, `ativo` | `200`, `400`, `404` |
-| `DELETE /api/servicos/<id>` | Desativa o serviço sem apagar histórico | `204`, `404` |
+| `PUT /api/servicos/<id>` | Atualiza nome, descrição, preço, duração e, opcionalmente, `ativo`; exige perfil proprietário ou profissional | `200`, `400`, `403`, `404`, `401` |
+| `DELETE /api/servicos/<id>` | Desativa o serviço sem apagar histórico; exige perfil proprietário ou profissional | `204`, `403`, `404`, `401` |
+
+Clientes podem consultar o catálogo ativo e os preços, mas recebem `403` ao tentar criar, editar, desativar serviços ou incluir serviços inativos. Requisições sem sessão também podem consultar os serviços ativos, mas recebem `401` ao tentar alterar o catálogo.
 
 Campos obrigatórios para criação/atualização: `nome` (1–120 caracteres), `preco` (não negativo, até duas casas decimais) e `duracao_minutos` (inteiro positivo). `descricao` é opcional (até 1000 caracteres); em `PUT`, envie todos os campos requeridos.
 
@@ -177,8 +179,9 @@ O horário de início é registrado pelo servidor. Para concluir, informe o stat
 
 1. Manter a tabela `usuarios` compartilhada com IDs e tipos `cliente`/`profissional` conforme já existente; não criar tabelas paralelas de clientes ou profissionais.
 2. `agendamento_id` continua opcional e sem checagem de existência; pode ser ligado a uma entidade de reserva futura.
-3. As rotas novas da agenda usam a sessão Flask-Login e validam papéis de proprietária/profissional. As APIs de serviços/atendimentos conservam as regras de autenticação existentes no projeto.
-4. O módulo financeiro pode consumir `valor_cobrado` e os IDs do atendimento/serviço, e o módulo de comissões pode consumir `profissional_id` por item. Nenhum cálculo ou lançamento financeiro é feito aqui.
+3. As rotas novas da agenda usam a sessão Flask-Login e validam papéis de proprietária/profissional. A consulta do catálogo ativo de serviços é pública; a listagem de inativos e as alterações exigem perfil de proprietária/profissional. As APIs de atendimentos conservam as regras de autenticação existentes no projeto.
+4. O módulo de repasses usa os atendimentos concluídos e o profissional responsável por cada serviço para calcular os valores devidos.
+5. Financeiro e relatórios são servidos pela mesma aplicação Flask em `/financeiro` e `/relatorios`; suas APIs mantêm os caminhos `/api/financeiro/*` e `/api/relatorios/*` e exigem sessão de proprietária.
 
 ## Interface web
 

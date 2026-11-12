@@ -20,6 +20,22 @@ Acesse `http://127.0.0.1:5000`. Se o comando `python` não for reconhecido ou a 
 & ..\..\venv\Scripts\python.exe app.py
 ```
 
+## Módulos integrados
+
+Agenda, serviços, atendimentos, repasses, financeiro e relatórios são servidos pela mesma aplicação Flask. Depois de autenticar como proprietária, use `/repasses`, `/financeiro` e `/relatorios`; não é necessário iniciar um servidor FastAPI separado. As páginas e APIs financeiras exigem acesso de proprietária.
+
+No desenvolvimento, `srbeauty.db` é o banco único de usuários, serviços, atendimentos, repasses, financeiro e relatórios. Repasses compartilha as tabelas principais porque seus cálculos dependem dos serviços concluídos e dos profissionais existentes. Ao iniciar, a aplicação cria as tabelas que faltarem nesse banco.
+
+Para importar os lançamentos do banco financeiro anterior (`Financeiro e Relatorios/salao_financeiro.db`) para o banco principal, execute uma vez na pasta `codigo-fonte`:
+
+```powershell
+python -m flask --app app migrate-finance-db
+```
+
+O comando preserva os IDs, os lançamentos, os fechamentos e as taxas; pode ser repetido com segurança. O arquivo anterior é mantido como cópia de origem e não é mais usado pela aplicação. Em hospedagem, configure `DATABASE_URL` com o banco persistente (por exemplo, PostgreSQL) e execute o mesmo comando para importar os dados iniciais. Configure também `SECRET_KEY` com um valor secreto próprio antes de publicar.
+
+As páginas do financeiro estão protegidas pela sessão do sistema e chamam APIs no mesmo domínio, sem depender de `localhost` ou de uma porta separada.
+
 Para rodar os testes, na mesma pasta e com o ambiente virtual ativo:
 
 ```powershell
