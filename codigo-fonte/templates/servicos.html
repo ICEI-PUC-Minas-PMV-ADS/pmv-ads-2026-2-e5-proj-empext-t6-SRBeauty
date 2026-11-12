@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SR Beauty | Serviços</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/module.css') }}">
+</head>
+<body>
+  <aside>
+    <div class="aside-brand"><div class="aside-logo-wrap"><img class="aside-logo" src="{{ url_for('documentos_img', filename='logo.png') }}" alt="SR Beauty"></div><div class="aside-subtitle"><span>SIMONE RODRIGUES</span><span>ESPAÇO DE BELEZA</span></div></div>
+    <nav>
+      <a href="{{ url_for('home') }}">⌂ <span>Início</span></a>
+      {% if current_user.tipo in ["proprietario", "profissional"] %}<a href="{{ url_for('pagina_agenda') }}">▣ <span>Agendamentos</span></a>{% endif %}
+      <a class="active" href="{{ url_for('pagina_servicos') }}">◇ <span>Serviços</span></a><a href="{{ url_for('pagina_atendimentos') }}">✦ <span>Atendimentos</span></a>{% if current_user.tipo == "proprietario" %}<a href="{{ url_for('financeiro.pagina_financeiro') }}">▥ <span>Financeiro</span></a><a href="{{ url_for('financeiro.pagina_relatorios') }}">▤ <span>Relatórios</span></a><a href="{{ url_for('repasses.pagina_repasses') }}">⇄ <span>Repasses</span></a>{% endif %}
+      <a href="{{ url_for('perfil') }}">⚙ <span>Minha conta</span></a>
+    </nav>
+    <a class="logout" href="{{ url_for('logout') }}">↪ <span>Sair</span></a>
+  </aside>
+  <main class="module-page" id="servicesPage" data-can-manage="{{ 'true' if current_user.tipo in ['proprietario', 'profissional'] else 'false' }}">
+    <header>
+      <div><h1>Serviços</h1><p>{% if current_user.tipo in ["proprietario", "profissional"] %}Gerencie os serviços oferecidos pelo salão.{% else %}Consulte os serviços disponíveis e seus valores.{% endif %}</p></div>
+      <a class="profile-link" href="{{ url_for('perfil') }}"><div class="profile"><span>{{ current_user.nome[0]|upper }}</span><div>{{ current_user.nome }}<small>{{ current_user.tipo_label }}</small></div></div></a>
+    </header>
+    <div class="notice" id="servicesNotice" role="status" aria-live="polite" hidden></div>
+    <section class="module-panel">
+      <div class="panel-heading">
+        <div><h2>Catálogo de serviços</h2><p>{% if current_user.tipo in ["proprietario", "profissional"] %}Consulte e atualize preços, duração e disponibilidade.{% else %}Consulte os preços e a duração dos serviços disponíveis.{% endif %}</p></div>
+        {% if current_user.tipo in ["proprietario", "profissional"] %}
+        <button class="button button-primary" id="newServiceButton" type="button">＋ Novo serviço</button>
+        {% endif %}
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Serviço</th><th>Preço</th><th>Duração</th>{% if current_user.tipo in ["proprietario", "profissional"] %}<th>Status</th><th class="actions-heading">Ações</th>{% endif %}</tr></thead>
+          <tbody id="servicesTableBody"><tr><td colspan="{{ 5 if current_user.tipo in ['proprietario', 'profissional'] else 3 }}" class="table-message">Carregando serviços…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+    {% if current_user.tipo in ["proprietario", "profissional"] %}
+    <dialog class="module-dialog" id="serviceDialog" aria-labelledby="serviceDialogTitle">
+      <form id="serviceForm">
+        <div class="dialog-heading"><div><h2 id="serviceDialogTitle">Novo serviço</h2><p>Preencha os dados do serviço.</p></div><button class="icon-button" type="button" data-close-dialog aria-label="Fechar">×</button></div>
+        <div class="form-grid">
+          <label class="field-full">Nome do serviço<input name="nome" maxlength="120" required autocomplete="off" placeholder="Ex.: Manicure"></label>
+          <label class="field-full">Descrição<textarea name="descricao" maxlength="1000" rows="3" placeholder="Detalhes do serviço (opcional)"></textarea></label>
+          <label>Preço (R$)<input name="preco" type="number" min="0" max="99999999.99" step="0.01" required inputmode="decimal" placeholder="0,00"></label>
+          <label>Duração (minutos)<input name="duracao_minutos" type="number" min="1" step="1" required inputmode="numeric" placeholder="Ex.: 40"></label>
+          <label class="field-full checkbox-field" id="serviceActiveField" hidden><input name="ativo" type="checkbox"> Serviço ativo</label>
+        </div>
+        <div class="form-error" id="serviceFormError" role="alert" hidden></div>
+        <div class="dialog-actions"><button class="button button-secondary" type="button" data-close-dialog>Cancelar</button><button class="button button-primary" id="saveServiceButton" type="submit">Salvar serviço</button></div>
+      </form>
+    </dialog>
+    {% endif %}
+  </main>
+  <script src="{{ url_for('static', filename='js/services.js') }}" defer></script>
+</body>
+</html>
