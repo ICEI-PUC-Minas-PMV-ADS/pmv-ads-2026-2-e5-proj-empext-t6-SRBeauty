@@ -23,6 +23,7 @@ class ServicesApiTestCase(unittest.TestCase):
                     User(nome="Profissional", email="prof@example.test", senha_hash="x", tipo="profissional"),
                     User(nome="Outra profissional", email="prof2@example.test", senha_hash="x", tipo="profissional"),
                     User(nome="Proprietária", email="dona@example.test", senha_hash="x", tipo="proprietario"),
+                    User(nome="Outra cliente", email="cliente2@example.test", senha_hash="x", tipo="cliente"),
                 ]
             )
             db.session.commit()
@@ -169,8 +170,9 @@ class ServicesApiTestCase(unittest.TestCase):
                     "duracao_minutos": 45,
                 },
             ).status_code,
-            201,
+            403,
         )
+        self.assertNotIn(b"newServiceButton", professional_client.get("/servicos").data)
 
     def test_appointment_snapshots_historical_price_and_service_details(self):
         service = self.create_service().json
@@ -249,6 +251,80 @@ class ServicesApiTestCase(unittest.TestCase):
         self.assertEqual(appointment.json["servicos"][0]["profissional_id"], 3)
         self.assertEqual(appointment.json["servicos"][0]["valor_cobrado"], "39.90")
 
+    def test_customer_appointments_are_scoped_to_session_and_cannot_change_status(self):
+        service_id = self.create_service().json["id"]
+        own_appointment = self.create_appointment(service_id).json
+        other_appointment = self.create_appointment(
+            service_id,
+            cliente_id=5,
+            agendado_para="2026-10-09T12:00:00-03:00",
+        ).json
+
+        with self.client.session_transaction() as session:
+            session["_user_id"] = "1"
+            session["_fresh"] = True
+
+        appointments = self.client.get("/api/atendimentos")
+        self.assertEqual(appointments.status_code, 200)
+        self.assertEqual([item["id"] for item in appointments.json], [own_appointment["id"]])
+        self.assertEqual(
+            self.client.get(f"/api/atendimentos/{other_appointment['id']}").status_code,
+            404,
+        )
+        self.assertEqual(
+            self.client.patch(
+                f"/api/atendimentos/{own_appointment['id']}/status",
+                json={"status": "em_atendimento"},
+            ).status_code,
+            403,
+        )
+
+    def test_customer_request_uses_session_customer_and_catalog_service_price(self):
+        service = self.create_service().json
+        with self.client.session_transaction() as session:
+            session["_user_id"] = "1"
+            session["_fresh"] = True
+
+        response = self.client.post(
+            "/api/atendimentos",
+            json={
+                "cliente_id": 5,
+                "profissional_id": 2,
+                "agendamento_id": 999,
+                "agendado_para": "2026-10-09T10:00:00-03:00",
+                "status": "concluido",
+                "servicos": [
+                    {
+                        "servico_id": service["id"],
+                        "profissional_id": 3,
+                        "valor_cobrado": "0.01",
+                    }
+                ],
+            },
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.json["cliente_id"], 1)
+        self.assertEqual(response.json["status"], "aguardando")
+        self.assertIsNone(response.json["agendamento_id"])
+        self.assertEqual(response.json["servicos"][0]["profissional_id"], 2)
+        self.assertEqual(response.json["servicos"][0]["valor_cobrado"], "45.00")
+
+    def test_appointment_and_service_catalog_apis_require_authentication(self):
+        anonymous = app.test_client()
+        self.assertEqual(anonymous.get("/api/servicos").status_code, 401)
+        self.assertEqual(anonymous.get("/api/servicos/1").status_code, 401)
+        self.assertEqual(anonymous.get("/api/atendimentos").status_code, 401)
+        self.assertEqual(anonymous.get("/api/atendimentos/1").status_code, 401)
+        self.assertEqual(
+            anonymous.post("/api/atendimentos", json={}).status_code,
+            401,
+        )
+        self.assertEqual(
+            anonymous.patch("/api/atendimentos/1/status", json={"status": "em_atendimento"}).status_code,
+            401,
+        )
+
     def test_module_pages_render_and_use_existing_user_records(self):
         with self.client.session_transaction() as session:
             session["_user_id"] = "4"
@@ -277,6 +353,22 @@ class ServicesApiTestCase(unittest.TestCase):
         appointments_script = self.client.get("/static/js/appointments.js")
         self.assertIn(b"/api/atendimentos", appointments_script.data)
         appointments_script.close()
+
+    def test_customer_appointments_page_only_exposes_own_customer_and_request_controls(self):
+        with self.client.session_transaction() as session:
+            session["_user_id"] = "1"
+            session["_fresh"] = True
+
+        page = self.client.get("/atendimentos")
+        self.assertEqual(page.status_code, 200)
+        self.assertIn(b"Solicitar atendimento", page.data)
+        self.assertNotIn(b'name="cliente_id"', page.data)
+        self.assertNotIn(b"Outra cliente", page.data)
+        self.assertNotIn(b"agendamento_id", page.data)
+        script = self.client.get("/static/js/appointments.js")
+        self.assertIn(b"data-user-type", page.data)
+        self.assertIn(b"valor_cobrado", script.data)
+        script.close()
 
 
 if __name__ == "__main__":

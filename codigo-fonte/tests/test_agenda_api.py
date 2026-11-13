@@ -111,6 +111,7 @@ class AgendaApiTestCase(unittest.TestCase):
         self.assertNotIn(6, [item["dia_semana"] for item in schedules])
 
     def test_appointment_rejects_overlapping_duration_and_accepts_adjacent_slot(self):
+        self.login_as(4)
         service_id = self.create_service(duration=60)
         first = self.create_appointment(service_id)
         self.assertEqual(first.status_code, 201)
@@ -233,9 +234,9 @@ class AgendaApiTestCase(unittest.TestCase):
         self.assertEqual(self.client.delete(f"/api/bloqueios/{block_id}").status_code, 204)
 
     def test_daily_weekly_views_and_role_scoping(self):
+        self.login_as(4)
         service_id = self.create_service(duration=30)
         self.assertEqual(self.create_appointment(service_id).status_code, 201)
-        self.login_as(4)
         daily = self.client.get("/api/agenda/diaria?data=2026-10-09")
         self.assertEqual(daily.status_code, 200)
         self.assertEqual(daily.json["eventos"][0]["tipo"], "atendimento")

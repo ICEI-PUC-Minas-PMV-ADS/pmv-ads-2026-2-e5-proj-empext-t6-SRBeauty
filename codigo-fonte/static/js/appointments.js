@@ -12,6 +12,7 @@
   const serviceRows = document.querySelector("#appointmentServiceRows");
   const statusFilter = document.querySelector("#statusFilter");
   const directory = JSON.parse(document.querySelector("#userDirectory").textContent);
+  const isCustomer = page.dataset.userType === "cliente";
   const users = new Map(
     [...directory.clientes, ...directory.profissionais].map((user) => [user.id, user.nome]),
   );
@@ -103,7 +104,7 @@
     details.textContent = "Detalhes";
     details.addEventListener("click", () => showDetails(appointment.id));
     actions.append(details);
-    if (appointment.status === "aguardando" || appointment.status === "em_atendimento") {
+    if (!isCustomer && (appointment.status === "aguardando" || appointment.status === "em_atendimento")) {
       const nextStatus = appointment.status === "aguardando" ? "em_atendimento" : "concluido";
       const next = document.createElement("button");
       next.type = "button";
@@ -144,7 +145,9 @@
         empty.className = "table-message";
         empty.textContent = selected
           ? "Não há atendimentos com este status."
-          : "Nenhum atendimento registrado. Cadastre o primeiro atendimento para acompanhar sua execução.";
+          : isCustomer
+            ? "Você ainda não tem atendimentos. Envie uma solicitação para começar."
+            : "Nenhum atendimento registrado. Cadastre o primeiro atendimento para acompanhar sua execução.";
         const row = document.createElement("tr");
         row.append(empty);
         body.append(row);
@@ -189,27 +192,36 @@
     row.className = "service-row";
     const select = document.createElement("select");
     select.className = "service-select";
-    select.setAttribute("aria-label", "Serviço");
+    select.setAttribute("aria-label", isCustomer ? "Serviço desejado" : "Serviço");
     select.required = true;
     select.append(option("", "Selecione um serviço"));
-    services.forEach((service) => select.append(option(service.id, service.nome)));
+    services.forEach((service) => {
+      const label = isCustomer ? `${service.nome} — ${money(service.preco)}` : service.nome;
+      select.append(option(service.id, label));
+    });
 
-    const price = document.createElement("input");
-    price.className = "price-input";
-    price.type = "number";
-    price.min = "0";
-    price.max = "99999999.99";
-    price.step = "0.01";
-    price.placeholder = "Preço cobrado";
-    price.inputMode = "decimal";
-    price.required = true;
-    price.setAttribute("aria-label", "Valor cobrado em reais");
+    const rowControls = [select];
+    let price;
+    if (!isCustomer) {
+      price = document.createElement("input");
+      price.className = "price-input";
+      price.type = "number";
+      price.min = "0";
+      price.max = "99999999.99";
+      price.step = "0.01";
+      price.placeholder = "Preço cobrado";
+      price.inputMode = "decimal";
+      price.required = true;
+      price.setAttribute("aria-label", "Valor cobrado em reais");
+      rowControls.push(price);
 
-    const provider = document.createElement("select");
-    provider.className = "provider-select";
-    provider.setAttribute("aria-label", "Profissional que executou o serviço");
-    provider.append(option("", "Profissional executora (responsável)"));
-    directory.profissionais.forEach((user) => provider.append(option(user.id, user.nome)));
+      const provider = document.createElement("select");
+      provider.className = "provider-select";
+      provider.setAttribute("aria-label", "Profissional que executou o serviço");
+      provider.append(option("", "Profissional executora (responsável)"));
+      directory.profissionais.forEach((user) => provider.append(option(user.id, user.nome)));
+      rowControls.push(provider);
+    }
 
     const remove = document.createElement("button");
     remove.type = "button";
@@ -222,10 +234,10 @@
     });
     select.addEventListener("change", () => {
       const selectedService = services.find((service) => String(service.id) === select.value);
-      price.value = selectedService ? selectedService.preco : "";
+      if (price) price.value = selectedService ? selectedService.preco : "";
       refreshServiceOptions();
     });
-    row.append(select, price, provider, remove);
+    row.append(...rowControls, remove);
     serviceRows.append(row);
     refreshServiceOptions();
   }
@@ -239,12 +251,12 @@
   }
 
   async function openCreate() {
-    if (!directory.clientes.length || !directory.profissionais.length) {
+    if ((!isCustomer && !directory.clientes.length) || !directory.profissionais.length) {
       announce("Cadastre clientes e profissionais pela integração de Usuários antes de registrar atendimentos.", "error");
       return;
     }
     if (!services.length) {
-      announce("Cadastre um serviço ativo antes de registrar atendimentos.", "error");
+      announce("Não há serviços ativos disponíveis para solicitar um atendimento.", "error");
       return;
     }
     closeAndResetForm();
@@ -345,22 +357,27 @@
     for (const row of rows) {
       const serviceId = row.querySelector(".service-select").value;
       const priceInput = row.querySelector(".price-input");
-      const providerId = row.querySelector(".provider-select").value;
-      const price = Number(priceInput.value);
+      const providerSelect = row.querySelector(".provider-select");
       if (seen.has(serviceId)) {
         formError.textContent = "Não repita o mesmo serviço no atendimento.";
         formError.hidden = false;
         return;
       }
       seen.add(serviceId);
-      if (!Number.isFinite(price) || price < 0) {
-        formError.textContent = "Informe um valor cobrado válido e não negativo para cada serviço.";
-        formError.hidden = false;
-        priceInput.focus();
-        return;
+      const item = { servico_id: Number(serviceId) };
+      if (priceInput) {
+        const price = Number(priceInput.value);
+        if (!Number.isFinite(price) || price < 0) {
+          formError.textContent = "Informe um valor cobrado válido e não negativo para cada serviço.";
+          formError.hidden = false;
+          priceInput.focus();
+          return;
+        }
+        item.valor_cobrado = priceInput.value;
       }
-      const item = { servico_id: Number(serviceId), valor_cobrado: priceInput.value };
-      if (providerId) item.profissional_id = Number(providerId);
+      if (providerSelect && providerSelect.value) {
+        item.profissional_id = Number(providerSelect.value);
+      }
       items.push(item);
     }
     const localDate = new Date(form.elements.agendado_para.value);
@@ -370,28 +387,30 @@
       return;
     }
     const payload = {
-      cliente_id: Number(form.elements.cliente_id.value),
       profissional_id: Number(form.elements.profissional_id.value),
       agendado_para: localDate.toISOString(),
       observacoes: form.elements.observacoes.value.trim(),
       servicos: items,
     };
-    const bookingId = form.elements.agendamento_id.value.trim();
-    if (bookingId) payload.agendamento_id = Number(bookingId);
+    if (!isCustomer) {
+      payload.cliente_id = Number(form.elements.cliente_id.value);
+      const bookingId = form.elements.agendamento_id.value.trim();
+      if (bookingId) payload.agendamento_id = Number(bookingId);
+    }
 
     saveButton.disabled = true;
-    saveButton.textContent = "Registrando…";
+    saveButton.textContent = isCustomer ? "Enviando…" : "Registrando…";
     try {
       await request("/api/atendimentos", { method: "POST", body: JSON.stringify(payload) });
       dialog.close();
-      announce("Atendimento registrado com sucesso.");
+      announce(isCustomer ? "Solicitação de atendimento enviada com sucesso." : "Atendimento registrado com sucesso.");
       await loadAppointments();
     } catch (error) {
       formError.textContent = error.message;
       formError.hidden = false;
     } finally {
       saveButton.disabled = false;
-      saveButton.textContent = "Registrar atendimento";
+      saveButton.textContent = isCustomer ? "Enviar solicitação" : "Registrar atendimento";
     }
   });
 
@@ -414,7 +433,7 @@
   async function initialize() {
     try {
       services = await request("/api/servicos");
-      if (!directory.clientes.length || !directory.profissionais.length) {
+      if ((!isCustomer && !directory.clientes.length) || !directory.profissionais.length) {
         announce("A lista de clientes ou profissionais está vazia. Integre usuários existentes antes de criar atendimentos.", "info");
       }
       await loadAppointments();

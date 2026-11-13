@@ -860,14 +860,25 @@ def api_agenda_semanal():
 def service_management_error():
     if not current_user.is_authenticated:
         return api_error("Faça login para gerenciar serviços.", 401)
-    if current_user.tipo not in {"proprietario", "profissional"}:
-        return api_error("Apenas proprietárias e profissionais podem gerenciar serviços.", 403)
+    if current_user.tipo != "proprietario":
+        return api_error("Apenas a proprietária pode gerenciar serviços e preços.", 403)
+    return None
+
+
+def service_catalog_access_error():
+    if not current_user.is_authenticated:
+        return api_error("Autenticação necessária.", 401)
+    if current_user.tipo not in {"cliente", "profissional", "proprietario"}:
+        return api_error("Perfil sem permissão para consultar serviços.", 403)
     return None
 
 
 @app.route("/api/servicos", methods=["GET", "POST"])
 def api_servicos():
     if request.method == "GET":
+        access_error = service_catalog_access_error()
+        if access_error:
+            return access_error
         include_inactive = request.args.get("incluir_inativos", "false").lower()
         if include_inactive not in {"true", "false"}:
             return api_error("'incluir_inativos' deve ser true ou false.", 400)
@@ -911,6 +922,9 @@ def api_servicos():
 
 @app.route("/api/servicos/<int:service_id>", methods=["GET", "PUT", "DELETE"])
 def api_servico_detalhe(service_id):
+    access_error = service_catalog_access_error()
+    if access_error:
+        return access_error
     if request.method != "GET":
         access_error = service_management_error()
         if access_error:
@@ -919,6 +933,8 @@ def api_servico_detalhe(service_id):
     if service is None:
         return api_error("Serviço não encontrado.", 404)
     if request.method == "GET":
+        if not service.ativo and current_user.tipo != "proprietario":
+            return api_error("Serviço não encontrado.", 404)
         return jsonify(service_json(service))
     if request.method == "DELETE":
         service.ativo = False
@@ -954,8 +970,15 @@ def api_servico_detalhe(service_id):
 
 @app.route("/api/atendimentos", methods=["GET", "POST"])
 def api_atendimentos():
+    if not current_user.is_authenticated:
+        return api_error("Autenticação necessária.", 401)
+    if current_user.tipo not in {"cliente", "profissional", "proprietario"}:
+        return api_error("Perfil sem permissão para acessar atendimentos.", 403)
+
     if request.method == "GET":
         query = Appointment.query
+        if current_user.tipo == "cliente":
+            query = query.filter_by(cliente_id=current_user.id)
         status = request.args.get("status")
         if status:
             if status not in {"aguardando", "em_atendimento", "concluido"}:
@@ -967,13 +990,18 @@ def api_atendimentos():
     if not isinstance(data, dict):
         return api_error("Envie um objeto JSON válido.", 400)
     try:
-        client_id = positive_integer(data.get("cliente_id"), "cliente_id")
+        is_customer_request = current_user.tipo == "cliente"
+        client_id = (
+            current_user.id
+            if is_customer_request
+            else positive_integer(data.get("cliente_id"), "cliente_id")
+        )
         professional_id = positive_integer(data.get("profissional_id"), "profissional_id")
         valid_user(client_id, "cliente", "cliente_id")
         valid_user(professional_id, "profissional", "profissional_id")
         scheduled_for = parse_datetime(data.get("agendado_para"), "agendado_para")
         notes = parse_notes(data.get("observacoes", ""))
-        external_booking_id = data.get("agendamento_id")
+        external_booking_id = None if is_customer_request else data.get("agendamento_id")
         if external_booking_id is not None:
             external_booking_id = positive_integer(external_booking_id, "agendamento_id")
         service_data = data.get("servicos")
@@ -999,12 +1027,16 @@ def api_atendimentos():
             catalog_service = db.session.get(Service, catalog_id)
             if catalog_service is None or not catalog_service.ativo:
                 raise ValueError(f"Serviço {catalog_id} não existe ou está inativo.")
-            item_professional_id = positive_integer(
-                entry.get("profissional_id", professional_id), "profissional_id"
+            item_professional_id = (
+                professional_id
+                if is_customer_request
+                else positive_integer(entry.get("profissional_id", professional_id), "profissional_id")
             )
             valid_user(item_professional_id, "profissional", "profissional_id")
-            charged_price = parse_money(
-                entry.get("valor_cobrado", catalog_service.preco), "valor_cobrado"
+            charged_price = (
+                catalog_service.preco
+                if is_customer_request
+                else parse_money(entry.get("valor_cobrado", catalog_service.preco), "valor_cobrado")
             )
             appointment.itens.append(
                 AppointmentService(
@@ -1039,14 +1071,24 @@ def api_atendimentos():
 
 @app.route("/api/atendimentos/<int:appointment_id>", methods=["GET"])
 def api_atendimento_detalhe(appointment_id):
+    if not current_user.is_authenticated:
+        return api_error("Autenticação necessária.", 401)
+    if current_user.tipo not in {"cliente", "profissional", "proprietario"}:
+        return api_error("Perfil sem permissão para acessar atendimentos.", 403)
     appointment = db.session.get(Appointment, appointment_id)
-    if appointment is None:
+    if appointment is None or (
+        current_user.tipo == "cliente" and appointment.cliente_id != current_user.id
+    ):
         return api_error("Atendimento não encontrado.", 404)
     return jsonify(appointment_json(appointment))
 
 
 @app.route("/api/atendimentos/<int:appointment_id>/status", methods=["PATCH"])
 def api_atendimento_status(appointment_id):
+    if not current_user.is_authenticated:
+        return api_error("Autenticação necessária.", 401)
+    if current_user.tipo not in {"profissional", "proprietario"}:
+        return api_error("Apenas a equipe responsável pode alterar o status.", 403)
     appointment = db.session.get(Appointment, appointment_id)
     if appointment is None:
         return api_error("Atendimento não encontrado.", 404)
@@ -1188,7 +1230,10 @@ def pagina_servicos():
 @app.route("/atendimentos")
 @login_required
 def pagina_atendimentos():
-    clientes = User.query.filter_by(tipo="cliente").order_by(User.nome).all()
+    if current_user.tipo == "cliente":
+        clientes = [current_user]
+    else:
+        clientes = User.query.filter_by(tipo="cliente").order_by(User.nome).all()
     profissionais = User.query.filter_by(tipo="profissional").order_by(User.nome).all()
     return render_template(
         "atendimentos.html",

@@ -17,7 +17,7 @@ A aplicação inicializa as tabelas ausentes com `db.create_all()`. O banco pode
 python -m unittest discover -s tests -v
 ```
 
-Após iniciar a aplicação e autenticar-se, abra `/agenda` para visualizar a agenda e gerenciar escalas e bloqueios, `/servicos` para o catálogo e `/atendimentos` para registrar e acompanhar execuções. As páginas reutilizam o menu lateral e as folhas de estilo do painel. Os dados de usuários disponíveis nas seleções de atendimento são consultados pelo servidor diretamente da tabela `usuarios`; os registros exibidos e criados na página continuam usando os endpoints reais da API descritos abaixo.
+Após iniciar a aplicação e autenticar-se, abra `/agenda` para visualizar a agenda e gerenciar escalas e bloqueios, `/servicos` para o catálogo e `/atendimentos` para registrar ou solicitar atendimentos. As páginas reutilizam o menu lateral e as folhas de estilo do painel. Os dados de usuários disponíveis nas seleções de atendimento são consultados pelo servidor diretamente da tabela `usuarios`; para clientes, a página envia ao navegador somente o próprio cliente e a API associa as solicitações à sessão autenticada.
 
 ## Modelo e dependências de integração
 
@@ -32,11 +32,11 @@ Após iniciar a aplicação e autenticar-se, abra `/agenda` para visualizar a ag
 - Horários e datas da agenda usam o fuso `America/Sao_Paulo`; datas e horas de atendimentos/bloqueios recebidas pela API devem incluir fuso explícito.
 - A criação de atendimentos verifica o expediente configurado, bloqueios e conflitos de intervalo, usando a soma das durações previstas para cada profissional. Se nenhuma escala semanal foi configurada para a profissional, a validação de expediente é omitida por compatibilidade, mas conflitos com atendimentos e bloqueios continuam ativos.
 
-No momento da criação do atendimento, o valor e o nome são copiados para cada item. Pode-se informar `valor_cobrado` diferente do preço atual para registrar o valor efetivamente combinado. Mudanças posteriores no catálogo não alteram o histórico. `profissional_id` pode ser especificado por item; caso omitido, usa o profissional responsável pelo atendimento. A criação retorna `409 Conflict` quando o intervalo se sobrepõe a outro atendimento ativo ou bloqueio, ou não cabe em um intervalo da escala já cadastrada.
+No registro realizado pela equipe, o valor e o nome são copiados para cada item; a equipe pode informar `valor_cobrado` diferente do preço atual para registrar o valor efetivamente combinado. Em solicitações de clientes, o preço do catálogo é aplicado obrigatoriamente e não pode ser substituído. Mudanças posteriores no catálogo não alteram o histórico. `profissional_id` pode ser especificado por item pela equipe; caso omitido, usa o profissional responsável pelo atendimento. Solicitações de clientes usam a profissional escolhida para todos os serviços. A criação retorna `409 Conflict` quando o intervalo se sobrepõe a outro atendimento ativo ou bloqueio, ou não cabe em um intervalo da escala já cadastrada.
 
 ## Endpoints
 
-Todas as respostas usam JSON, exceto exclusões bem-sucedidas, que retornam `204 No Content`. Erros seguem `{"erro": "mensagem compreensível"}`. Os endpoints da agenda exigem autenticação: uma profissional só consulta e gerencia os próprios horários e bloqueios; a proprietária pode consultar e gerenciar todas as profissionais. Usuários clientes recebem `403`; requisições sem sessão recebem `401`.
+Todas as respostas usam JSON, exceto exclusões bem-sucedidas, que retornam `204 No Content`. Erros seguem `{"erro": "mensagem compreensível"}`. Os endpoints da agenda exigem autenticação: uma profissional só consulta e gerencia os próprios horários e bloqueios; a proprietária pode consultar e gerenciar todas as profissionais. Usuários clientes recebem `403`; requisições sem sessão recebem `401`. O catálogo exige autenticação; somente a proprietária pode criar, editar, desativar serviços ou consultar itens inativos. Clientes, profissionais e proprietária podem consultar os serviços ativos.
 
 ### Agenda
 
@@ -100,13 +100,13 @@ As visões diárias e semanais retornam `inicio`, `fim`, `eventos`, `horarios`, 
 | Método e caminho | Descrição | Respostas principais |
 |---|---|---|
 | `GET /api/servicos` | Lista serviços ativos, por nome | `200` |
-| `GET /api/servicos?incluir_inativos=true` | Inclui serviços desativados; exige perfil proprietário ou profissional | `200`, `400`, `403`, `401` |
-| `POST /api/servicos` | Cadastra serviço; exige perfil proprietário ou profissional | `201`, `400`, `403`, `401` |
-| `GET /api/servicos/<id>` | Consulta serviço | `200`, `404` |
-| `PUT /api/servicos/<id>` | Atualiza nome, descrição, preço, duração e, opcionalmente, `ativo`; exige perfil proprietário ou profissional | `200`, `400`, `403`, `404`, `401` |
-| `DELETE /api/servicos/<id>` | Desativa o serviço sem apagar histórico; exige perfil proprietário ou profissional | `204`, `403`, `404`, `401` |
+| `GET /api/servicos?incluir_inativos=true` | Inclui serviços desativados; exige perfil proprietário | `200`, `400`, `403`, `401` |
+| `POST /api/servicos` | Cadastra serviço; exige perfil proprietário | `201`, `400`, `403`, `401` |
+| `GET /api/servicos/<id>` | Consulta serviço ativo; itens inativos são visíveis somente à proprietária | `200`, `401`, `403`, `404` |
+| `PUT /api/servicos/<id>` | Atualiza nome, descrição, preço, duração e, opcionalmente, `ativo`; exige perfil proprietário | `200`, `400`, `403`, `404`, `401` |
+| `DELETE /api/servicos/<id>` | Desativa o serviço sem apagar histórico; exige perfil proprietário | `204`, `403`, `404`, `401` |
 
-Clientes podem consultar o catálogo ativo e os preços, mas recebem `403` ao tentar criar, editar, desativar serviços ou incluir serviços inativos. Requisições sem sessão também podem consultar os serviços ativos, mas recebem `401` ao tentar alterar o catálogo.
+Clientes e profissionais podem consultar o catálogo ativo e os preços, mas recebem `403` ao tentar criar, editar, desativar serviços ou incluir serviços inativos. Requisições sem sessão recebem `401`.
 
 Campos obrigatórios para criação/atualização: `nome` (1–120 caracteres), `preco` (não negativo, até duas casas decimais) e `duracao_minutos` (inteiro positivo). `descricao` é opcional (até 1000 caracteres); em `PUT`, envie todos os campos requeridos.
 
@@ -145,13 +145,13 @@ Resposta `201`:
 
 | Método e caminho | Descrição | Respostas principais |
 |---|---|---|
-| `POST /api/atendimentos` | Registra atendimento no estado `aguardando` com um ou mais serviços | `201`, `400`, `409` |
-| `GET /api/atendimentos` | Lista atendimentos, ordenados pela data agendada | `200` |
-| `GET /api/atendimentos?status=aguardando` | Filtra por `aguardando`, `em_atendimento` ou `concluido` | `200`, `400` |
-| `GET /api/atendimentos/<id>` | Consulta detalhes e snapshots dos serviços | `200`, `404` |
-| `PATCH /api/atendimentos/<id>/status` | Avança o estado operacional | `200`, `400`, `404`, `409` |
+| `POST /api/atendimentos` | Registra atendimento para equipe ou cria solicitação para cliente | `201`, `400`, `401`, `403`, `409` |
+| `GET /api/atendimentos` | Lista atendimentos; clientes recebem somente os próprios | `200`, `401`, `403` |
+| `GET /api/atendimentos?status=aguardando` | Filtra atendimentos visíveis por status | `200`, `400`, `401`, `403` |
+| `GET /api/atendimentos/<id>` | Consulta detalhes; clientes só podem consultar os próprios | `200`, `401`, `403`, `404` |
+| `PATCH /api/atendimentos/<id>/status` | Avança o estado operacional; exige perfil profissional ou proprietário | `200`, `400`, `401`, `403`, `404`, `409` |
 
-Para criar, envie `cliente_id`, `profissional_id`, `agendado_para` em ISO 8601 com fuso explícito e uma lista não vazia de itens `servicos`. Cada item tem `servico_id` e pode conter `profissional_id` e `valor_cobrado`. `agendamento_id` e `observacoes` são opcionais.
+Para registrar um atendimento pela equipe, envie `cliente_id`, `profissional_id`, `agendado_para` em ISO 8601 com fuso explícito e uma lista não vazia de itens `servicos`. Cada item tem `servico_id` e pode conter `profissional_id` e `valor_cobrado`. `agendamento_id` e `observacoes` são opcionais. Clientes enviam os mesmos dados da solicitação, exceto `cliente_id` e `agendamento_id`; o servidor usa o ID da sessão, mantém o status `aguardando`, associa todos os serviços à profissional escolhida e define cada valor com o preço atual do catálogo, ignorando campos de cliente, status, profissional por item e preço enviados pelo navegador.
 
 ```json
 {
@@ -179,14 +179,14 @@ O horário de início é registrado pelo servidor. Para concluir, informe o stat
 
 1. Manter a tabela `usuarios` compartilhada com IDs e tipos `cliente`/`profissional` conforme já existente; não criar tabelas paralelas de clientes ou profissionais.
 2. `agendamento_id` continua opcional e sem checagem de existência; pode ser ligado a uma entidade de reserva futura.
-3. As rotas novas da agenda usam a sessão Flask-Login e validam papéis de proprietária/profissional. A consulta do catálogo ativo de serviços é pública; a listagem de inativos e as alterações exigem perfil de proprietária/profissional. As APIs de atendimentos conservam as regras de autenticação existentes no projeto.
+3. As rotas da agenda, catálogo e atendimentos validam a sessão Flask-Login. A consulta do catálogo ativo permite cliente, profissional e proprietária; gestão de serviços e preços é exclusiva da proprietária. Clientes só consultam os próprios atendimentos e podem criar solicitações, sem alterar cliente, preço ou status. Profissionais e proprietária mantêm os fluxos de execução e atualização de status.
 4. O módulo de repasses usa os atendimentos concluídos e o profissional responsável por cada serviço para calcular os valores devidos.
 5. Financeiro e relatórios são servidos pela mesma aplicação Flask em `/financeiro` e `/relatorios`; suas APIs mantêm os caminhos `/api/financeiro/*` e `/api/relatorios/*` e exigem sessão de proprietária.
 
 ## Interface web
 
 - `GET /agenda`: mostra visões diária e semanal com cards separados para cada profissional, permite gerenciar intervalos de escala e bloqueios, e filtra a agenda por profissional para a proprietária.
-- `GET /servicos`: lista o catálogo, permite cadastrar/editar serviços e desativar serviços com confirmação.
-- `GET /atendimentos`: permite filtrar/listar atendimentos, registrar vários serviços com seus valores e profissionais executores, consultar os detalhes e avançar o status para a próxima etapa válida.
+- `GET /servicos`: lista o catálogo para clientes e equipe; somente a proprietária pode cadastrar/editar serviços, alterar preços e desativá-los.
+- `GET /atendimentos`: clientes solicitam atendimentos e acompanham exclusivamente os próprios pedidos; profissionais e proprietária podem listar, registrar execuções, consultar detalhes e avançar o status para a próxima etapa válida.
 - As páginas requerem a sessão Flask-Login já existente. A interface não cria contas nem substitui a autenticação.
 - A listagem de clientes e profissionais é obtida de `usuarios` somente no servidor ao renderizar a página; não existe uma rota de usuários acrescentada por este módulo. Se uma das listas estiver vazia, integre primeiro os registros do módulo de usuários.

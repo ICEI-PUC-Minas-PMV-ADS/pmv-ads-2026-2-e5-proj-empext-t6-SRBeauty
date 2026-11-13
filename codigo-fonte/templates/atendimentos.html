@@ -19,16 +19,16 @@
     </nav>
     <a class="logout" href="{{ url_for('logout') }}">↪ <span>Sair</span></a>
   </aside>
-  <main class="module-page" id="appointmentsPage">
+  <main class="module-page" id="appointmentsPage" data-user-type="{{ current_user.tipo }}">
     <header>
-      <div><h1>Atendimentos</h1><p>Acompanhe a execução dos serviços do salão.</p></div>
+      <div><h1>Atendimentos</h1><p>{% if current_user.tipo == "cliente" %}Solicite atendimentos e acompanhe o andamento dos seus pedidos.{% else %}Acompanhe a execução dos serviços do salão.{% endif %}</p></div>
       <a class="profile-link" href="{{ url_for('perfil') }}"><div class="profile"><span>{{ current_user.nome[0]|upper }}</span><div>{{ current_user.nome }}<small>{{ current_user.tipo_label }}</small></div></div></a>
     </header>
     <div class="notice" id="appointmentsNotice" role="status" aria-live="polite" hidden></div>
     <section class="module-panel">
       <div class="panel-heading">
-        <div><h2>Atendimentos registrados</h2><p>Avance cada registro somente para a próxima etapa.</p></div>
-        <button class="button button-primary" id="newAppointmentButton" type="button">＋ Novo atendimento</button>
+        <div><h2>{% if current_user.tipo == "cliente" %}Meus atendimentos{% else %}Atendimentos registrados{% endif %}</h2><p>{% if current_user.tipo == "cliente" %}Consulte suas solicitações ou envie um novo pedido.{% else %}Avance cada registro somente para a próxima etapa.{% endif %}</p></div>
+        <button class="button button-primary" id="newAppointmentButton" type="button">{% if current_user.tipo == "cliente" %}＋ Solicitar atendimento{% else %}＋ Novo atendimento{% endif %}</button>
       </div>
       <div class="filter-row"><label for="statusFilter">Filtrar por status</label><select id="statusFilter"><option value="">Todos os status</option><option value="aguardando">Aguardando</option><option value="em_atendimento">Em Atendimento</option><option value="concluido">Concluído</option></select></div>
       <div class="table-wrap">
@@ -40,21 +40,27 @@
     </section>
     <dialog class="module-dialog appointment-dialog" id="appointmentDialog" aria-labelledby="appointmentDialogTitle">
       <form id="appointmentForm">
-        <div class="dialog-heading"><div><h2 id="appointmentDialogTitle">Novo atendimento</h2><p>Selecione os registros existentes e os serviços executados.</p></div><button class="icon-button" type="button" data-close-dialog aria-label="Fechar">×</button></div>
+        <div class="dialog-heading"><div><h2 id="appointmentDialogTitle">{% if current_user.tipo == "cliente" %}Solicitar atendimento{% else %}Novo atendimento{% endif %}</h2><p>{% if current_user.tipo == "cliente" %}Informe sua preferência de horário e os serviços desejados.{% else %}Selecione os registros existentes e os serviços executados.{% endif %}</p></div><button class="icon-button" type="button" data-close-dialog aria-label="Fechar">×</button></div>
         <div class="form-grid">
+          {% if current_user.tipo == "cliente" %}
+          <p class="field-full">Solicitação para: <strong>{{ current_user.nome }}</strong></p>
+          {% else %}
           <label>Cliente<select name="cliente_id" required><option value="">Selecione uma cliente</option>{% for cliente in clientes %}<option value="{{ cliente.id }}">{{ cliente.nome }}</option>{% endfor %}</select></label>
-          <label>Profissional responsável<select name="profissional_id" required><option value="">Selecione uma profissional</option>{% for profissional in profissionais %}<option value="{{ profissional.id }}">{{ profissional.nome }}</option>{% endfor %}</select></label>
+          {% endif %}
+          <label>{% if current_user.tipo == "cliente" %}Profissional de preferência{% else %}Profissional responsável{% endif %}<select name="profissional_id" required><option value="">Selecione uma profissional</option>{% for profissional in profissionais %}<option value="{{ profissional.id }}">{{ profissional.nome }}</option>{% endfor %}</select></label>
           <label>Data e horário<input name="agendado_para" type="datetime-local" required></label>
+          {% if current_user.tipo != "cliente" %}
           <label>Referência de agendamento <span class="optional-label">(opcional)</span><input name="agendamento_id" type="number" min="1" step="1" placeholder="ID da agenda, se disponível"></label>
+          {% endif %}
           <div class="field-full service-selection">
-            <div class="service-selection-heading"><label>Serviços deste atendimento</label><button class="text-button" type="button" id="addServiceButton">＋ Adicionar serviço</button></div>
+            <div class="service-selection-heading"><label>{% if current_user.tipo == "cliente" %}Serviços desejados{% else %}Serviços deste atendimento{% endif %}</label><button class="text-button" type="button" id="addServiceButton">＋ {% if current_user.tipo == "cliente" %}Adicionar serviço desejado{% else %}Adicionar serviço{% endif %}</button></div>
             <div id="appointmentServiceRows" class="service-rows"></div>
-            <p class="field-hint">O valor sugerido vem do catálogo; você pode registrar o valor efetivamente cobrado.</p>
+            <p class="field-hint">{% if current_user.tipo == "cliente" %}Os serviços e preços são definidos pela administração.{% else %}O valor sugerido vem do catálogo; você pode registrar o valor efetivamente cobrado.{% endif %}</p>
           </div>
           <label class="field-full">Observações<textarea name="observacoes" maxlength="1000" rows="3" placeholder="Notas operacionais (opcional)"></textarea></label>
         </div>
         <div class="form-error" id="appointmentFormError" role="alert" hidden></div>
-        <div class="dialog-actions"><button class="button button-secondary" type="button" data-close-dialog>Cancelar</button><button class="button button-primary" id="saveAppointmentButton" type="submit">Registrar atendimento</button></div>
+        <div class="dialog-actions"><button class="button button-secondary" type="button" data-close-dialog>Cancelar</button><button class="button button-primary" id="saveAppointmentButton" type="submit">{% if current_user.tipo == "cliente" %}Enviar solicitação{% else %}Registrar atendimento{% endif %}</button></div>
       </form>
     </dialog>
     <dialog class="module-dialog details-dialog" id="detailsDialog" aria-labelledby="detailsTitle">
