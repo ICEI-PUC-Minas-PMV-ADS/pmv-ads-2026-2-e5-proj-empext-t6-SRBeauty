@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: Please cite this software using these metadata.
+title: 
+authors:
+  - family-names: 
+    given-names: 
+  - family-names: 
+    given-names: 
+  - family-names: 
+    given-names: 
+  - family-names: 
+    given-names: 
+  - family-names: 
+    given-names: 
+  - family-names: 
+    given-names: 
+  - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: da Costa
+    given-names: José Wilson
+keywords:
+  - 
+  - 
+repository-code: 
+version: 1.0.0
+date-released: 2026-11-12
