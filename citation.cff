@@ -1,26 +1,24 @@
 cff-version: 1.2.0
 message: Please cite this software using these metadata.
-title: 
+title: SR Beauty
 authors:
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
+  - family-names: Sergina Rodrigues
+    given-names: Flávia 
+  - family-names: Villaça Cardoso
+    given-names: Júlio César 
+  - family-names: Martins Franchim
+    given-names: Luiz Guilherme 
+  - family-names: Almeida da Silva
+    given-names: Pamela
+  - family-names: Parreiras Campos Zenith
+    given-names: Virgílio
   - name-suffix: Professor
     affiliation: PUC Minas
     family-names: da Costa
     given-names: José Wilson
 keywords:
-  - 
-  - 
-repository-code: 
+  - Sistema de gestão de espaço de Beleza
+  - Gerenciamento das atividades do salão
+repository-code: https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2026-2-e5-proj-empext-t6-SRBeauty
 version: 1.0.0
 date-released: 2026-11-12
